@@ -8,13 +8,19 @@
             <div class="container">
                 <div class="row">
                     <div class="col d-flex flex-row">
-                        <div class="top_bar_contact_item"><div class="top_bar_icon"><img src="images/phone.png" alt=""></div>notre numero de téléphone</div>
+                        <div class="top_bar_contact_item">
+                            <div class="top_bar_icon">
+                                <div class="user_icon"><img src="images/user.svg" alt=""></div>
+                            </div>
+                            <a href="#">Administrer</a></div>
                         <div class="top_bar_content ml-auto">
                             <div class="top_bar_user">
                                 <div class="user_icon"><img src="images/user.svg" alt=""></div>
                                 <div><a href="#">Connectez-vous</a></div>
                                 <div><a href="#">Creer un compte</a></div>
+                                <div></div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -107,7 +113,6 @@
                             <div class="main_nav_menu ml-auto">
                                 <ul class="standard_dropdown main_nav_dropdown">
                                     <li><a href="acceuil">Acceuil<i class="fas fa-chevron-down"></i></a></li>
-                                    <li><a href="#">Administrer<i class="fas fa-chevron-down"></i></a></li>
                                     <li><a href="#">Les Deals<i class="fas fa-chevron-down"></i></a></li>
                                     <li><a href="{{ url('/produits')  }}">Les produits<i class="fas fa-chevron-down"></i></a></li>
                                     <li><a href="#">Votre Panier<i class="fas fa-chevron-down"></i></a></li>
