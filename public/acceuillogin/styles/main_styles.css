@@ -38,6 +38,40 @@
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600,700,800,900|Rubik:300,400,500,700,900');
 
+.home {
+    width: 100%;
+    height: 260px;
+    background: transparent;
+}
+
+.home_background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+}
+
+.home_overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #cde4f1;
+    background: linear-gradient(#FFFFFF, #cde4f1);
+    opacity: 0.9;
+}
+
+.home_content {
+    width: 100%;
+    height: 100%;
+}
+
+
 /*********************************
 2. Body and some general stuff
 *********************************/
@@ -594,13 +628,7 @@ section
 	line-height: 50px;
 	color: #a3a3a3 !important;
 }
-.header_search_input::input-placeholder
-{
-	font-size: 16px !important;
-	font-weight: 300;
-	line-height: 50px;
-	color: #a3a3a3 !important;
-}
+
 .custom_dropdown
 {
 	width: calc((100% - 50px) * 0.399);
@@ -906,8 +934,8 @@ select option
 	position: absolute;
 	top: 100%;
 	left: 0;
-	/*visibility: hidden;
-	opacity: 0;*/
+    visibility: hidden;
+    opacity: 0;
 	min-width: 100%;
 	background: #FFFFFF;
 	box-shadow: 0px 10px 25px rgba(0,0,0,0.1);
@@ -1037,7 +1065,6 @@ select option
     text-transform: uppercase;
     margin-right: 16px;
 }
-
 /*********************************
 3.4 Page Menu
 *********************************/
@@ -3463,11 +3490,7 @@ select option
 	font-size: 16px;
 	color: rgba(0,0,0,0.3);
 }
-.newsletter_input::input-placeholder
-{
-	font-size: 16px;
-	color: rgba(0,0,0,0.3);
-}
+
 .newsletter_button
 {
 	position: absolute;
