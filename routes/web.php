@@ -20,3 +20,9 @@ Route::get('/inscription', 'InscriptionController@show');
 Route::get('/acceuil','AcceuilController@show');
 
 Route::get('/produits','ProduitsController@show');
+
+Route::get('/blog','BlogController@show');
+
+Route::get('/panier','PanierController@show');
+
+Route::get('/admin','AdminController@show');

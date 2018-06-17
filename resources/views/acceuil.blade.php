@@ -1500,7 +1500,7 @@
                             <div class="popular_categories_prev popular_categories_nav"><i class="fas fa-angle-left ml-auto"></i></div>
                             <div class="popular_categories_next popular_categories_nav"><i class="fas fa-angle-right ml-auto"></i></div>
                         </div>
-                        <div class="popular_categories_link"><a href="#">catalogue Complet</a></div>
+
                     </div>
                 </div>
 
@@ -2844,7 +2844,7 @@
 
                     <div class="reviews_title_container">
                         <h3 class="reviews_title">Blog : Nouvautés</h3>
-                        <div class="reviews_all ml-auto"><a href="#">voir tous les <span>blogs</span></a></div>
+                        <div class="reviews_all ml-auto"><a href="{{ url('/blog')  }}">voir tous les <span>blogs</span></a></div>
                     </div>
 
                     <div class="reviews_slider_container">
