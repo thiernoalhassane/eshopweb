@@ -56,7 +56,7 @@
         //Fixed layout
       + "<div class='form-group'>"
       + "<label class='control-sidebar-subheading'>"
-      + "<input type='checkbox' data-layout='fixed' class='pull-right'/> "
+      + "<input type='checkbox' data-layout='fixed' class='pull-right'  /> "
       + "Fixer le menu"
       + "</label>"
 
@@ -178,7 +178,8 @@
   tab_pane.append(demo_settings);
   $("#control-sidebar-home-tab").after(tab_pane);
 
-  setup();
+
+    setup();
 
   /**
    * Toggles layout classes

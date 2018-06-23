@@ -36,6 +36,19 @@
 .btn-social.btn-sm {
   padding-left: 38px;
 }
+
+.thierno {
+    -moz-transition: all 0.5s;
+    -o-transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+    transition: all 0.5s;
+
+    width: 300px;
+    overflow: hidden;
+
+    position: fixed;
+
+}
 .btn-social.btn-sm > :first-child {
   line-height: 28px;
   width: 28px;
