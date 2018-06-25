@@ -15,6 +15,11 @@
     {!! HTML::style('acceuillogin/plugins/slick-1.8.0/slick.css') !!}
     {!! HTML::style('acceuillogin/styles/main_styles.css') !!}
     {!! HTML::style('acceuillogin/styles/responsive.css') !!}
+    <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">-->
+    {!! HTML::style('inscriptiontemplate/bootstrap.min.css') !!}
+    <!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script> -->
+    {!! HTML::style('inscriptiontemplate/jquery-1.11.1.min.js') !!}
+    <!------ Include the above in your HEAD tag ---------->
 
 
 </head>
@@ -30,25 +35,38 @@
     <!-- Home -->
 
 
-    <div class="characteristics" id="form"><!--form-->
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-4 justify-content-start">
-                    <div class="login-form"><!--login form-->
-                        <h2>Connection</h2>
-                        <form action="#">
-                            <input type="text" placeholder="Téléphone ou Email"/>
-                            <input type="password" placeholder="Mot de passe"/>
+    <div class="row">
+        <div class="col-md-6 col-sm-12 col-lg-6 col-md-offset-3">
+            <div class="panel panel-primary">
+                <div class="panel-heading">Connection</div>
+                <div class="panel-body">
+                    <form name="myform" action="" method="post">
 
-                            <button type="submit" class="btn btn-default">Login</button>
-                        </form>
-                    </div><!--/login form-->
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+
+                        <div class="form-group">
+                            <label for="myName">Téléphone ou Email</label>
+                            <input id="myName" name="myName" class="form-control" type="text" required>
+                            <span id="error_name" class="text-danger"></span>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="password">Mot de Passe</label>
+                            <input id="password" name="password" class="form-control" type="text" required>
+                            <span id="error_lastname" class="text-danger"></span>
+                        </div>
+
+
+                        <button id="submit" type="submit" value="submit" class="btn btn-primary center">Valider</button>
+
+                    </form>
+
                 </div>
-
-
             </div>
         </div>
-    </div><!--/form-->
+    </div>
 
 
     <!-- Footer -->
@@ -68,6 +86,8 @@
 {!! HTML::script('acceuillogin/plugins/easing/easing.js') !!}
 {!! HTML::script('acceuillogin/js/custom.js') !!}
 {!! HTML::script('acceuillogin/plugins/scrollmagic/ScrollMagic.min.js') !!}
+{!! HTML::script('inscriptiontemplate/bootstrap.min.js') !!}
+<!--<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>-->
 
 
 </body>

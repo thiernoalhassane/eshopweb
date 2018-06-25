@@ -1,72 +1,68 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Eshop Connexion</title>
-    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+    <title>Inscription</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="commerce boutique en ligne togo">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {!! HTML::style('acceuillogin/styles/bootstrap4/bootstrap.min.css') !!}
+    {!! HTML::style('acceuillogin/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css') !!}
+    {!! HTML::style('acceuillogin/plugins/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css') !!}
+    {!! HTML::style('acceuillogin/plugins/OwlCarousel2-2.2.1/owl.carousel.css') !!}
+    {!! HTML::style('acceuillogin/plugins/OwlCarousel2-2.2.1/owl.theme.default.css') !!}
+    {!! HTML::style('acceuillogin/plugins/OwlCarousel2-2.2.1/animate.css') !!}
+    {!! HTML::style('acceuillogin/plugins/slick-1.8.0/slick.css') !!}
+    {!! HTML::style('acceuillogin/styles/main_styles.css') !!}
+    {!! HTML::style('acceuillogin/styles/responsive.css') !!}
+    {!! HTML::style('administration/dist/css/AdminLTE.min.css') !!}
 
-    <!-- Bootstrap 3.3.4 -->
-    {!! HTML::style('templatelogin/bootstrap/css/bootstrap.min.css') !!}
-    <!-- Font Awesome Icons -->
-    {!! HTML::style('https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css') !!}
-    <!-- Theme style -->
-    {!! HTML::style('templatelogin/dist/css/AdminLTE.min.css') !!}
-    <!-- iCheck -->
-    {!! HTML::style('templatelogin/plugins/iCheck/square/blue.css') !!}
+
+    <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">-->
+
+    <!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script> -->
+
+    <!------ Include the above in your HEAD tag ---------->
 
 
 </head>
-<body class="login-page">
-<div class="login-box">
-    <div class="login-logo">
-       <b>Eshop</b> Web
-    </div>
-    <div class="login-box-body">
-        <p class="login-box-msg"><strong> Connexion  </strong></p>
 
-        <form action="" method="post">
-            <div class="form-group has-feedback">
-                {!! csrf_field() !!}
+<body>
 
-                <input type="text" id="nom" name="nom" class="form-control" placeholder="email ou téléphone"  required />
-
-                <span class="glyphicon glyphicon-user form-control-feedback"></span>
-            </div>
-            <div class="form-group has-feedback">
-                <input type="password" name="password" class="form-control" placeholder="Mot de Passe" required />
-                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-
-            </div>
-
-            <div class="row">
-                <div class="col-xs-8">
-                    <button type="submit" class="btn btn-primary ">Se connecter</button>
-                </div>
-
-        </form>
-    </div>
+<div class="super_container">
 
 
+    @include('header')
+
+    @include('formulaireinscription')
 
 
+    <!-- Footer -->
+    @include('footer')
 
 </div>
-</div>
 
-<!-- jQuery 2.1.4 -->
-{!! HTML::script('templatelogin/plugins/jQuery/jQuery-2.1.4.min.js') !!}
-<!-- Bootstrap 3.3.2 JS -->
-{!! HTML::script('templatelogin/bootstrap/js/bootstrap.min.js') !!}
-<!-- iCheck -->
-{!! HTML::script('templatelogin/plugins/iCheck/icheck.min.js') !!}
-<script>
-    $(function () {
-        $('input').iCheck({
-            checkboxClass: 'icheckbox_square-blue',
-            radioClass: 'iradio_square-blue',
-            increaseArea: '20%'
-        });
-    });
-</script>
+
+{!! HTML::script('acceuillogin/js/jquery-3.3.1.min.js') !!}
+
+{!! HTML::script('acceuillogin/styles/bootstrap4/popper.js') !!}
+
+{!! HTML::script('acceuillogin/styles/bootstrap4/bootstrap.min.js') !!}
+
+{!! HTML::script('acceuillogin/plugins/greensock/TweenMax.min.js') !!}
+{!! HTML::script('acceuillogin/plugins/greensock/TimelineMax.min.js') !!}
+{!! HTML::script('acceuillogin/plugins/greensock/animation.gsap.min.js') !!}
+{!! HTML::script('acceuillogin/plugins/greensock/ScrollToPlugin.min.js') !!}
+{!! HTML::script('acceuillogin/plugins/OwlCarousel2-2.2.1/owl.carousel.js') !!}
+{!! HTML::script('acceuillogin/plugins/slick-1.8.0/slick.js') !!}
+{!! HTML::script('acceuillogin/plugins/easing/easing.js') !!}
+{!! HTML::script('acceuillogin/js/custom.js') !!}
+{!! HTML::script('acceuillogin/plugins/scrollmagic/ScrollMagic.min.js') !!}
+
+
+
+
+
 </body>
+
 </html>
