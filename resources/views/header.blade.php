@@ -17,7 +17,7 @@
                             <div class="top_bar_user">
                                 <div class="user_icon"><img src="images/user.svg" alt=""></div>
                                 <div><a href="{{ url('/connection')  }}">Connectez-vous</a></div>
-                                <div><a href="#">Creer un compte</a></div>
+                                <div><a href="{{ url('/inscription')  }}">Creer un compte</a></div>
                                 <div></div>
                             </div>
 
