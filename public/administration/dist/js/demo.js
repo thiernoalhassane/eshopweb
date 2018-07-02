@@ -54,13 +54,14 @@
       + "Personnaliser votre design"
       + "</h4>"
         //Fixed layout
-      + "<div class='form-group'>"
+      /*  + "<div class='form-group'>"
       + "<label class='control-sidebar-subheading'>"
       + "<input type='checkbox' data-layout='fixed' class='pull-right'  /> "
       + "Fixer le menu"
       + "</label>"
 
       + "</div>"
+       */
         //Boxed layout
 
         //Sidebar Toggle

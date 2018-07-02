@@ -12,6 +12,18 @@ class AdminController extends BaseController
 
     public function show()
     {
-        return view('administration ');
+        return view('administration/administration ');
     }
+
+    public function showProfile()
+    {
+        return view('administration/profile ');
+    }
+
+    public function showProduct()
+    {
+        return view('administration/listeproduit');
+    }
+
+
 }

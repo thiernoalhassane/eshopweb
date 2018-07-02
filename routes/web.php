@@ -27,4 +27,8 @@ Route::get('/blog','BlogController@show');
 
 Route::get('/panier','PanierController@show');
 
+Route::get('/profile', 'AdminController@showProfile');
+
+Route::get('/product', 'AdminController@showProduct');
+
 Route::get('/admin','AdminController@show');

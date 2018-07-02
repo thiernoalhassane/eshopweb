@@ -32,7 +32,7 @@
 <div class="super_container">
 
 
-    @include('header')
+    @include('headerothers')
 
     @include('formulaireinscription')
 

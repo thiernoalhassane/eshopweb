@@ -30,7 +30,7 @@
 
     <!-- Header -->
 
-    @include('header')
+    @include('headerothers')
 
     <!-- Home -->
 
