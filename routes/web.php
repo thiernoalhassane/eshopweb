@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/','AcceuilController@show');
 
 Route::get('/inscription', 'InscriptionController@show');
 
