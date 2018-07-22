@@ -15,7 +15,16 @@
     {!! HTML::style('acceuillogin/plugins/slick-1.8.0/slick.css') !!}
     {!! HTML::style('acceuillogin/styles/main_styles.css') !!}
     {!! HTML::style('acceuillogin/styles/responsive.css') !!}
+    {!! HTML::style('administration/bootstrap/css/bootstrap.min.css') !!}
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     {!! HTML::style('administration/dist/css/AdminLTE.min.css') !!}
+
 
 
     <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">-->
@@ -32,23 +41,27 @@
 <div class="super_container">
 
 
-    @include('headerothers')
+    @include('headerconnexion')
 
     @include('formulaireinscription')
 
 
     <!-- Footer -->
-    @include('footer')
+
 
 </div>
 
 
 {!! HTML::script('acceuillogin/js/jquery-3.3.1.min.js') !!}
-
 {!! HTML::script('acceuillogin/styles/bootstrap4/popper.js') !!}
-
 {!! HTML::script('acceuillogin/styles/bootstrap4/bootstrap.min.js') !!}
+{!! HTML::script('administration/plugins/jQuery/jquery-2.2.3.min.js') !!}
+{!! HTML::script('administration/bootstrap/js/bootstrap.min.js') !!}
 
+
+{!! HTML::script('administration/plugins/fastclick/fastclick.js') !!}
+{!! HTML::script('administration/dist/js/app.min.js') !!}
+{!! HTML::script('administration/dist/js/demo.js') !!}
 {!! HTML::script('acceuillogin/plugins/greensock/TweenMax.min.js') !!}
 {!! HTML::script('acceuillogin/plugins/greensock/TimelineMax.min.js') !!}
 {!! HTML::script('acceuillogin/plugins/greensock/animation.gsap.min.js') !!}

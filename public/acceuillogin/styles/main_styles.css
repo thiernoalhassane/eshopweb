@@ -2246,7 +2246,7 @@ select option
 {
 	width: 100%;
 	padding-top: 96px;
-	padding-bottom: 96px;
+    padding-bottom: -51px;
 }
 .new_arrivals_title
 {
@@ -3069,7 +3069,7 @@ select option
 
 .reviews
 {
-	padding-top: 96px;
+    padding-top: 20px;
 	padding-bottom: 125px;
 }
 .reviews_title_container

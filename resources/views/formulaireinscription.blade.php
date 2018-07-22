@@ -59,21 +59,51 @@
                                             </label>
                                           </div>
 
+                             <div class="form-group">
+                                <label>Votre type </label>
+                                               <div class="checkbox">
+                                                 <label>
+                                                   <input type="checkbox">
+                                                     Client
+                                                 </label>
+                                               </div>
+
+                                               <div class="checkbox">
+                                                 <label>
+                                                   <input type="checkbox">
+                                                   Vendeur
+                                                 </label>
+                                               </div>
+
+
                                         </div>
 
 
-
+                        <label>Moyen de paiement </label>
                         <div class="form-group">
                             <label for="flooz">Numéro Flooz</label>
-                            <input type="flooz" name="flooz" id="flooz" class="form-control">
-                            <span id="error_dob" class="text-danger"></span>
+                            <div class="col-lg-6">
+                                                                <div class="input-group">
+                                                    <span class="input-group-addon">
+                                                      <input type="checkbox">
+                                                    </span>
+                                                                    <input type="text" class="form-control">
+                                                                </div>
+                                                                <!-- /input-group -->
+                                                            </div>
                         </div>
-
                         <div class="form-group">
-                            <label for="tmoney">Numéro Tmoney</label>
-                            <input type="tmoney" name="tmoney" id="tmoney" class="form-control">
-                            <span id="error_dob" class="text-danger"></span>
-                        </div>
+                                                    <label for="tmoney">Numéro Tmoney</label>
+                                                    <div class="col-lg-6">
+                                                                                        <div class="input-group">
+                                                                            <span class="input-group-addon">
+                                                                              <input type="checkbox">
+                                                                            </span>
+                                                                                            <input type="text" class="form-control">
+                                                                                        </div>
+                                                                                        <!-- /input-group -->
+                                                                                    </div>
+                                                </div>
 
                         <div class="form-group">
                                           <label for="exampleInputFile">Votre Photo</label>

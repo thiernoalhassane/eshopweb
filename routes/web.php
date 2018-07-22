@@ -31,4 +31,6 @@ Route::get('/profile', 'AdminController@showProfile');
 
 Route::get('/product', 'AdminController@showProduct');
 
+Route::get('/bilan', 'AdminController@showBilan');
+
 Route::get('/admin','AdminController@show');

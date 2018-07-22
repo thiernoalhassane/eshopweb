@@ -35,7 +35,7 @@
                 <ul class="treeview-menu">
                     <li class="active"><a href="{{ url('/product')  }}"><i class="fa fa-circle-o"></i> Liste
                             produits</a></li>
-                    <li><a href=""><i class="fa fa-circle-o"></i> Bilan</a></li>
+                    <li><a href="{{ url('/bilan')  }}"><i class="fa fa-circle-o"></i> Bilan</a></li>
                     <li><a href=""><i class="fa fa-files-o"></i>Statistiques</a></li>
                     <li><a href=""><i class="fa fa-th"></i>Historique</a></li>
                     <li><a href="#"><i class="fa fa-pie-chart"></i>Commande de vos clients</a></li>
@@ -51,7 +51,7 @@
             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href=""><i class="fa fa-circle-o"></i> Liste de vos achats</a></li>
+                    <li><a href=""><i class="fa fa-circle-o"></i>Paniers</a></li>
 
                 </ul>
             </li>

@@ -15,11 +15,10 @@
     {!! HTML::style('acceuillogin/plugins/slick-1.8.0/slick.css') !!}
     {!! HTML::style('acceuillogin/styles/main_styles.css') !!}
     {!! HTML::style('acceuillogin/styles/responsive.css') !!}
-    <!--<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">-->
+
     {!! HTML::style('inscriptiontemplate/bootstrap.min.css') !!}
-    <!--<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script> -->
+
     {!! HTML::style('inscriptiontemplate/jquery-1.11.1.min.js') !!}
-    <!------ Include the above in your HEAD tag ---------->
 
 
 </head>
@@ -30,7 +29,7 @@
 
     <!-- Header -->
 
-    @include('headerothers')
+    @include('headerconnexion')
 
     <!-- Home -->
 
@@ -70,7 +69,7 @@
 
 
     <!-- Footer -->
-    @include('footer')
+
 
 </div>
 {!! HTML::script('acceuillogin/js/jquery-3.3.1.min.js') !!}

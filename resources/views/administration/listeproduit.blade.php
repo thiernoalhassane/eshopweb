@@ -61,7 +61,24 @@
                                         Explorer 4.0
                                     </td>
                                     <td>Win 95+</td>
-                                    <td> 4</td>
+                                    <td>
+                                        <form method="get" action="">
+                                            <input type="hidden" name="_token" value="">
+                                            <input type="hidden" name="id" value="">
+                                            <button class="b">Modifier</span>
+                                            </button>
+                                        </form>
+
+                                        <form method="POST" action="">
+                                            <input type="hidden" name="_token" value="{{csrf_token()}}">
+                                            <input type="hidden" name="id" value="">
+                                            <button class="b"
+                                                    onclick="return confirm('Voulez vous supprimer cet produit?')">
+                                                Supprimer</span>
+                                            </button>
+
+
+                                    </td>
 
                                 </tr>
                                 <tr>
@@ -497,14 +514,6 @@
 <script>
     $(function () {
         $("#example1").DataTable();
-        $('#example2').DataTable({
-            "paging": true,
-            "lengthChange": false,
-            "searching": false,
-            "ordering": true,
-            "info": true,
-            "autoWidth": false
-        });
     });
 </script>
 

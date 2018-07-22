@@ -1,95 +1,83 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page du trader</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap 3.3.6 -->
+    {!! HTML::style('administration/bootstrap/css/bootstrap.min.css') !!}
 
-        <title>Laravel</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+    {!! HTML::style('administration/plugins/jvectormap/jquery-jvectormap-1.2.2.css') !!}
+    {!! HTML::style('administration/dist/css/AdminLTE.min.css') !!}
+    {!! HTML::style('administration/dist/css/skins/_all-skins.min.css') !!}
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Raleway', sans-serif;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
 
-            .full-height {
-                height: 100vh;
-            }
+</head>
+<body class="hold-transition skin-blue fixed">
+<div class="wrapper">
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+    @include('administration/hearder')
+    <!-- Left side column. contains the logo and sidebar -->
+    @include('administration/menu')
 
-            .position-ref {
-                position: relative;
-            }
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
 
-            .content {
-                text-align: center;
-            }
+        <!-- Main content -->
+        <section class="content">
 
-            .title {
-                font-size: 84px;
-            }
+            <!-- Default box -->
+            <div class="box">
+                <div class="box-header with-border">
+                    <h3 class="box-title"> Tous les Produits de Mr .... </h3>
 
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 12px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
+                                title="Collapse">
+                            <i class="fa fa-minus"></i></button>
 
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
+                    </div>
                 </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
+                <div class="box-body">
+                    Start creating your amazing application!
                 </div>
+                <!-- /.box-body -->
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+                <!-- /.box-footer-->
             </div>
-        </div>
-    </body>
+            <!-- /.box -->
+
+        </section>
+        <!-- /.content -->
+    </div>
+
+
+    @include('administration/footer')
+    @include('administration/settings')
+
+</div>
+<!-- ./wrapper -->
+{!! HTML::script('administration/plugins/jQuery/jquery-2.2.3.min.js') !!}
+{!! HTML::script('administration/bootstrap/js/bootstrap.min.js') !!}
+{!! HTML::script('administration/plugins/fastclick/fastclick.js') !!}
+{!! HTML::script('administration/dist/js/app.min.js') !!}
+{!! HTML::script('administration/plugins/sparkline/jquery.sparkline.min.js') !!}
+{!! HTML::script('administration/plugins/slimScroll/jquery.slimscroll.min.js') !!}
+{!! HTML::script('administration/plugins/chartjs/Chart.min.js') !!}
+{!! HTML::script('administration/dist/js/pages/dashboard2.js') !!}
+{!! HTML::script('administration/dist/js/demo.js') !!}
+
+
+</body>
 </html>
+
+
+

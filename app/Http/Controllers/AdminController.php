@@ -25,5 +25,11 @@ class AdminController extends BaseController
         return view('administration/listeproduit');
     }
 
+    public function showBilan()
+    {
+        return view('administration/bilan');
+    }
+
+
 
 }
