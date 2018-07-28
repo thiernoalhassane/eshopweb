@@ -10,6 +10,8 @@
     {!! HTML::style('acceuillogin/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css') !!}
     {!! HTML::style('acceuillogin/styles/cart_responsive.css') !!}
     {!! HTML::style('acceuillogin/styles/cart_styles.css') !!}
+    {!! HTML::style('administration/bootstrap/css/bootstrap.min.css') !!}
+    {!! HTML::style('administration/dist/css/AdminLTE.min.css') !!}
 
 
 </head>
@@ -52,6 +54,14 @@
                                             <div class="cart_item_title">Total</div>
                                             <div class="cart_item_text">$2000</div>
                                         </div>
+                                        <div class="cart_item_total cart_info_col">
+                                            <div class="cart_item_title">Supprimer</div>
+                                            <div class="cart_item_text">
+                                                <button type="button" class="btn btn-box-tool" data-widget="remove"
+                                                        onclick="return confirm('Voulez vous supprimer cet produit?')">
+                                                    <i class="fa fa-times"></i></button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </li>
                             </ul>
@@ -93,6 +103,42 @@
 {!! HTML::script('acceuillogin/plugins/greensock/ScrollToPlugin.min.js') !!}
 {!! HTML::script('acceuillogin/plugins/easing/easing.js') !!}
 {!! HTML::script('acceuillogin/js/cart_custom.js') !!}
+{!! HTML::script('administration/plugins/jQuery/jquery-2.2.3.min.js') !!}
+<script src="https://code.jquery.com/ui/1.11.4/jquery-ui.min.js"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+    $.widget.bridge('uibutton', $.ui.button);
+</script>
+
+
+{!! HTML::script('administration/bootstrap/js/bootstrap.min.js') !!}
+{!! HTML::script('administration/plugins/fastclick/fastclick.js') !!}
+{!! HTML::script('administration/dist/js/app.min.js') !!}
+{!! HTML::script('administration/plugins/sparkline/jquery.sparkline.min.js') !!}
+{!! HTML::script('administration/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js') !!}
+{!! HTML::script('administration/plugins/jvectormap/jquery-jvectormap-world-mill-en.js') !!}
+{!! HTML::script('administration/plugins/chartjs/Chart.min.js') !!}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+{!! HTML::script('administration/plugins/morris/morris.min.js') !!}
+
+
+{!! HTML::script('administration/plugins/knob/jquery.knob.js') !!}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.2/moment.min.js"></script>
+{!! HTML::script('administration/plugins/daterangepicker/daterangepicker.js') !!}
+
+{!! HTML::script('administration/plugins/datepicker/bootstrap-datepicker.js') !!}
+{!! HTML::script('administration/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') !!}
+
+{!! HTML::script('administration/plugins/slimScroll/jquery.slimscroll.min.js') !!}
+
+
+{!! HTML::script('administration/dist/js/pages/dashboard.js') !!}
+
+{!! HTML::script('administration/dist/js/pages/dashboard2.js') !!}
+
+{!! HTML::script('administration/dist/js/demo.js') !!}
+
+
 
 
 </body>

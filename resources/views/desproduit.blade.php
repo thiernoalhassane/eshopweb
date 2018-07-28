@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,8 +17,6 @@
     {!! HTML::style('administration/dist/css/AdminLTE.min.css') !!}
 
 
-
-
 </head>
 
 <body>
@@ -27,7 +24,6 @@
 <div class="super_container">
 
     <!-- Header -->
-
 
 
     @include('header')
@@ -50,17 +46,7 @@
                                 <span class="username"><a href="#">Jonathan Burke Jr.</a></span>
                                 <span class="description">Shared publicly - 7:30 PM Today</span>
                             </div>
-                            <!-- /.user-block -->
-                            <div class="box-tools">
-                                <button type="button" class="btn btn-box-tool" data-toggle="tooltip"
-                                        title="Mark as read">
-                                    <i class="fa fa-circle-o"></i></button>
-                                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
-                                            class="fa fa-minus"></i>
-                                </button>
-                                <button type="button" class="btn btn-box-tool" data-widget="remove"><i
-                                            class="fa fa-times"></i></button>
-                            </div>
+
                             <!-- /.box-tools -->
                         </div>
                         <!-- /.box-header -->
@@ -123,53 +109,53 @@
                     </div>
                     <!-- /.box -->
                 </div>
-            </div>
 
-            <!-- Description -->
-            <div class="col-lg-5 order-3">
-                <div class="product_description">
-                    <div class="product_category">Laptops</div>
-                    <div class="product_name">MacBook Air 13</div>
 
-                    <div class="product_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-                            fermentum. laoreet turpis, nec sollicitudin dolor cursus at. Maecenas aliquet, dolor a
-                            faucibus efficitur, nisi tellus cursus urna, eget dictum lacus turpis.</p></div>
-                    <div class="order_info d-flex flex-row">
-                        <form action="#">
-                            <div class="clearfix" style="z-index: 1000;">
+                <!-- Description -->
+                <div class="col-lg-5 order-3">
+                    <div class="product_description">
+                        <div class="product_category">Laptops</div>
+                        <div class="product_name">MacBook Air 13</div>
 
-                                <!-- Product Quantity -->
-                                <div class="product_quantity clearfix">
-                                    <span>Quantity: </span>
-                                    <input id="quantity_input" type="text" pattern="[0-9]*" value="1">
-                                    <div class="quantity_buttons">
-                                        <div id="quantity_inc_button" class="quantity_inc quantity_control"><i
-                                                    class="fas fa-chevron-up"></i></div>
-                                        <div id="quantity_dec_button" class="quantity_dec quantity_control"><i
-                                                    class="fas fa-chevron-down"></i></div>
+                        <div class="product_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
+                                fermentum. laoreet turpis, nec sollicitudin dolor cursus at. Maecenas aliquet, dolor a
+                                faucibus efficitur, nisi tellus cursus urna, eget dictum lacus turpis.</p></div>
+                        <div class="order_info d-flex flex-row">
+                            <form action="#">
+                                <div class="clearfix" style="z-index: 1000;">
+
+                                    <!-- Product Quantity -->
+                                    <div class="product_quantity clearfix">
+                                        <span>Quantity: </span>
+                                        <input id="quantity_input" type="text" pattern="[0-9]*" value="1">
+                                        <div class="quantity_buttons">
+                                            <div id="quantity_inc_button" class="quantity_inc quantity_control"><i
+                                                        class="fas fa-chevron-up"></i></div>
+                                            <div id="quantity_dec_button" class="quantity_dec quantity_control"><i
+                                                        class="fas fa-chevron-down"></i></div>
+                                        </div>
                                     </div>
-                                    </div>
 
 
-                            </div>
+                                </div>
 
-                            <div class="product_price">$2000</div>
-                            <div class="button_container">
-                                <button type="button" class="button cart_button">Add to Cart</button>
-                                <div class="product_fav"><i class="fas fa-heart"></i></div>
-                            </div>
+                                <div class="product_price">$2000</div>
+                                <div class="button_container">
+                                    <button type="button" class="button cart_button">Add to Cart</button>
+                                    <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                </div>
 
-                        </form>
+                            </form>
                         </div>
+                    </div>
                 </div>
-            </div>
 
+            </div>
         </div>
     </div>
-</div>
 
 
-<!-- footer -->
+    <!-- footer -->
     @include('footer')
 
 </div>
