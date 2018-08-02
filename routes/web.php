@@ -17,7 +17,7 @@ Route::get('/test', function () {
 
 Route::get('/inscription', 'InscriptionController@show');
 
-Route::get('/,'AcceuilController@show');
+Route::get('/', 'AcceuilController@show');
 
 Route::get('/connection', 'ConnectionController@show');
 
