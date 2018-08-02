@@ -15,9 +15,9 @@ Route::get('/test', function () {
     return view('welcome');
 });
 
-Route::get('/inscription', 'InscriptionController@show');
-
 Route::get('/', 'AcceuilController@show');
+
+Route::get('/inscription', 'InscriptionController@show');
 
 Route::get('/connection', 'ConnectionController@show');
 
