@@ -15,4 +15,9 @@ class ProduitsController extends BaseController
     return view('produits');
   }
 
+    public function explore()
+    {
+        return view('desproduit');
+    }
+
 }

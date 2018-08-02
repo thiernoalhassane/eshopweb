@@ -30,6 +30,11 @@ class AdminController extends BaseController
         return view('administration/bilan');
     }
 
+    public function showTrader()
+    {
+        return view('administration/vendeur');
+    }
+
 
 
 }

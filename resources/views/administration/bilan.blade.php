@@ -4,16 +4,10 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Liste Des Produits</title>
-    <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <!-- Bootstrap 3.3.6 -->
     {!! HTML::style('administration/bootstrap/css/bootstrap.min.css') !!}
-
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-    <!-- Ionicons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-
     {!! HTML::style('administration/plugins/jvectormap/jquery-jvectormap-1.2.2.css') !!}
     {!! HTML::style('administration/dist/css/AdminLTE.min.css') !!}
     {!! HTML::style('administration/dist/css/skins/_all-skins.min.css') !!}
@@ -134,6 +128,7 @@
 {!! HTML::script('administration/plugins/chartjs/Chart.min.js') !!}
 {!! HTML::script('administration/dist/js/pages/dashboard2.js') !!}
 {!! HTML::script('administration/dist/js/demo.js') !!}
+
 
 
 </body>

@@ -11,11 +11,13 @@
 |
 */
 
-Route::get('/','AcceuilController@show');
+Route::get('/test', function () {
+    return view('welcome');
+});
 
 Route::get('/inscription', 'InscriptionController@show');
 
-Route::get('/acceuil','AcceuilController@show');
+Route::get('/,'AcceuilController@show');
 
 Route::get('/connection', 'ConnectionController@show');
 
@@ -30,5 +32,9 @@ Route::get('/profile', 'AdminController@showProfile');
 Route::get('/product', 'AdminController@showProduct');
 
 Route::get('/bilan', 'AdminController@showBilan');
+
+Route::get(' / trader', 'AdminController@showTrader');
+
+Route::get(' / explore', 'ProduitsController@explore');
 
 Route::get('/admin','AdminController@show');

@@ -102,7 +102,7 @@
             <!-- Main row -->
             <div class="row">
                 <!-- Left col -->
-                <section class="col-lg-6 connectedSortable">
+                <section class="col-lg-9 connectedSortable">
                     <!-- Custom tabs (Charts with tabs)-->
                     @include('administration/addproduct')
                     <!-- Horizontal Form -->
@@ -123,7 +123,7 @@
                 </section>
                 <!-- /.Left col -->
                 <!-- right col (We are only adding the ID to make the widgets sortable)-->
-                <section class="col-lg-6 connectedSortable">
+                <section class="col-lg-9 connectedSortable">
 
                     <!-- Map box -->
 

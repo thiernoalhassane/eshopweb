@@ -69,7 +69,7 @@
 
                 </ul>
             </li>
-            <li><a href=""><i class="fa fa-book"></i> <span>Page du trader</span></a></li>
+            <li><a href="{{ url('/trader')  }}"><i class="fa fa-book"></i> <span>Page du trader</span></a></li>
 
 
         </ul>

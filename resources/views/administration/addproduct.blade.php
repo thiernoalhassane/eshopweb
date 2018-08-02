@@ -8,7 +8,7 @@
         <form class="form-horizontal">
             <div class="box-body">
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Nom Produit</label>
+                    <label for="inputEmail3" class="col-sm-2 control-label">Nom Produit *</label>
 
                     <div class="col-sm-5">
                         <input type="email" class="form-control" id="inputEmail3" placeholder="" required>
@@ -24,21 +24,21 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Prix</label>
+                    <label for="inputEmail3" class="col-sm-2 control-label">Prix *</label>
 
                     <div class="col-sm-5">
                         <input type="email" class="form-control" id="inputEmail3" placeholder="" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Quantité</label>
+                    <label for="inputEmail3" class="col-sm-2 control-label">Quantité *</label>
 
                     <div class="col-sm-5">
                         <input type="number" class="form-control" id="inputEmail3" placeholder="" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Catégories</label>
+                    <label for="inputEmail3" class="col-sm-2 control-label">Catégories *</label>
 
                     <div class="col-sm-5">
                         <select class="form-control">
@@ -58,12 +58,11 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">3 Images</label>
+                    <label for="inputEmail3" class="col-sm-2 control-label">Image</label>
 
                     <div class="col-sm-5">
                         <input type="file" id="exampleInputFile">
-                        <input type="file" id="exampleInputFile">
-                        <input type="file" id="exampleInputFile">
+
                     </div>
                 </div>
             </div>
