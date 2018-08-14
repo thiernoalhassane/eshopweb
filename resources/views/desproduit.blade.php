@@ -25,7 +25,6 @@
     <link rel="stylesheet" type="text/css" href="acceuillogin/plugins/OwlCarousel2-2.2.1/animate.css">
     <link rel="stylesheet" type="text/css" href="acceuillogin/styles/product_styles.css">
     <link rel="stylesheet" type="text/css" href="acceuillogin/styles/product_responsive.css">
-
     <link rel="stylesheet" type="text/css" href="administration/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="administration/dist/css/AdminLTE.min.css">
 
@@ -203,7 +202,6 @@
 <script src="acceuillogin/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
 <script src="acceuillogin/plugins/easing/easing.js"></script>
 <script src="acceuillogin/js/product_custom.js"></script>
-
 <script src="administration/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <script src="administration/bootstrap/js/bootstrap.min.js"></script>
 <script src="administration/plugins/fastclick/fastclick.js"></script>
