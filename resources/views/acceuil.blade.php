@@ -18,14 +18,14 @@
 
      -->
 
-    <link rel="stylesheet" href="{{asset('acceuillogin/styles/bootstrap4/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{asset('acceuillogin/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css')}}">
-    <link rel="stylesheet" href="{{asset('acceuillogin/plugins/OwlCarousel2-2.2.1/owl.carousel.css')}}">
-    <link rel="stylesheet" href="{{asset('acceuillogin/plugins/OwlCarousel2-2.2.1/owl.theme.default.css')}}">
-    <link rel="stylesheet" href="plugins/OwlCarousel2-2.2.1/animate.css">
-    <link rel="stylesheet" href="plugins/slick-1.8.0/slick.css">
-    <link rel="stylesheet" href="styles/main_styles.css">
-    <link rel="stylesheet" href="styles/responsive.css">
+    <link rel="stylesheet" href="acceuillogin/styles/bootstrap4/bootstrap.min.css">
+    <link rel="stylesheet" href="acceuillogin/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css')}}">
+    <link rel="stylesheet" href="acceuillogin/plugins/OwlCarousel2-2.2.1/owl.carousel.css')}}">
+    <link rel="stylesheet" href="acceuillogin/plugins/OwlCarousel2-2.2.1/owl.theme.default.css')}}">
+    <link rel="stylesheet" href="acceuillogin/plugins/OwlCarousel2-2.2.1/animate.css">
+    <link rel="stylesheet" href="acceuillogin/plugins/slick-1.8.0/slick.css">
+    <link rel="stylesheet" href="acceuillogin/styles/main_styles.css">
+    <link rel="stylesheet" href="acceuillogin/styles/responsive.css">
 
 
 </head>
