@@ -5,7 +5,7 @@
             <div class="col-lg-3 footer_col">
                 <div class="footer_column footer_contact">
                     <div class="logo_container">
-                        <div class="logo"><a href="#">Eshop</a></div>
+                        <div class="logo"><a href="#">OpenTrade</a></div>
                     </div>
                     <div class="footer_phone">numéro de téléphone</div>
                     <div class="footer_contact_text">
@@ -23,32 +23,17 @@
 
             <div class="col-lg-2 offset-lg-2">
                 <div class="footer_column">
+
                     <div class="footer_title">Les Catégories</div>
                     <ul class="footer_list">
-                        <li><a href="#">Computers & Laptops</a></li>
-                        <li><a href="#">Cameras & Photos</a></li>
-                        <li><a href="#">Hardware</a></li>
-                        <li><a href="#">Smartphones & Tablets</a></li>
-                        <li><a href="#">TV & Audio</a></li>
-                    </ul>
-                    <div class="footer_subtitle">Gadgets</div>
-                    <ul class="footer_list">
-                        <li><a href="#">Car Electronics</a></li>
+                        @foreach($footer as $nom)
+                        <li><a href="#">{!! $nom->description  !!}</a></li>
+                        @endforeach
                     </ul>
                 </div>
+
             </div>
 
-            <div class="col-lg-2">
-                <div class="footer_column">
-                    <ul class="footer_list footer_list_2">
-                        <li><a href="#">Video Games & Consoles</a></li>
-                        <li><a href="#">Accessories</a></li>
-                        <li><a href="#">Cameras & Photos</a></li>
-                        <li><a href="#">Hardware</a></li>
-                        <li><a href="#">Computers & Laptops</a></li>
-                    </ul>
-                </div>
-            </div>
 
             <div class="col-lg-2">
                 <div class="footer_column">

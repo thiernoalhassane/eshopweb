@@ -1,3 +1,4 @@
+
 <div class="cat_menu_container">
     <div class="cat_menu_title d-flex flex-row align-items-center justify-content-start">
         <div class="cat_burger"><span></span><span></span><span></span></div>
@@ -7,6 +8,8 @@
     <ul class="cat_menu">
 
         <!-- placer ici les resultats du webservice-->
+
+        <!--
         <li><a href="#">Computers & Laptops <i class="fas fa-chevron-right ml-auto"></i></a></li>
         <li><a href="#">Cameras & Photos<i class="fas fa-chevron-right"></i></a></li>
         <li class="hassubs">
@@ -32,5 +35,13 @@
         <li><a href="#">Car Electronics<i class="fas fa-chevron-right"></i></a></li>
         <li><a href="#">Video Games & Consoles<i class="fas fa-chevron-right"></i></a></li>
         <li><a href="#">Accessories<i class="fas fa-chevron-right"></i></a></li>
+
+        -->
+
+        @foreach($nom as $nom)
+        <li><a href="#"> {!! $nom->description !!} <i class="fas fa-chevron-right"></i></a></li>
+        @endforeach
+
+
     </ul>
 </div>

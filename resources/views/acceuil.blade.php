@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Eshop Bienvenue</title>
+    <title>OpenTrade Bienvenue</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="commerce boutique en ligne togo">
@@ -14,11 +14,14 @@
     {!! HTML::style('acceuillogin/plugins/slick-1.8.0/slick.css') !!}
     {!! HTML::style('acceuillogin/styles/main_styles.css') !!}
     {!! HTML::style('acceuillogin/styles/responsive.css') !!}
+    {!! HTML::style('acceuillogin/plugins/jquery-ui-1.12.1.custom/jquery-ui.css') !!}
+
 
 
 </head>
 
 <body>
+
 
 <div class="super_container">
 
@@ -26,119 +29,95 @@
 
     @include('header')
 
+
+
+
     <!-- Characteristics -->
     @include('bannerprincipale')
 
     <!-- Deals of the week -->
-
+    <?php          $footer = $nom                     ?>
     <div class="new_arrivals">
         <div class="container">
             <div class="row">
                 <div class="col">
                     <div class="tabbed_container">
                         <div class="tabs clearfix tabs-right">
-                            <div class="new_arrivals_title">Les Nouvautés</div>
+                            <div class="new_arrivals_title">Les Produits</div>
                             <ul class="clearfix">
-                                <li class="active">Favoris</li>
-                                <li>Audio & Video</li>
-                                <li>Laptops & Computers</li>
+                                <li class="active">La Liste</li>
+
                             </ul>
                             <div class="tabs_line"><span></span></div>
                         </div>
-                        <div class="row">
-                            <div class="col-lg-9" style="z-index:1;">
+                        <div class="col-lg-9">
 
-                                <!-- Product Panel -->
-                                <div class="product_panel panel active">
-                                    <div class="arrivals_slider slider">
+                            <!-- Shop Content -->
 
-                                        <!-- Slider Item -->
-                                        <div class="arrivals_slider_item">
-                                            <div class="border_active"></div>
-                                            <div class="product_item is_new d-flex flex-column align-items-center justify-content-center text-center">
-                                                <div class="product_image d-flex flex-column align-items-center justify-content-center">
-                                                    <img src="images/new_1.jpg" alt=""></div>
-                                                <div class="product_content">
-                                                    <div class="product_price">$225</div>
-                                                    <div class="product_name">
-                                                        <div>Astro M2 Black</div>
-                                                    </div>
-                                                    <div class="product_extras">
-                                                        <button class="product_cart_button">Add to Cart</button>
-                                                        <button class="product_cart_button"><a
-                                                                    href="{{ url('/explore')}}">Explore</a></button>
-                                                    </div>
-                                                </div>
-                                                <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                                <ul class="product_marks">
-                                                    <li class="product_mark product_discount">-25%</li>
-                                                    <li class="product_mark product_new">new</li>
-                                                </ul>
-                                            </div>
+                            <div class="shop_content">
+
+
+                                <div class="product_grid">
+                                    <div class="product_grid_border"></div>
+
+                                    <!-- Product Item  Pour les produits nouveaux
+                                    <div class="product_item is_new">
+                                        <div class="product_border"></div>
+                                        <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="images/new_5.jpg" alt=""></div>
+                                        <div class="product_content">
+                                            <div class="product_price">$225</div>
+                                            <div class="product_name"><div><a href="{{ url('/explore')}}" tabindex="0">Philips BT6900A</a></div></div>
                                         </div>
-
-                                        <!-- Slider Item -->
-
-
-                                        <!-- Slider Item -->
-
-
-                                        <!-- Slider Item -->
-
-                                    </div>
-                                    <div class="arrivals_slider_dots_cover"></div>
-                                </div>
-
-                                <!-- Product Panel -->
-                                <div class="product_panel panel">
-                                    <div class="arrivals_slider slider">
-
-                                        <!-- Slider Item -->
-
-                                    </div>
-                                    <div class="arrivals_slider_dots_cover"></div>
-                                </div>
-
-                                <!-- Product Panel -->
-                                <div class="product_panel panel">
-                                    <div class="arrivals_slider slider">
-
-                                        <!-- Slider Item -->
-
-
-                                        <!-- Slider Item -->
-
-                                    </div>
-                                    <div class="arrivals_slider_dots_cover"></div>
-                                </div>
-
-                            </div>
-
-                            <div class="col-lg-3">
-                                <div class="arrivals_single clearfix">
-                                    <div class="d-flex flex-column align-items-center justify-content-center">
-                                        <div class="arrivals_single_image"><img src="images/new_single.png" alt="">
-                                        </div>
-                                        <div class="arrivals_single_content">
-                                            <div class="arrivals_single_category"><a href="#">Smartphones</a></div>
-                                            <div class="arrivals_single_name_container clearfix">
-                                                <div class="arrivals_single_name">LUNA Smartphone</div>
-                                                <div class="arrivals_single_price text-right">$379</div>
-                                            </div>
-
-                                            <form action="#">
-                                                <button class="arrivals_single_button">Add to Cart</button>
-                                            </form>
-                                            <button class="arrivals_single_button"><a href="{{ url('/explore')}}">Explore</a>
-                                            </button>
-                                        </div>
-                                        <div class="arrivals_single_fav product_fav active"><i class="fas fa-heart"></i>
-                                        </div>
-                                        <ul class="arrivals_single_marks product_marks">
-                                            <li class="arrivals_single_mark product_mark product_new">new</li>
+                                        <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                        <ul class="product_marks">
+                                            <li class="product_mark product_discount">-25%</li>
+                                            <li class="product_mark product_new">new</li>
                                         </ul>
                                     </div>
+
+                                    <!-- Product Item  Pour les produits en rabais
+                                    <div class="product_item discount">
+                                        <div class="product_border"></div>
+                                        <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="images/featured_1.png" alt=""></div>
+                                        <div class="product_content">
+                                            <div class="product_price">$225<span>$300</span></div>
+                                            <div class="product_name"><div><a href="{{ url('/explore')}}" tabindex="0">Huawei MediaPad...</a></div></div>
+                                        </div>
+                                        <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                        <ul class="product_marks">
+                                            <li class="product_mark product_discount">-25%</li>
+                                            <li class="product_mark product_new">new</li>
+                                        </ul>
+                                    </div>
+
+                                    -->
+                                     @foreach($produits as $produits)
+
+
+
+                                    <div class="product_item is_new">
+                                        <div class="product_border"></div>
+                                        <div class="product_image d-flex flex-column align-items-center justify-content-center"><a href="{{ url('/explore', $id= $produits->id)}}" ><img src="images/new_5.jpg" alt=""></a></div>
+                                        <div class="product_content">
+                                            <div class="product_price">{!! $produits->price !!} CFA</div>
+                                            <div class="product_name"><div><a href="{{ url('/explore', $id= $produits->id)}}"  tabindex="0">{!! $produits->wording !!}</a></div></div>
+                                        </div>
+                                        <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                        <ul class="product_marks">
+                                            <li class="product_mark product_new">new</li>
+                                        </ul>
+                                    </div>
+
+                                    @endforeach
+
+
+
                                 </div>
+
+                                <!-- Shop Page Navigation -->
+
+
+
                             </div>
 
                         </div>
@@ -174,44 +153,24 @@
                         <div class="owl-carousel owl-theme popular_categories_slider">
 
                             <!-- Popular Categories Item -->
-                            <div class="owl-item">
-                                <div class="popular_category d-flex flex-column align-items-center justify-content-center">
-                                    <div class="popular_category_image"><img src="images/popular_1.png" alt=""></div>
-                                    <div class="popular_category_text">Smartphones & Tablets</div>
-                                </div>
-                            </div>
+
+
 
                             <!-- Popular Categories Item -->
-                            <div class="owl-item">
-                                <div class="popular_category d-flex flex-column align-items-center justify-content-center">
-                                    <div class="popular_category_image"><img src="images/popular_2.png" alt=""></div>
-                                    <div class="popular_category_text">Computers & Laptops</div>
-                                </div>
-                            </div>
-
-                            <!-- Popular Categories Item -->
+                            @foreach($nom as $nom)
                             <div class="owl-item">
                                 <div class="popular_category d-flex flex-column align-items-center justify-content-center">
                                     <div class="popular_category_image"><img src="images/popular_3.png" alt=""></div>
-                                    <div class="popular_category_text">Gadgets</div>
+                                    <div class="popular_category_text">{{ $nom->description}}</div>
                                 </div>
                             </div>
+                            @endforeach
 
                             <!-- Popular Categories Item -->
-                            <div class="owl-item">
-                                <div class="popular_category d-flex flex-column align-items-center justify-content-center">
-                                    <div class="popular_category_image"><img src="images/popular_4.png" alt=""></div>
-                                    <div class="popular_category_text">Video Games & Consoles</div>
-                                </div>
-                            </div>
+
 
                             <!-- Popular Categories Item -->
-                            <div class="owl-item">
-                                <div class="popular_category d-flex flex-column align-items-center justify-content-center">
-                                    <div class="popular_category_image"><img src="images/popular_5.png" alt=""></div>
-                                    <div class="popular_category_text">Accessories</div>
-                                </div>
-                            </div>
+
 
                         </div>
                     </div>
@@ -220,7 +179,7 @@
         </div>
     </div>
     <!-- Reviews -->
-
+    <!-- Partie du Blog
     <div class="reviews">
         <div class="container">
             <div class="row">
@@ -234,10 +193,10 @@
 
                     <div class="reviews_slider_container">
 
-                        <!-- Reviews Slider -->
+
                         <div class="owl-carousel owl-theme reviews_slider">
 
-                            <!-- Reviews Slider Item -->
+
                             <div class="owl-item">
                                 <div class="review d-flex flex-row align-items-start justify-content-start">
                                     <div>
@@ -256,7 +215,7 @@
                                 </div>
                             </div>
 
-                            <!-- Reviews Slider Item -->
+
                             <div class="owl-item">
                                 <div class="review d-flex flex-row align-items-start justify-content-start">
                                     <div>
@@ -275,7 +234,7 @@
                                 </div>
                             </div>
 
-                            <!-- Reviews Slider Item -->
+
                             <div class="owl-item">
                                 <div class="review d-flex flex-row align-items-start justify-content-start">
                                     <div>
@@ -294,7 +253,7 @@
                                 </div>
                             </div>
 
-                            <!-- Reviews Slider Item -->
+
                             <div class="owl-item">
                                 <div class="review d-flex flex-row align-items-start justify-content-start">
                                     <div>
@@ -313,7 +272,7 @@
                                 </div>
                             </div>
 
-                            <!-- Reviews Slider Item -->
+
                             <div class="owl-item">
                                 <div class="review d-flex flex-row align-items-start justify-content-start">
                                     <div>
@@ -332,7 +291,7 @@
                                 </div>
                             </div>
 
-                            <!-- Reviews Slider Item -->
+
                             <div class="owl-item">
                                 <div class="review d-flex flex-row align-items-start justify-content-start">
                                     <div>
@@ -358,6 +317,8 @@
             </div>
         </div>
     </div>
+
+    -->
     <div class="characteristics">
         <div class="container">
             <div class="row">
@@ -430,8 +391,10 @@
 {!! HTML::script('acceuillogin/plugins/slick-1.8.0/slick.js') !!}
 {!! HTML::script('acceuillogin/plugins/easing/easing.js') !!}
 {!! HTML::script('acceuillogin/js/custom.js') !!}
-
-
+{!! HTML::script('acceuillogin/plugins/Isotope/isotope.pkgd.min.js') !!}
+{!! HTML::script('acceuillogin/plugins/jquery-ui-1.12.1.custom/jquery-ui.js') !!}
+{!! HTML::script('acceuillogin/plugins/parallax-js-master/parallax.min.js') !!}
+{!! HTML::script('acceuillogin/js/shop_custom.js') !!}
 
 </body>
 

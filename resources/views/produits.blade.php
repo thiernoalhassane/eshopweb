@@ -38,7 +38,7 @@
     </div>
 
     <!-- Shop -->
-
+    <?php          $footer = $nom                     ?>
     <div class="shop">
         <div class="container">
             <div class="row">
@@ -49,15 +49,9 @@
                         <div class="sidebar_section">
                             <div class="sidebar_title">Les Categories</div>
                             <ul class="sidebar_categories">
-                                <li><a href="#">Computers & Laptops</a></li>
-                                <li><a href="#">Cameras & Photos</a></li>
-                                <li><a href="#">Hardware</a></li>
-                                <li><a href="#">Smartphones & Tablets</a></li>
-                                <li><a href="#">TV & Audio</a></li>
-                                <li><a href="#">Gadgets</a></li>
-                                <li><a href="#">Car Electronics</a></li>
-                                <li><a href="#">Video Games & Consoles</a></li>
-                                <li><a href="#">Accessories</a></li>
+                                @foreach($nom as $nom)
+                                <li><a href="#">{!! $nom->description !!}</a></li>
+                                @endforeach
                             </ul>
                         </div>
                         <div class="sidebar_section filter_by_section">
@@ -81,16 +75,16 @@
 
                     <div class="shop_content">
                         <div class="shop_bar clearfix">
-                            <div class="shop_product_count"><span>186</span> products found</div>
+                            <div class="shop_product_count"><span> <?php $nombre = count($produits)  ?> {!! $nombre !!} </span> produits trouvés</div>
                             <div class="shop_sorting">
-                                <span>Sort by:</span>
+                                <span>Trier Par:</span>
                                 <ul>
                                     <li>
-                                        <span class="sorting_text">highest rated<i class="fas fa-chevron-down"></span></i>
+                                        <span class="sorting_text">Les meilleurs ratio<i class="fas fa-chevron-down"></span></i>
                                         <ul>
-                                            <li class="shop_sorting_button" data-isotope-option='{ "sortBy": "original-order" }'>highest rated</li>
-                                            <li class="shop_sorting_button" data-isotope-option='{ "sortBy": "name" }'>name</li>
-                                            <li class="shop_sorting_button"data-isotope-option='{ "sortBy": "price" }'>price</li>
+                                            <li class="shop_sorting_button" data-isotope-option='{ "sortBy": "original-order" }'>Les meilleurs ratio</li>
+                                            <li class="shop_sorting_button" data-isotope-option='{ "sortBy": "name" }'>nom</li>
+                                            <li class="shop_sorting_button"data-isotope-option='{ "sortBy": "price" }'>prix</li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -100,7 +94,7 @@
                         <div class="product_grid">
                             <div class="product_grid_border"></div>
 
-                            <!-- Product Item -->
+                            <!-- Product Item
                             <div class="product_item is_new">
                                 <div class="product_border"></div>
                                 <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="images/new_5.jpg" alt=""></div>
@@ -115,10 +109,10 @@
                                 </ul>
                             </div>
 
-                            <!-- Product Item -->
+                            <!-- Product Item
                             <div class="product_item discount">
                                 <div class="product_border"></div>
-                                <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="images/featured_1.png" alt=""></div>
+                                <div class="product_image d-flex flex-column align-items-center justify-content-center" ><img src="images/featured_1.png" alt=""></div>
                                 <div class="product_content">
                                     <div class="product_price">$225<span>$300</span></div>
                                     <div class="product_name"><div><a href="{{ url('/explore')}}" tabindex="0">Huawei MediaPad...</a></div></div>
@@ -129,7 +123,22 @@
                                     <li class="product_mark product_new">new</li>
                                 </ul>
                             </div>
+                             -->
+                            @foreach($produits as $produits)
+                            <div class="product_item is_new">
+                                <div class="product_border"></div>
+                                <div class="product_image d-flex flex-column align-items-center justify-content-center"><a href="{{ url('/explore')}}" ><img src="images/new_5.jpg" alt="" ></a></div>
+                                <div class="product_content">
+                                    <div class="product_price">{!! $produits->price !!} CFA</div>
+                                    <div class="product_name"><div><a href="{{ url('/explore')}}" tabindex="0">{!! $produits->wording !!}</a></div></div>
+                                </div>
+                                <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                <ul class="product_marks">
+                                    <li class="product_mark product_new">new</li>
+                                </ul>
+                            </div>
 
+                            @endforeach
 
 
 
@@ -164,11 +173,6 @@
     @include('footer')
 
 </div>
-
-
-
-
-
 {!! HTML::script('acceuillogin/js/jquery-3.3.1.min.js') !!}
 {!! HTML::script('acceuillogin/styles/bootstrap4/popper.js') !!}
 {!! HTML::script('acceuillogin/styles/bootstrap4/bootstrap.min.js') !!}

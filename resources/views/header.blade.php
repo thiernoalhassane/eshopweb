@@ -12,6 +12,7 @@
                             <div class="top_bar_icon">
                                 <div class="user_icon"><img src="images/user.svg" alt=""></div>
                             </div>
+
                             <a href="{{ url('/admin')  }}">Administrer</a></div>
                         <div class="top_bar_content ml-auto">
                             <div class="top_bar_user">
@@ -36,7 +37,7 @@
                     <!-- Logo -->
                     <div class="col-lg-2 col-sm-3 col-3 order-1">
                         <div class="logo_container">
-                            <div class="logo"><a href="#">Eshop</a></div>
+                            <div class="logo"><a href="#">OpenTrade</a></div>
                         </div>
                     </div>
 
@@ -51,10 +52,13 @@
                                             <div class="custom_dropdown_list">
                                                 <span class="custom_dropdown_placeholder clc">La catégorie</span>
                                                 <i class="fas fa-chevron-down"></i>
-                                                <ul class="custom_list clc">
+                                                <?php     $categorie = $nom       ?>
 
-                                                    <!--element recupérer du webservice-->
+                                                <ul class="custom_list clc">
                                                     <li><a class="clc" href="#">All Categories</a></li>
+                                                    @foreach($categorie as $categorie)
+                                                    <li><a class="clc" href="#">{!! $categorie->description !!}</a></li>
+                                                    @endforeach
                                                 </ul>
                                             </div>
                                         </div>
@@ -70,7 +74,7 @@
                         <div class="wishlist_cart d-flex flex-row align-items-center justify-content-end">
 
 
-                            <!-- Cart -->
+                            <!-- Cart  Le Panier
                             <div class="cart">
                                 <div class="cart_container d-flex flex-row align-items-center justify-content-end">
                                     <div class="cart_icon">
@@ -83,6 +87,8 @@
                                     </div>
                                 </div>
                             </div>
+
+                            -->
                         </div>
                     </div>
                 </div>
@@ -106,7 +112,7 @@
 
                             <div class="main_nav_menu ml-auto">
                                 <ul class="standard_dropdown main_nav_dropdown">
-                                    <li><a href="{{ url('/acceuil')  }}">Acceuil<i class="fas fa-chevron-down"></i></a>
+                                    <li><a href="{{ url('/')  }}">Acceuil<i class="fas fa-chevron-down"></i></a>
                                     </li>
                                     <li><a href="{{ url('/produits')  }}">Les produits<i class="fas fa-chevron-down"></i></a></li>
                                     <li><a href="{{ url('/panier')  }}">Votre Panier<i class="fas fa-chevron-down"></i></a>

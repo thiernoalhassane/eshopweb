@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Les Produits</title>
+    <title>Description d'un produit</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Togo commerce e-commerce">
@@ -29,7 +29,7 @@
     @include('header')
 
     <!-- Single Product -->
-
+    <?php          $footer = $nom                     ?>
     <div class="single_product">
         <div class="container">
             <div class="row">
@@ -43,8 +43,8 @@
                         <div class="box-header with-border">
                             <div class="user-block">
                                 <img class="img-circle" src="../dist/img/user1-128x128.jpg" alt="User Image">
-                                <span class="username"><a href="#">Jonathan Burke Jr.</a></span>
-                                <span class="description">Shared publicly - 7:30 PM Today</span>
+                                <span class="username"><a href="#">{!! $produits->trader->name  !!} {!! $produits->trader->surname  !!}  </a></span>
+                                <span class="description"></span>
                             </div>
 
                             <!-- /.box-tools -->
@@ -53,12 +53,12 @@
                         <div class="box-body">
                             <img class="img-responsive pad" src="../dist/img/photo2.png" alt="Photo">
 
-                            <p>I took this photo this morning. What do you guys think?</p>
+                            <p></p>
                             <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i> Share
                             </button>
                             <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i> Like
                             </button>
-                            <span class="pull-right text-muted">127 likes - 3 comments</span>
+                            <span class="pull-right text-muted">Nombre de  likes - Nombre de comments</span>
                         </div>
                         <!-- /.box-body -->
                         <div class="box-footer box-comments">
@@ -114,12 +114,10 @@
                 <!-- Description -->
                 <div class="col-lg-5 order-3">
                     <div class="product_description">
-                        <div class="product_category">Laptops</div>
-                        <div class="product_name">MacBook Air 13</div>
+                        <div class="product_category">{!! $produits->category->description  !!}</div>
+                        <div class="product_name">{!! $produits->wording  !!}</div>
 
-                        <div class="product_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas
-                                fermentum. laoreet turpis, nec sollicitudin dolor cursus at. Maecenas aliquet, dolor a
-                                faucibus efficitur, nisi tellus cursus urna, eget dictum lacus turpis.</p></div>
+                        <div class="product_text"><p>{!! $produits->description  !!}</p></div>
                         <div class="order_info d-flex flex-row">
                             <form action="#">
                                 <div class="clearfix" style="z-index: 1000;">
@@ -139,9 +137,9 @@
 
                                 </div>
 
-                                <div class="product_price">$2000</div>
+                                <div class="product_price"> Prix : {!! $produits->price !!} CFA</div>
                                 <div class="button_container">
-                                    <button type="button" class="button cart_button">Add to Cart</button>
+                                    <button type="button" class="button cart_button">Ajouter au Panier</button>
                                     <div class="product_fav"><i class="fas fa-heart"></i></div>
                                 </div>
 

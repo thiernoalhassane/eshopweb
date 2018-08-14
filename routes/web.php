@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/test', function () {
-    return view('welcome');
-});
+Route::get('/test', 'AcceuilController@saveApiData');
 
 Route::get('/', 'AcceuilController@show');
 
@@ -33,8 +31,8 @@ Route::get('/product', 'AdminController@showProduct');
 
 Route::get('/bilan', 'AdminController@showBilan');
 
-Route::get(' / trader', 'AdminController@showTrader');
+Route::get(' /trader', 'AdminController@showTrader');
 
-Route::get(' / explore', 'ProduitsController@explore');
+Route::get(' /explore/{id}', 'ProduitsController@explore');
 
 Route::get('/admin','AdminController@show');
