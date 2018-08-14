@@ -18,7 +18,7 @@ class AcceuilController extends BaseController
           return view('acceuil',compact('nom','produits'));
       } else {
 
-            
+
           $uri = new ApiConfig();
           $json = file_get_contents($uri->getUrlAuth().'auth/authorization?client_id='.$uri->getClientId());
           $result = \GuzzleHttp\json_decode($json);

@@ -6,16 +6,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="commerce boutique en ligne togo">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    {!! HTML::style('acceuillogin/styles/bootstrap4/bootstrap.min.css') !!}
-    {!! HTML::style('acceuillogin/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css') !!}
-    {!! HTML::style('acceuillogin/plugins/OwlCarousel2-2.2.1/owl.carousel.css') !!}
-    {!! HTML::style('acceuillogin/plugins/OwlCarousel2-2.2.1/owl.theme.default.css') !!}
-    {!! HTML::style('acceuillogin/plugins/OwlCarousel2-2.2.1/animate.css') !!}
-    {!! HTML::style('acceuillogin/plugins/slick-1.8.0/slick.css') !!}
-    {!! HTML::style('acceuillogin/styles/main_styles.css') !!}
-    {!! HTML::style('acceuillogin/styles/responsive.css') !!}
-    {!! HTML::style('acceuillogin/plugins/jquery-ui-1.12.1.custom/jquery-ui.css') !!}
+    <!-- {!! HTML::style('acceuillogin/styles/bootstrap4/bootstrap.min.css') !!}
+     {!! HTML::style('acceuillogin/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css') !!}
+     {!! HTML::style('acceuillogin/plugins/OwlCarousel2-2.2.1/owl.carousel.css') !!}
+     {!! HTML::style('acceuillogin/plugins/OwlCarousel2-2.2.1/owl.theme.default.css') !!}
+     {!! HTML::style('acceuillogin/plugins/OwlCarousel2-2.2.1/animate.css') !!}
+     {!! HTML::style('acceuillogin/plugins/slick-1.8.0/slick.css') !!}
+     {!! HTML::style('acceuillogin/styles/main_styles.css') !!}
+     {!! HTML::style('acceuillogin/styles/responsive.css') !!}
+     {!! HTML::style('acceuillogin/plugins/jquery-ui-1.12.1.custom/jquery-ui.css') !!}
 
+     -->
+
+    <link rel="stylesheet" href="{{asset('acceuillogin/styles/bootstrap4/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('acceuillogin/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css')}}">
+    <link rel="stylesheet" href="{{asset('acceuillogin/plugins/OwlCarousel2-2.2.1/owl.carousel.css')}}">
+    <link rel="stylesheet" href="{{asset('acceuillogin/plugins/OwlCarousel2-2.2.1/owl.theme.default.css')}}">
+    <link rel="stylesheet" href="plugins/OwlCarousel2-2.2.1/animate.css">
+    <link rel="stylesheet" href="plugins/slick-1.8.0/slick.css">
+    <link rel="stylesheet" href="styles/main_styles.css">
+    <link rel="stylesheet" href="styles/responsive.css">
 
 
 </head>
