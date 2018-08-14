@@ -139,6 +139,40 @@
             </div>
         </nav>
 
+        <div class="page_menu">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+
+                        <div class="page_menu_content">
+
+                            <div class="page_menu_search">
+                                <form action="#">
+                                    <input type="search" required="required" class="page_menu_search_input"
+                                           placeholder="Search for products...">
+                                </form>
+                            </div>
+                            <ul class="page_menu_nav">
+
+                                <li class="page_menu_item"><a href="{{ url('/')  }}">Acceuil<i
+                                                class="fas fa-chevron-down"></i></a></li>
+
+                                <li class="page_menu_item"><a href="{{ url('/produits')  }}">Les produits<i
+                                                class="fas fa-chevron-down"></i></a></li>
+                                <li class="page_menu_item"><a href="{{ url('/panier')  }}">Votre Panier<i
+                                                class="fas fa-chevron-down"></i></a></li>
+                                <li class="page_menu_item"><a href="{{ url('/blog')  }}">Blog<i
+                                                class="fas fa-chevron-down"></i></a></li>
+
+                            </ul>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
 
     </header>

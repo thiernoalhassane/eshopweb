@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Togo commerce e-commerce">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--
     {!! HTML::style('acceuillogin/styles/bootstrap4/bootstrap.min.css') !!}
     {!! HTML::style('acceuillogin/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css') !!}
     {!! HTML::style('acceuillogin/plugins/OwlCarousel2-2.2.1/owl.carousel.css') !!}
@@ -16,6 +17,17 @@
     {!! HTML::style('administration/bootstrap/css/bootstrap.min.css') !!}
     {!! HTML::style('administration/dist/css/AdminLTE.min.css') !!}
 
+-->
+    <link rel="stylesheet" type="text/css" href="acceuillogin/styles/bootstrap4/bootstrap.min.css">
+    <link href="acceuillogin/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="acceuillogin/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
+    <link rel="stylesheet" type="text/css" href="acceuillogin/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
+    <link rel="stylesheet" type="text/css" href="acceuillogin/plugins/OwlCarousel2-2.2.1/animate.css">
+    <link rel="stylesheet" type="text/css" href="acceuillogin/styles/product_styles.css">
+    <link rel="stylesheet" type="text/css" href="acceuillogin/styles/product_responsive.css">
+
+    <link rel="stylesheet" type="text/css" href="administration/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="administration/dist/css/AdminLTE.min.css">
 
 </head>
 
@@ -158,7 +170,7 @@
 
 </div>
 
-
+<!--
 {!! HTML::script('acceuillogin/js/jquery-3.3.1.min.js') !!}
 {!! HTML::script('acceuillogin/styles/bootstrap4/popper.js') !!}
 {!! HTML::script('acceuillogin/styles/bootstrap4/bootstrap.min.js') !!}
@@ -170,19 +182,35 @@
 {!! HTML::script('acceuillogin/plugins/OwlCarousel2-2.2.1/owl.carousel.js') !!}
 {!! HTML::script('acceuillogin/plugins/easing/easing.js') !!}
 {!! HTML::script('acceuillogin/js/product_custom.js') !!}
+
 {!! HTML::script('administration/plugins/jQuery/jquery-2.2.3.min.js') !!}
-
-
 {!! HTML::script('administration/bootstrap/js/bootstrap.min.js') !!}
 {!! HTML::script('administration/plugins/fastclick/fastclick.js') !!}
 {!! HTML::script('administration/dist/js/app.min.js') !!}
 {!! HTML::script('administration/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js') !!}
 {!! HTML::script('administration/plugins/slimScroll/jquery.slimscroll.min.js') !!}
-
-
 {!! HTML::script('administration/dist/js/demo.js') !!}
 
+-->
+<script src="acceuillogin/js/jquery-3.3.1.min.js"></script>
+<script src="acceuillogin/styles/bootstrap4/popper.js"></script>
+<script src="acceuillogin/styles/bootstrap4/bootstrap.min.js"></script>
+<script src="acceuillogin/plugins/greensock/TweenMax.min.js"></script>
+<script src="acceuillogin/plugins/greensock/TimelineMax.min.js"></script>
+<script src="acceuillogin/plugins/scrollmagic/ScrollMagic.min.js"></script>
+<script src="acceuillogin/plugins/greensock/animation.gsap.min.js"></script>
+<script src="acceuillogin/plugins/greensock/ScrollToPlugin.min.js"></script>
+<script src="acceuillogin/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
+<script src="acceuillogin/plugins/easing/easing.js"></script>
+<script src="acceuillogin/js/product_custom.js"></script>
 
+<script src="administration/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="administration/bootstrap/js/bootstrap.min.js"></script>
+<script src="administration/plugins/fastclick/fastclick.js"></script>
+<script src="administration/dist/js/app.min.js"></script>
+<script src="administration/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
+<script src="administration/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script src="administration/dist/js/demo.js"></script>
 </body>
 
 </html>
