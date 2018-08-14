@@ -11,7 +11,7 @@ namespace App;
 
 class ApiConfig
 {
-    protected $client_id ="5b6701c5e034f86e53f3628b";
+    protected $client_id ="5b26340139e44b2a9bd4ee30";
     protected $url_auth = " https://nameless-tor-45908.herokuapp.com/";
     protected $url_rest = "https://desolate-castle-82146.herokuapp.com/";
 
