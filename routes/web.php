@@ -11,7 +11,9 @@
 |
 */
 
-Route::get('/test', 'AcceuilController@saveApiData');
+Route::get('/test', function () {
+    return view('welcome');
+});
 
 Route::get('/', 'AcceuilController@show');
 

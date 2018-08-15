@@ -107,7 +107,7 @@
 
                         <div class="main_nav_menu ml-auto">
                             <ul class="standard_dropdown main_nav_dropdown">
-                                <li><a href="{{ url('/acceuil')  }}">Acceuil<i class="fas fa-chevron-down"></i></a>
+                                <li><a href="{{ url('/')  }}">Acceuil<i class="fas fa-chevron-down"></i></a>
                                 </li>
                                 <li><a href="{{ url('/produits')  }}">Les produits<i
                                                 class="fas fa-chevron-down"></i></a></li>

@@ -139,10 +139,15 @@
                             @foreach($produits as $produits)
                             <div class="product_item is_new">
                                 <div class="product_border"></div>
-                                <div class="product_image d-flex flex-column align-items-center justify-content-center"><a href="{{ url('/explore')}}" ><img src="images/new_5.jpg" alt="" ></a></div>
+                                <div class="product_image d-flex flex-column align-items-center justify-content-center">
+                                    <a href="{{ url('/explore', $id= $produits->id)}}"><img src="images/new_5.jpg"
+                                                                                            alt=""></a></div>
                                 <div class="product_content">
                                     <div class="product_price">{!! $produits->price !!} CFA</div>
-                                    <div class="product_name"><div><a href="{{ url('/explore')}}" tabindex="0">{!! $produits->wording !!}</a></div></div>
+                                    <div class="product_name">
+                                        <div><a href="{{ url('/explore', $id= $produits->id)}}" tabindex="0">{!!
+                                                $produits->wording !!}</a></div>
+                                    </div>
                                 </div>
                                 <div class="product_fav"><i class="fas fa-heart"></i></div>
                                 <ul class="product_marks">

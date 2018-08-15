@@ -61,6 +61,7 @@ $(document).ready(function()
 	initViewedSlider();
 	initBrandsSlider();
 	initTimer();
+    initIsotope();
 
 	$(window).on('resize', function()
 	{
@@ -861,93 +862,81 @@ $(document).ready(function()
 
 	*/
 
-	function initViewedSlider()
-	{
-		if($('.viewed_slider').length)
-		{
-			var viewedSlider = $('.viewed_slider');
+    function initViewedSlider() {
+        if ($('.viewed_slider').length) {
+            var viewedSlider = $('.viewed_slider');
 
-			viewedSlider.owlCarousel(
-			{
-				loop:true,
-				margin:30,
-				autoplay:true,
-				autoplayTimeout:6000,
-				nav:false,
-				dots:false,
-				responsive:
-				{
-					0:{items:1},
-					575:{items:2},
-					768:{items:3},
-					991:{items:4},
-					1199:{items:6}
-				}
-			});
+            viewedSlider.owlCarousel(
+                {
+                    loop: true,
+                    margin: 30,
+                    autoplay: true,
+                    autoplayTimeout: 6000,
+                    nav: false,
+                    dots: false,
+                    responsive: {
+                        0: {items: 1},
+                        575: {items: 2},
+                        768: {items: 3},
+                        991: {items: 4},
+                        1199: {items: 6}
+                    }
+                });
 
-			if($('.viewed_prev').length)
-			{
-				var prev = $('.viewed_prev');
-				prev.on('click', function()
-				{
-					viewedSlider.trigger('prev.owl.carousel');
-				});
-			}
+            if ($('.viewed_prev').length) {
+                var prev = $('.viewed_prev');
+                prev.on('click', function () {
+                    viewedSlider.trigger('prev.owl.carousel');
+                });
+            }
 
-			if($('.viewed_next').length)
-			{
-				var next = $('.viewed_next');
-				next.on('click', function()
-				{
-					viewedSlider.trigger('next.owl.carousel');
-				});
-			}
-		}
-	}
+            if ($('.viewed_next').length) {
+                var next = $('.viewed_next');
+                next.on('click', function () {
+                    viewedSlider.trigger('next.owl.carousel');
+                });
+            }
+        }
+    }
 
-	/* 
 
-	19. Init Brands Slider
+	/*
 
-	*/
+	 19. Init Brands Slider
 
-	function initBrandsSlider()
-	{
-		if($('.brands_slider').length)
-		{
-			var brandsSlider = $('.brands_slider');
+	 */
 
-			brandsSlider.owlCarousel(
-			{
-				loop:true,
-				autoplay:true,
-				autoplayTimeout:5000,
-				nav:false,
-				dots:false,
-				autoWidth:true,
-				items:8,
-				margin:42
-			});
+    function initBrandsSlider() {
+        if ($('.brands_slider').length) {
+            var brandsSlider = $('.brands_slider');
 
-			if($('.brands_prev').length)
-			{
-				var prev = $('.brands_prev');
-				prev.on('click', function()
-				{
-					brandsSlider.trigger('prev.owl.carousel');
-				});
-			}
+            brandsSlider.owlCarousel(
+                {
+                    loop: true,
+                    autoplay: true,
+                    autoplayTimeout: 5000,
+                    nav: false,
+                    dots: false,
+                    autoWidth: true,
+                    items: 8,
+                    margin: 42
+                });
 
-			if($('.brands_next').length)
-			{
-				var next = $('.brands_next');
-				next.on('click', function()
-				{
-					brandsSlider.trigger('next.owl.carousel');
-				});
-			}
-		}
-	}
+            if ($('.brands_prev').length) {
+                var prev = $('.brands_prev');
+                prev.on('click', function () {
+                    brandsSlider.trigger('prev.owl.carousel');
+                });
+            }
+
+            if ($('.brands_next').length) {
+                var next = $('.brands_next');
+                next.on('click', function () {
+                    brandsSlider.trigger('next.owl.carousel');
+                });
+            }
+        }
+    }
 
 	/* 
 
@@ -1028,5 +1017,42 @@ $(document).ready(function()
 				}, 1000);
     		});	
     	}	
+    }
+
+	/*
+
+	 21. Init Isotope
+
+	 */
+
+    function initIsotope() {
+        var sortingButtons = $('.shop_sorting_button');
+
+        $('.product_grid').isotope({
+            itemSelector: '.product_item',
+            getSortData: {
+                price: function (itemElement) {
+                    var priceEle = $(itemElement).find('.product_price').text().replace('cfa', '');
+                    return parseFloat(priceEle);
+                },
+                name: '.product_name div a'
+            },
+            animationOptions: {
+                duration: 750,
+                easing: 'linear',
+                queue: false
+            }
+        });
+
+        // Sort based on the value from the sorting_type dropdown
+        sortingButtons.each(function () {
+            $(this).on('click', function () {
+                $('.sorting_text').text($(this).text());
+                var option = $(this).attr('data-isotope-option');
+                option = JSON.parse(option);
+                $('.product_grid').isotope(option);
+            });
+        });
+
     }
 });

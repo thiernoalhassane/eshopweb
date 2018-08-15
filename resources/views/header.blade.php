@@ -16,7 +16,7 @@
                             <a href="{{ url('/admin')  }}">Administrer</a></div>
                         <div class="top_bar_content ml-auto">
                             <div class="top_bar_user">
-                                <div class="user_icon"><img src="images/user.svg" alt=""></div>
+                                <div class="user_icon"><img src="../images/user.svg" alt=""></div>
                                 <div><a href="{{ url('/connection')  }}">Connectez-vous</a></div>
                                 <div><a href="{{ url('/inscription')  }}">Creer un compte</a></div>
                                 <div></div>
@@ -50,19 +50,20 @@
                                         <input type="search" required="required" class="header_search_input" placeholder="Le nom de votre recherche...">
                                         <div class="custom_dropdown">
                                             <div class="custom_dropdown_list">
-                                                <span class="custom_dropdown_placeholder clc">La catégorie</span>
+                                                <span class="custom_dropdown_placeholder clc">Les catégories</span>
                                                 <i class="fas fa-chevron-down"></i>
                                                 <?php     $categorie = $nom       ?>
 
                                                 <ul class="custom_list clc">
-                                                    <li><a class="clc" href="#">All Categories</a></li>
+                                                    <li><a class="clc" href="#">Les Catégories</a></li>
                                                     @foreach($categorie as $categorie)
                                                     <li><a class="clc" href="#">{!! $categorie->description !!}</a></li>
                                                     @endforeach
                                                 </ul>
                                             </div>
                                         </div>
-                                        <button type="submit" class="header_search_button trans_300" value="Submit"><img src="images/search.png" alt=""></button>
+                                        <button type="submit" class="header_search_button trans_300" value="Submit"><img
+                                                    src="../images/search.png" alt=""></button>
                                     </form>
                                 </div>
                             </div>

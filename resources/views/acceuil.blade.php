@@ -18,15 +18,14 @@
 
      -->
 
-    <link rel="stylesheet" href="acceuillogin/styles/bootstrap4/bootstrap.min.css">
-    <link rel="stylesheet" href="acceuillogin/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css">
-    <link rel="stylesheet" href="acceuillogin/plugins/OwlCarousel2-2.2.1/owl.carousel.css">
-    <link rel="stylesheet" href="acceuillogin/plugins/OwlCarousel2-2.2.1/owl.theme.default.css">
-    <link rel="stylesheet" href="acceuillogin/plugins/OwlCarousel2-2.2.1/animate.css">
-    <link rel="stylesheet" href="acceuillogin/plugins/slick-1.8.0/slick.css">
-    <link rel="stylesheet" href="acceuillogin/styles/main_styles.css">
-    <link rel="stylesheet" href="acceuillogin/plugins/jquery-ui-1.12.1.custom/jquery-ui.css">
-    <link rel="stylesheet" href="acceuillogin/styles/responsive.css">
+    <link rel="stylesheet" href="{{asset('acceuillogin/styles/bootstrap4/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('acceuillogin/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css')}}">
+    <link rel="stylesheet" href="{{asset('acceuillogin/plugins/OwlCarousel2-2.2.1/owl.carousel.css')}}">
+    <link rel="stylesheet" href="{{asset('acceuillogin/plugins/OwlCarousel2-2.2.1/owl.theme.default.css')}}">
+    <link rel="stylesheet" href="{{asset('acceuillogin/plugins/OwlCarousel2-2.2.1/animate.css')}}">
+    <link rel="stylesheet" href="{{asset('acceuillogin/plugins/slick-1.8.0/slick.css')}}">
+    <link rel="stylesheet" href="{{asset('acceuillogin/styles/main_styles.css')}}">
+    <link rel="stylesheet" href="{{asset('acceuillogin/styles/responsive.css')}}">
 
 
 </head>
@@ -41,10 +40,14 @@
     @include('header')
 
 
-
-
-    <!-- Characteristics -->
-    @include('bannerprincipale')
+    <div class="home">
+        <div class="home_background parallax-window" data-parallax="scroll"
+             data-image-src="images/shop_background.jpg"></div>
+        <div class="home_overlay"></div>
+        <div class="home_content d-flex flex-column align-items-center justify-content-center">
+            <h2 class="home_title">BIENVENUE SUR OPENTRADE</h2>
+        </div>
+    </div>
 
     <!-- Deals of the week -->
     <?php          $footer = $nom                     ?>
@@ -412,22 +415,20 @@
 {!! HTML::script('acceuillogin/js/shop_custom.js') !!}
 -->
 
-<script src="acceuillogin/js/jquery-3.3.1.min.js"></script>
-<script src="acceuillogin/styles/bootstrap4/popper.js"></script>
-<script src="acceuillogin/styles/bootstrap4/bootstrap.min.js"></script>
-<script src="acceuillogin/plugins/greensock/TweenMax.min.js"></script>
-<script src="acceuillogin/plugins/greensock/TimelineMax.min.js"></script>
-<script src="acceuillogin/plugins/scrollmagic/ScrollMagic.min.js"></script>
-<script src="acceuillogin/plugins/greensock/animation.gsap.min.js"></script>
-<script src="acceuillogin/plugins/greensock/ScrollToPlugin.min.js"></script>
-<script src="acceuillogin/plugins/OwlCarousel2-2.2.1/owl.carousel.js"></script>
-<script src="acceuillogin/plugins/slick-1.8.0/slick.js"></script>
-<script src="acceuillogin/plugins/easing/easing.js"></script>
-<script src="acceuillogin/js/custom.js"></script>
-<script src="acceuillogin/plugins/Isotope/isotope.pkgd.min.js"></script>
-<script src="acceuillogin/plugins/jquery-ui-1.12.1.custom/jquery-ui.js"></script>
-<script src="acceuillogin/plugins/parallax-js-master/parallax.min.js"></script>
-<script src="acceuillogin/js/shop_custom.js"></script>
+<script src="{{asset('acceuillogin/js/jquery-3.3.1.min.js')}}"></script>
+<script src="{{asset('acceuillogin/styles/bootstrap4/popper.js')}}"></script>
+<script src="{{asset('acceuillogin/styles/bootstrap4/bootstrap.min.js')}}"></script>
+<script src="{{asset('acceuillogin/plugins/greensock/TweenMax.min.js')}}"></script>
+<script src="{{asset('acceuillogin/plugins/greensock/TimelineMax.min.js')}}"></script>
+<script src="{{asset('acceuillogin/plugins/scrollmagic/ScrollMagic.min.js')}}"></script>
+<script src="{{asset('acceuillogin/plugins/greensock/animation.gsap.min.js')}}"></script>
+<script src="{{asset('acceuillogin/plugins/greensock/ScrollToPlugin.min.js')}}"></script>
+<script src="{{asset('acceuillogin/plugins/OwlCarousel2-2.2.1/owl.carousel.js')}}"></script>
+<script src="{{asset('acceuillogin/plugins/slick-1.8.0/slick.js')}}"></script>
+<script src="{{asset('acceuillogin/plugins/easing/easing.js')}}"></script>
+<script src="{{asset('acceuillogin/plugins/Isotope/isotope.pkgd.min.js')}}"></script>
+<script src="{{asset('acceuillogin/plugins/parallax-js-master/parallax.min.js')}}"></script>
+<script src="{{asset('acceuillogin/js/custom.js')}}"></script>
 
 </body>
 
