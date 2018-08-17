@@ -33,7 +33,7 @@ Route::get('/product', 'AdminController@showProduct');
 
 Route::get('/bilan', 'AdminController@showBilan');
 
-Route::get(' /trader', 'AdminController@showTrader');
+Route::get(' /trader/{id}', 'AdminController@showTrader');
 
 Route::get(' /explore/{id}', 'ProduitsController@explore');
 

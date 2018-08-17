@@ -6,18 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Togo commerce e-commerce">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!--
-    {!! HTML::style('acceuillogin/styles/bootstrap4/bootstrap.min.css') !!}
-    {!! HTML::style('acceuillogin/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css') !!}
-    {!! HTML::style('acceuillogin/plugins/OwlCarousel2-2.2.1/owl.carousel.css') !!}
-    {!! HTML::style('acceuillogin/plugins/OwlCarousel2-2.2.1/owl.theme.default.css') !!}
-    {!! HTML::style('acceuillogin/plugins/OwlCarousel2-2.2.1/animate.css') !!}
-    {!! HTML::style('acceuillogin/styles/product_styles.css') !!}
-    {!! HTML::style('acceuillogin/styles/product_responsive.css') !!}
-    {!! HTML::style('administration/bootstrap/css/bootstrap.min.css') !!}
-    {!! HTML::style('administration/dist/css/AdminLTE.min.css') !!}
 
--->
 
 
     <link rel="stylesheet" type="text/css" href="{{asset('acceuillogin/styles/bootstrap4/bootstrap.min.css')}}">
@@ -57,7 +46,8 @@
                         <div class="box-header with-border">
                             <div class="user-block">
                                 <img class="img-circle" src="../dist/img/user1-128x128.jpg" alt="User Image">
-                                <span class="username"><a href="#">{!! $produits->trader->name  !!} {!! $produits->trader->surname  !!}  </a></span>
+
+                                <span class="username"><a href="{{ url('/trader', $id= $produits->trader->id)}}">{!! $produits->trader->name  !!} {!! $produits->trader->surname  !!}  </a></span>
                                 <span class="description"></span>
                             </div>
 
@@ -128,18 +118,23 @@
                 <!-- Description -->
                 <div class="col-lg-5 order-3">
                     <div class="product_description">
-                        <div class="product_category">{!! $produits->category->description  !!}</div>
-                        <div class="product_name">{!! $produits->wording  !!}</div>
+                        <div class="product_name">La Catégorie du produit : {!! $produits->category->description !!}
+                        </div>
+                        <div class="product_name">Nom du produit : {!! $produits->wording !!}</div>
 
-                        <div class="product_text"><p>{!! $produits->description  !!}</p></div>
+                        <div class="product_text"><p>Détails sur le produit : {!! $produits->description !!}</p></div>
+                        <div class="product_text"><p>Quantité en stock : {!! $produits->quantity !!}</p></div>
+                        <div class="product_text"><p>Prix Unitiare: {!! $produits->price !!} CFA</p></div>
                         <div class="order_info d-flex flex-row">
                             <form action="#">
                                 <div class="clearfix" style="z-index: 1000;">
 
                                     <!-- Product Quantity -->
+
                                     <div class="product_quantity clearfix">
-                                        <span>Quantity: </span>
-                                        <input id="quantity_input" type="text" pattern="[0-9]*" value="1">
+                                        <span>Quantité : </span>
+                                        <input id="quantity_input" type="text" pattern="[1-9]*" min="0"
+                                               onkeypress="return valid_number(event);">
                                         <div class="quantity_buttons">
                                             <div id="quantity_inc_button" class="quantity_inc quantity_control"><i
                                                         class="fas fa-chevron-up"></i></div>
@@ -151,7 +146,7 @@
 
                                 </div>
 
-                                <div class="product_price"> Prix : {!! $produits->price !!} CFA</div>
+
                                 <div class="button_container">
                                     <button type="button" class="button cart_button">Ajouter au Panier</button>
                                     <div class="product_fav"><i class="fas fa-heart"></i></div>
