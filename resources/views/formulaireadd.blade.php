@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-6 col-sm-12 col-lg-6 col-md-offset-3">
+    <div class="col-md-6 col-sm-12 col-lg-6 col-md-offset-2">
         <div class="panel panel-primary">
             <div class="panel-heading">OPENTRADE INSCRIPTION</div>
             <div class="panel-body">
@@ -14,7 +14,7 @@
                         <span id="error_name" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label for="lastname">Prénom *</label>
+                        <label for="lastname">Prénom </label>
                         <input id="lastname" name="lastname" class="form-control" type="text">
                         <span id="error_lastname" class="text-danger"></span>
                     </div>
@@ -35,7 +35,12 @@
                     </div>
                     <div class="form-group">
                         <label for="tel">Téléphone *</label>
-                        <input type="tel" name="tel" id="tel" class="form-control" required>
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="fa fa-phone"></i>
+                            </div>
+                            <input type="text" class="form-control" data-inputmask='"mask": "(+999) 99-99-99-99"' data-mask required>
+                        </div>
                         <span id="error_dob" class="text-danger"></span>
                     </div>
 
@@ -44,14 +49,14 @@
                         <div>
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1"
+                                    <input type="radio" name="optionsRadios" id="M" value="M"
                                            checked>
                                     Masculin
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                                    <input type="radio" name="optionsRadios" id="M" value="M">
                                     Feminin
                                 </label>
                             </div>
@@ -60,14 +65,14 @@
                             <label>Votre type </label>
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox">
+                                    <input type="checkbox" name="Client" id="Client" checked>
                                     Client
                                 </label>
                             </div>
 
                             <div class="checkbox">
                                 <label>
-                                    <input type="checkbox">
+                                    <input type="checkbox" name="Vendeur" id="Vendeur">
                                     Vendeur
                                 </label>
                             </div>
@@ -82,9 +87,12 @@
                             <div class="col-lg-6">
                                 <div class="input-group">
                                                     <span class="input-group-addon">
-                                                      <input type="checkbox">
+                                                      <input type="checkbox" checked>
                                                     </span>
-                                    <input type="text" class="form-control">
+                                    <div class="input-group">
+
+                                        <input type="text" class="form-control" data-inputmask='"mask": "(+999) 99-99-99-99"' data-mask required>
+                                    </div>
                                 </div>
                                 <!-- /input-group -->
                             </div>
@@ -96,7 +104,10 @@
                                                                             <span class="input-group-addon">
                                                                               <input type="checkbox">
                                                                             </span>
-                                    <input type="text" class="form-control">
+                                    <div class="input-group">
+
+                                        <input type="text" class="form-control" data-inputmask='"mask": "(+999) 99-99-99-99"' data-mask required>
+                                    </div>
                                 </div>
                                 <!-- /input-group -->
                             </div>
@@ -111,7 +122,7 @@
 
 
                         <div class="box-footer">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Valider</button>
                         </div>
 
                 </form>
