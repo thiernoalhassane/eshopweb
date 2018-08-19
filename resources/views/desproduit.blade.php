@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Description d'un produit</title>
+    <title>Open Trade - {!! $produits->wording  !!}</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Togo commerce e-commerce">
@@ -118,32 +118,42 @@
                 <!-- Description -->
                 <div class="col-lg-5 order-3">
                     <div class="product_description">
-                        <div class="product_name">La Catégorie du produit : {!! $produits->category->description !!}
-                        </div>
-                        <div class="product_name">Nom du produit : {!! $produits->wording !!}</div>
+                        <div class="product_category">{!! $produits->category->description !!}</div>
+                        <div class="product_name">{!! $produits->wording !!}</div>
 
-                        <div class="product_text"><p>Détails sur le produit : {!! $produits->description !!}</p></div>
-                        <div class="product_text"><p>Quantité en stock : {!! $produits->quantity !!}</p></div>
-                        <div class="product_text"><p>Prix Unitiare: {!! $produits->price !!} CFA</p></div>
+                        <div class="product_text">
+                            <h4>Détails sur le produit</h4>
+                            <div>
+                                {!! $produits->description !!}
+                            </div>
+                        </div>
+                        <div class="product_price">Prix Unitiare: {!! $produits->price !!} CFA</div>
                         <div class="order_info d-flex flex-row">
                             <form action="#">
                                 <div class="clearfix" style="z-index: 1000;">
-
                                     <!-- Product Quantity -->
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <div class="product_quantity clearfix">
+                                                <span>Quantité : </span>
+                                                <input id="quantity_input" type="text" pattern="[1-9]*" value="0">
+                                                <div class="quantity_buttons">
+                                                    <div id="quantity_inc_button" class="quantity_inc quantity_control">
+                                                        <i class="fas fa-chevron-up"></i>
+                                                    </div>
+                                                    <div id="quantity_dec_button" class="quantity_dec quantity_control">
+                                                        <i class="fas fa-chevron-down"></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
 
-                                    <div class="product_quantity clearfix">
-                                        <span>Quantité : </span>
-                                        <input id="quantity_input" type="text" pattern="[1-9]*" min="0"
-                                               onkeypress="return valid_number(event);">
-                                        <div class="quantity_buttons">
-                                            <div id="quantity_inc_button" class="quantity_inc quantity_control"><i
-                                                        class="fas fa-chevron-up"></i></div>
-                                            <div id="quantity_dec_button" class="quantity_dec quantity_control"><i
-                                                        class="fas fa-chevron-down"></i></div>
+                                        <div class="col-6">
+                                            <div class="product_quantity clearfix">
+                                                <span>Stock : {!! $produits->quantity !!} </span>
+                                            </div>
                                         </div>
                                     </div>
-
-
                                 </div>
 
 
