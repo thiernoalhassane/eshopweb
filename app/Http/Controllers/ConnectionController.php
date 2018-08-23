@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 use App\ApiConfig;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Input;
 
@@ -14,7 +13,8 @@ class ConnectionController extends BaseController
 {
     public function show()
     {
-        return view("connection");
+        $data["tel_regex"] = "^\\+228 [0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}$" ;
+        return view("connection", $data);
     }
 
     public function connect()
@@ -25,9 +25,9 @@ class ConnectionController extends BaseController
         $client = new Client();
         if(\Illuminate\Support\Facades\Cache::has('access_token') ){
             $uri = new ApiConfig();
-            //$message = file_get_contents($uri->getUrlRest().'aapi/user/signin?client_id='.$uri->getClientId().'&access_token='.\Illuminate\Support\Facades\Cache::get('access_token'));
+            $access_token = \Illuminate\Support\Facades\Cache::get('access_token') ;
             try{
-                $response = $client->request('POST',$uri->getUrlRest().'api/user/signin?client_id='.$uri->getClientId().'&access_token='.\Illuminate\Support\Facades\Cache::get('access_token'),
+                $response = $client->request('POST',$uri->getUrlRest().'api/user/signin?client_id='.$uri->getClientId().'&access_token='.$access_token,
                     [
                         'form_params' =>[
                             'login' => $login,

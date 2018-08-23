@@ -33,19 +33,71 @@
     <div class="row">
         <div class="col-md-6 col-sm-12 col-lg-6 col-md-offset-3">
             <div class="panel panel-primary">
-                <div class="panel-heading">Connection</div>
-
-
-
-
-
-                        <button id="submit" type="submit" value="email" class="btn btn-primary center" onclick="ecran($(this).val(),'connection','connectionajax')">Se Connecter avec Son Email</button>
-                        <button id="submit" type="submit" value="num" class="btn btn-primary center" onclick="ecran($(this).val(),'connection','connectionajax')">Se Connecter avec Son Numéro</button>
-                <div class="panel-body" id="connection">
-
-
-
+                <div class="panel-heading text-center">
+                    <h2>Connexion</h2>
                 </div>
+                <div class="row" style="margin: auto; width: 40%">
+                    <ul class="nav nav-tabs">
+                        <li>
+                            <a class="btn btn-link" href="#email" title="Se connecter avec son email" data-toggle="tab">Email</a>
+                        </li>
+                        <li>
+                            <a class="btn btn-link" href="#tel" data-toggle="tab" title="Se sonnecter avec son numéro de téléphone">Numéro de téléphone</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="panel-body">
+                    <div class="tab-content">
+                        <div id="email" class="tab-pane fade in active">
+                            <form  action="{{ url('/connect') }}" method="post">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+                                <div class="form-group">
+                                    <label for="name">Email *</label>
+                                    <input id="name" name="name" class="form-control" type="email" required>
+                                    <span id="error_name" class="text-danger"></span>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="password">Mot de Passe</label>
+                                    <input id="password" name="password" class="form-control" type="password" required>
+                                    <span id="error_lastname" class="text-danger"></span>
+                                </div>
+                                @include("connectionButtons")
+                            </form>
+                        </div>
+                        <div id="tel" class="tab-pane fade">
+
+                            <form  action="{{ url('/connect') }}" method="post">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+                                <div class="form-group">
+                                    <label for="name">Numéro de téléphone *</label>
+                                    <div class="input-group">
+                                        <input id="name" placeholder="+228 87-75-65-47" data-inputmask='"mask": "+228 99-99-99-99"' name="name" type="text" class="form-control" pattern="{!! $tel_regex !!}" required>
+                                    </div>
+                                    <span id="error_name" class="text-danger"></span>
+                                </div>
+
+
+                                <div class="form-group">
+                                    <label for="password">Mot de Passe</label>
+                                    <input id="password" name="password" class="form-control" type="password" required>
+                                    <span id="error_lastname" class="text-danger"></span>
+                                </div>
+                                @include("connectionButtons")
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-footer">
+                    <span class="float-right"><a href="#" class="btn btn-link">S'inscrire !</a></span>
+                    <span><a href="#" class="btn btn-link">Mot de passe oublié ?</a></span>
+                </div>
+            </div>
+
             </div>
         </div>
     </div>
@@ -70,19 +122,6 @@
 <script src="{{asset('acceuillogin/plugins/Isotope/isotope.pkgd.min.js')}}"></script>
 <script src="{{asset('acceuillogin/plugins/parallax-js-master/parallax.min.js')}}"></script>
 <script src="{{asset('acceuillogin/js/custom.js')}}"></script>
-<script>
-    function ecran(val, idvu, fichier, param) {
-        var req = $.ajax({
-            url: '{{URL::to('/ecran')}}',
-            type: "GET",
-            data: {val: val, fichier: fichier, param: param},
-            dataType: "html"
-        });
-        req.done(function (msg) {
-            $('#' + idvu).html(msg);
-        });
-    }
-</script>
 
 </body>
 
