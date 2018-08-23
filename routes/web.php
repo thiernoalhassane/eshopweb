@@ -14,14 +14,14 @@
 Route::get('/test', function () {
     return view('welcome');
 });
-
+/////////////////////////////////////////////////////
+/// Les Routes get /////////////////////////////////
+/// ///////////////////////////////////////////////
 Route::get('/', 'AcceuilController@show');
 
 Route::get('/inscription', 'InscriptionController@show');
 
 Route::get('/connection', 'ConnectionController@show');
-
-Route::post('/connect','ConnectionController@connect');
 
 Route::get('/produits','ProduitsController@show');
 
@@ -39,6 +39,8 @@ Route::get(' /trader/{id}', 'AdminController@showTrader');
 
 Route::get(' /explore/{id}', 'ProduitsController@explore');
 
+Route::get(' /confirmationaccount', 'InscriptionController@confirmation');
+
 Route::get('/admin','AdminController@show');
 
 Route::get('/ecran', function () {
@@ -49,4 +51,10 @@ Route::get('/ecran', function () {
     return view($fichier, array('val' => $val, 'param' => $param));
 });
 
+/////////////////////////////////////////////////////////////////////
+/// Les Routes en post /////////////////////////////////////////////
+/// ///////////////////////////////////////////////////////////////
 
+Route::post('/connect', 'ConnectionController@connect');
+
+Route::post('/inscription', 'InscriptionController@add');

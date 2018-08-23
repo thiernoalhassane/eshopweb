@@ -25,8 +25,13 @@
 <body>
 
 <div class="super_container">
+    @if(Session::has('message'))
+    @include('partials/error', ['type' => 'info', 'message' => Session::get('message') ])
+    @endif
 
-
+    @if(Session::has('erreur'))
+    @include('partials/error', ['type' => 'info', 'message' => Session::get('erreur') ])
+    @endif
     @include('headerconnexion')
 
     @include('formulaireadd')
