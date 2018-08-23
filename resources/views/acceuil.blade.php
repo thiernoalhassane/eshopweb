@@ -21,6 +21,9 @@
 </head>
 
 <body>
+@if(Session::has('bienvenue'))
+@include('partials/error', ['type' => 'info', 'message' => Session::get('bienvenue') ])
+@endif
 
 
 <div class="super_container">

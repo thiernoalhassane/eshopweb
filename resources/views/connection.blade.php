@@ -12,6 +12,9 @@
     {!! HTML::style('acceuillogin/styles/responsive.css') !!}
     {!! HTML::style('inscriptiontemplate/bootstrap.min.css') !!}
 
+    @if(Session::has('message'))
+    @include('partials/error', ['type' => 'info', 'message' => Session::get('message') ])
+    @endif
 
 
 </head>
@@ -31,29 +34,16 @@
         <div class="col-md-6 col-sm-12 col-lg-6 col-md-offset-3">
             <div class="panel panel-primary">
                 <div class="panel-heading">Connection</div>
-                <div class="panel-body">
-                    <form name="myform" action="" method="post">
-
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
 
-                        <div class="form-group">
-                            <label for="myName">Téléphone ou Email *</label>
-                            <input id="myName" name="myName" class="form-control" type="text" required>
-                            <span id="error_name" class="text-danger"></span>
-                        </div>
 
 
-                        <div class="form-group">
-                            <label for="password">Mot de Passe</label>
-                            <input id="password" name="password" class="form-control" type="text" required>
-                            <span id="error_lastname" class="text-danger"></span>
-                        </div>
+
+                        <button id="submit" type="submit" value="email" class="btn btn-primary center" onclick="ecran($(this).val(),'connection','connectionajax')">Se Connecter avec Son Email</button>
+                        <button id="submit" type="submit" value="num" class="btn btn-primary center" onclick="ecran($(this).val(),'connection','connectionajax')">Se Connecter avec Son Numéro</button>
+                <div class="panel-body" id="connection">
 
 
-                        <button id="submit" type="submit" value="submit" class="btn btn-primary center">Valider</button>
-
-                    </form>
 
                 </div>
             </div>
@@ -66,7 +56,33 @@
 
 </div>
 
-
+<script src="{{asset('acceuillogin/js/jquery-3.3.1.min.js')}}"></script>
+<script src="{{asset('acceuillogin/styles/bootstrap4/popper.js')}}"></script>
+<script src="{{asset('acceuillogin/styles/bootstrap4/bootstrap.min.js')}}"></script>
+<script src="{{asset('acceuillogin/plugins/greensock/TweenMax.min.js')}}"></script>
+<script src="{{asset('acceuillogin/plugins/greensock/TimelineMax.min.js')}}"></script>
+<script src="{{asset('acceuillogin/plugins/scrollmagic/ScrollMagic.min.js')}}"></script>
+<script src="{{asset('acceuillogin/plugins/greensock/animation.gsap.min.js')}}"></script>
+<script src="{{asset('acceuillogin/plugins/greensock/ScrollToPlugin.min.js')}}"></script>
+<script src="{{asset('acceuillogin/plugins/OwlCarousel2-2.2.1/owl.carousel.js')}}"></script>
+<script src="{{asset('acceuillogin/plugins/slick-1.8.0/slick.js')}}"></script>
+<script src="{{asset('acceuillogin/plugins/easing/easing.js')}}"></script>
+<script src="{{asset('acceuillogin/plugins/Isotope/isotope.pkgd.min.js')}}"></script>
+<script src="{{asset('acceuillogin/plugins/parallax-js-master/parallax.min.js')}}"></script>
+<script src="{{asset('acceuillogin/js/custom.js')}}"></script>
+<script>
+    function ecran(val, idvu, fichier, param) {
+        var req = $.ajax({
+            url: '{{URL::to('/ecran')}}',
+            type: "GET",
+            data: {val: val, fichier: fichier, param: param},
+            dataType: "html"
+        });
+        req.done(function (msg) {
+            $('#' + idvu).html(msg);
+        });
+    }
+</script>
 
 </body>
 

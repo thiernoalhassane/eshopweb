@@ -1,58 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Inscription</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="description" content="commerce boutique en ligne togo">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    {!! HTML::style('acceuillogin/styles/bootstrap4/bootstrap.min.css') !!}
-    {!! HTML::style('acceuillogin/styles/main_styles.css') !!}
-    {!! HTML::style('acceuillogin/styles/responsive.css') !!}
-    <link rel="stylesheet" href="administration/bootstrap/css/bootstrap.min.css">
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
-    <!-- Ionicons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- Select2 -->
-    <link rel="stylesheet" href="administration/plugins/select2/select2.min.css">
-    <!-- Theme style -->
-    <link rel="stylesheet" href="administration/dist/css/AdminLTE.min.css">
+<link rel="stylesheet" href="administration/bootstrap/css/bootstrap.min.css">
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+<!-- Ionicons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+<!-- Select2 -->
+<link rel="stylesheet" href="administration/plugins/select2/select2.min.css">
+<!-- Theme style -->
+<link rel="stylesheet" href="administration/dist/css/AdminLTE.min.css">
+
+@if($val == "email")
 
 
-</head>
 
-<body>
+<form  action="{{ url('/connect') }}" method="post">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-<div class="super_container">
-
-
-    @include('headerconnexion')
-
-    @include('formulaireadd')
-
-
-    <!-- Footer -->
+    <div class="form-group">
+        <label for="name">Email *</label>
+        <input id="name" name="name" class="form-control" type="email" required>
+        <span id="error_name" class="text-danger"></span>
+    </div>
 
 
-</div>
+    <div class="form-group">
+        <label for="password">Mot de Passe</label>
+        <input id="password" name="password" class="form-control" type="text" required>
+        <span id="error_lastname" class="text-danger"></span>
+    </div>
 
 
-<script src="{{asset('acceuillogin/js/jquery-3.3.1.min.js')}}"></script>
-<script src="{{asset('acceuillogin/styles/bootstrap4/popper.js')}}"></script>
-<script src="{{asset('acceuillogin/styles/bootstrap4/bootstrap.min.js')}}"></script>
-<script src="{{asset('acceuillogin/plugins/greensock/TweenMax.min.js')}}"></script>
-<script src="{{asset('acceuillogin/plugins/greensock/TimelineMax.min.js')}}"></script>
-<script src="{{asset('acceuillogin/plugins/scrollmagic/ScrollMagic.min.js')}}"></script>
-<script src="{{asset('acceuillogin/plugins/greensock/animation.gsap.min.js')}}"></script>
-<script src="{{asset('acceuillogin/plugins/greensock/ScrollToPlugin.min.js')}}"></script>
-<script src="{{asset('acceuillogin/plugins/OwlCarousel2-2.2.1/owl.carousel.js')}}"></script>
-<script src="{{asset('acceuillogin/plugins/slick-1.8.0/slick.js')}}"></script>
-<script src="{{asset('acceuillogin/plugins/easing/easing.js')}}"></script>
-<script src="{{asset('acceuillogin/plugins/Isotope/isotope.pkgd.min.js')}}"></script>
-<script src="{{asset('acceuillogin/plugins/parallax-js-master/parallax.min.js')}}"></script>
-<script src="{{asset('acceuillogin/js/custom.js')}}"></script>
-<!-- jQuery 2.2.3 -->
+    <button id="submit" type="submit" value="submit" class="btn btn-primary center">Valider</button>
+
+</form>
+
+@endif
+
+@if($val == "num")
+
+<form  action="{{ url('/connect') }}" method="post">
+    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+
+    <div class="form-group">
+        <label for="name">Numéro de Téléphone *</label>
+        <div class="input-group">
+            <input id="name" name="name" type="text" class="form-control" data-inputmask='"mask": "+999 99-99-99-99"' data-mask required>
+        </div>
+        <span id="error_name" class="text-danger"></span>
+    </div>
+
+
+    <div class="form-group">
+        <label for="password">Mot de Passe</label>
+        <input id="password" name="password" class="form-control" type="text" required>
+        <span id="error_lastname" class="text-danger"></span>
+    </div>
+
+
+    <button id="submit" type="submit" value="submit" class="btn btn-primary center">Valider</button>
+
+</form>
+
+
+
+
+
+@endif
+
 <script src="administration/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <!-- Bootstrap 3.3.6 -->
 <script src="administration/bootstrap/js/bootstrap.min.js"></script>
@@ -134,6 +147,3 @@
         });
     });
 </script>
-</body>
-
-</html>
