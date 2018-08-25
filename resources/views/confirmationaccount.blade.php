@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Connection</title>
+    <title>Confirmation compte</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="commerce boutique en ligne togo">
@@ -36,8 +36,9 @@
                 <div class="panel-heading">Confirmation</div>
 
 
-                <form action="{{ url('/connect') }}" method="post">
+                <form action="{{ url('/confirmation') }}" method="post">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="id" value="{{ $id }}">
 
 
                     <div class="form-group">

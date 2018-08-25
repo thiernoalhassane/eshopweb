@@ -35,11 +35,11 @@ Route::get('/product', 'AdminController@showProduct');
 
 Route::get('/bilan', 'AdminController@showBilan');
 
-Route::get(' /trader/{id}', 'AdminController@showTrader');
+Route::get('/trader/{id}', 'AdminController@showTrader');
 
-Route::get(' /explore/{id}', 'ProduitsController@explore');
+Route::get('/explore/{id}', 'ProduitsController@explore');
 
-Route::get(' /confirmationaccount', 'InscriptionController@confirmation');
+Route::get('/confirmationaccount/{id}', 'InscriptionController@confirmation')->name('confirmation');
 
 Route::get('/admin','AdminController@show');
 
@@ -58,3 +58,5 @@ Route::get('/ecran', function () {
 Route::post('/connect', 'ConnectionController@connect');
 
 Route::post('/inscription', 'InscriptionController@add');
+
+Route::post('/confirmation', 'InscriptionController@validate');
