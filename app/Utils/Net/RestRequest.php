@@ -10,6 +10,7 @@ namespace App\Utils\Net;
 use GuzzleHttp\Exception\RequestException;
 use Throwable;
 use \Illuminate\Support\Facades\Cache as Cache ;
+use \Illuminate\Support\Facades\Log as Log ;
 
 /**
  * Class RestRequest
@@ -20,11 +21,24 @@ use \Illuminate\Support\Facades\Cache as Cache ;
 class RestRequest
 {
     private static $singleton ;
+
+    /**
+     * Configuration de l'API REST.
+     * @var \App\ApiConfig
+     */
     protected $appConfig ;
+
+    /**
+     * Client HTTP custom.
+     * <p>Il ne lance pas d'exception en cas de réponses négatives du serveur.</p>
+     * @var \GuzzleHttp\Client
+     */
+    protected $httpClient ;
 
     private function __construct()
     {
         $this->appConfig = new \App\ApiConfig() ;
+        $this->httpClient = new \GuzzleHttp\Client(["base_uri"=>$this->appConfig->getUrlRest(), "http_errors"=>FALSE]) ;
     }
 
     public static function getInstance()
@@ -50,6 +64,58 @@ class RestRequest
         $client = new \GuzzleHttp\Client(["base_uri"=>$base_uri]) ;
         $response = $client->request("GET", $path, $params) ;
         return $response ;
+    }
+
+    /**
+     * @param string $path Chemin depuis l'url de base de l'API Open Trade.
+     * @param array $query Les parametres de l'URL.
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     */
+    public function get(string $path, array $query = [])
+    {
+        $params["query"] = $query ;
+        return $this->httpClient->request("GET", $path, $params) ;
+    }
+
+    /**
+     * Récupérer les catégories de l'API REST de Open Trade.
+     * @return mixed|null
+     * <p>
+     *   Renvoie null si le code du message est différent de 2000.<br/>
+     *   Renvoie les catégories sous forme de tableaux associatif si le code est 2000.
+     * </p>
+     * @throws RestRequestException Si le code du message est 4001.
+     */
+    public function getCategories()
+    {
+        $access_token = $this->getAccessToken() ;
+        if(!Cache::has("categories"))
+        {
+            Log::info("tentative de récupération des catégories") ;
+            $response = $this->get("api/categories",[
+                "client_id"=>$this->appConfig->getClientId(),
+                "access_token"=>$access_token
+            ]);
+            $categories = json_decode((string) $response->getBody()) ;
+
+            if($categories->code == 4001)
+            {
+                $msg = json_decode($categories->data, TRUE) ;
+                Log::critical("impossible de récupérer les catégories: message REST: {$msg['message']}");
+                throw new RestRequestException($msg["message"]) ;
+            }
+            elseif ($categories->code == 2000)
+            {
+                Log::info("mise en cache des catégories") ;
+                Cache::add("categories", json_decode($categories->data, TRUE), 1440) ;
+            }
+            else
+            {
+                Log::critical("impossible de récupérer les catégories: code REST: {$categories->code}");
+                return null ;
+            }
+        }
+        return Cache::get("categories") ;
     }
 
     /**

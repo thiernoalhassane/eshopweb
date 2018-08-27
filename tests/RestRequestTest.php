@@ -23,4 +23,17 @@ class RestRequestTest extends TestCase
             $this->fail($e->getMessage()) ;
         }
     }
+
+    public function testGetCategories()
+    {
+        try
+        {
+            $categories = \App\Utils\Net\RestRequest::getInstance()->getCategories() ;
+            $this->assertTrue($categories != null);
+            var_dump($categories) ;
+        }catch (\Exception $e)
+        {
+            $this->fail($e->getMessage()) ;
+        }
+    }
 }
