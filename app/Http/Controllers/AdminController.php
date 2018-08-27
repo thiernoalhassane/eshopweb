@@ -4,16 +4,57 @@ namespace App\Http\Controllers;
 
 use App\ApiConfig;
 use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use \Illuminate\Support\Facades\Cache as Cache;
+use \App\Utils\Net\RestRequest as RestRequest ;
+use \App\Utils\Net\RestRequestException as RestRequestException ;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends BaseController
 {
 
     public function show()
     {
-        return view('administration/administration ');
+        $categories = Cache::get("nomcategorie") ;
+        if(!Cache::has("nomcategorie"))
+        {
+            $rest_endpoint = new ApiConfig() ;
+            try
+            {
+                $access_token = RestRequest::getInstance()->getAccessToken() ;
+                // Récupération des catégories
+                $get_categories_reponse = RestRequest::getInstance()->simpleGet(
+                    $rest_endpoint->getUrlRest(),
+                    "api/categories",
+                    ["client_id"=>$rest_endpoint->getClientId(), "access_token"=>$access_token]) ;
+                Log::info("Récupération et mise en cache du jetton d'accès !");
+
+                $json = json_decode((string)$get_categories_reponse->getBody(), TRUE) ;
+
+                if($json["code"]==2000)
+                {
+                    $categories = json_decode($json["data"]) ;
+                    Cache::add("nomcategorie", $categories, 1440);
+                    Log::info("Récupération et mise en cache des catégories !");
+                }
+                elseif ($json["code"] == 4001)
+                {
+                    Log::critical("Erreur d'authentification de l'application !") ;
+                    return view("errors/app_unauthorized") ;
+                }
+            }catch (RestRequestException $rre)
+            {
+                Log::critical("Erreur d'authentification de l'application !") ;
+                return view("errors/app_unauthorized") ;
+            }
+        }
+
+        return view('administration/administration', ["categories"=>$categories]);
     }
 
     public function showProfile()
