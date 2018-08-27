@@ -39,7 +39,7 @@ class RestRequest
     /**
      * Cette fonction permet de faire une requête Http::GET et c'est tout.
      * @param string $base_uri L'url de base. ex: https://toto.com/
-     * @param strin $path Le chemin par rapport à $base_uri, sans / au début
+     * @param string $path Le chemin par rapport à $base_uri, sans / au début
      * @param array $query Les query parameters de l'url
      * @return mixed|\Psr\Http\Message\ResponseInterface
      */
@@ -49,6 +49,24 @@ class RestRequest
         $params["query"]=$query;
         $client = new \GuzzleHttp\Client(["base_uri"=>$base_uri]) ;
         $response = $client->request("GET", $path, $params) ;
+        return $response ;
+    }
+
+    /**
+     * @param string $base_uri L'url de base. ex: https://toto.com/
+     * @param string $path Le chemin par rapport à $base_uri, sans / au début
+     * @param array $multipart_data
+     * @param array $query Les query parameters de l'url. ex: ["client_id"=>"toto"]
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     */
+    public function postMultipart(string $base_uri, string $path, array $multipart_data, array $query = [])
+    {
+        $params["multipart"]=$multipart_data;
+        $params["query"]=$query;
+        $params["http_errors"] = false ;
+        $client = new \GuzzleHttp\Client(["base_uri"=>$base_uri]) ;
+
+        $response = $client->request("POST", $path, $params);
         return $response ;
     }
 
