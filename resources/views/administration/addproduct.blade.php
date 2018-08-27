@@ -5,48 +5,55 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form class="form-horizontal">
+        <form action="{{ url('/newproduct')  }}" class="form-horizontal" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+            <div class="alert-warning">
+                @if(isset($errors))
+                    @foreach($errors->all() as $error)
+                        <span class="">{{ $error }}</span>
+                    @endforeach
+                @endif
+            </div>
             <div class="box-body">
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Nom Produit *</label>
-
+                    <label class="col-sm-2 control-label">Libellé <i style="color: red">*</i></label>
                     <div class="col-sm-5">
-                        <input type="email" class="form-control" id="inputEmail3" placeholder="" required>
+                        <input type="text" name="wording" placeholder="Coca cola zéro" value="{{ old("wording") }}" required>
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputPassword3" class="col-sm-2 control-label">Description</label>
 
                     <div class="col-sm-10">
-                                    <textarea type="text" class="form-control" id="inputPassword3"
-                                              placeholder="Password">
-                                    </textarea>
+                        <textarea name="description" class="form-control" placeholder="Soda allégé sans sucre">
+                            {{ old("description") }}
+                        </textarea>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Prix *</label>
+                    <label class="col-sm-2 control-label">Prix <i style="color: red">*</i></label>
 
                     <div class="col-sm-5">
-                        <input type="email" class="form-control" id="inputEmail3" placeholder="" required>
+                        <input type="number" value="{{ old("price") }}" class="form-control" name="price" min="1" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Quantité *</label>
+                    <label class="col-sm-2 control-label">Quantité <i style="color: red">*</i></label>
 
                     <div class="col-sm-5">
-                        <input type="number" class="form-control" id="inputEmail3" placeholder="" required>
+                        <input type="number" name="quantity" value="{{ old("quantity") }}" class="form-control" min="1" required>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="inputEmail3" class="col-sm-2 control-label">Catégories *</label>
+                    <label for="inputEmail3" class="col-sm-2 control-label">Catégories <i style="color: red">*</i></label>
 
                     <div class="col-sm-5">
-                        <select class="form-control">
-                            <option>option 1</option>
-                            <option>option 2</option>
-                            <option>option 3</option>
-                            <option>option 4</option>
-                            <option>option 5</option>
+                        <select name="category_id" class="form-control">
+                            @if($categories != null)
+                                @foreach($categories as $category)
+                                    <option value="{{ $category->id }}">{{ $category->description }}</option>
+                                @endforeach
+                            @endif
                         </select>
                     </div>
                 </div>
@@ -54,21 +61,20 @@
                     <label for="inputEmail3" class="col-sm-2 control-label">Tags</label>
 
                     <div class="col-sm-5">
-                        <input type="email" class="form-control" id="inputEmail3" placeholder="">
+                        <input type="text" class="form-control" value="{{ old("tags") }}" name="tags" placeholder="coca,sprite,soda,boisson gazeuse">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="inputEmail3" class="col-sm-2 control-label">Image</label>
 
                     <div class="col-sm-5">
-                        <input type="file" id="exampleInputFile">
-
+                        <input type="file" name="picture" accept="image/png image/jpg image/jpeg" size="200">
                     </div>
                 </div>
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-                <button type="submit" class="btn btn-default">Annuler</button>
+                <button type="reset" class="btn btn-default">Annuler</button>
                 <button type="submit" class="btn btn-info pull-right">Valider</button>
             </div>
             <!-- /.box-footer -->
