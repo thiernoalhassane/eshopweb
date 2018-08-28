@@ -60,3 +60,5 @@ Route::post('/connect', 'ConnectionController@connect');
 Route::post('/inscription', 'InscriptionController@add');
 
 Route::post('/confirmation', 'InscriptionController@validate');
+
+Route::post('/email', 'InscriptionController@resend');

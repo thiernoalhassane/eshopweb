@@ -236,4 +236,73 @@ class InscriptionController extends BaseController
             */
         }
     }
+
+
+    public function resend(Request $request){
+
+        $email = e(Input::get('email'));
+
+
+        $client = new Client();
+        if (\Illuminate\Support\Facades\Cache::has('access_token')) {
+            $uri = new ApiConfig();
+
+
+            try {
+                $response = $client->request('POST', $uri->getUrlRest() . 'api/user/email/resend?client_id=' . $uri->getClientId() . '&access_token=' . \Illuminate\Support\Facades\Cache::get('access_token'),
+                    [
+                        'form_params' => [
+                            'email' => $email
+                        ]
+
+                    ]);
+
+
+            } catch (RequestException  $e) {
+                if ($e->hasResponse()) {
+                    $exception = (string)$e->getResponse()->getBody();
+                    $exception = json_decode($exception);
+                    //return redirect()->route('confirmation',['id' => $request->id])->with('message',$exception)  ;
+                    return redirect()->route('confirmation', ['id' => $request->id, 'donée' => $request->_token])->with('message', $exception->data->message);
+                }
+            }
+            $jsonid = \GuzzleHttp\json_decode($response->getBody()->getContents());
+            $data = \GuzzleHttp\json_decode($jsonid->data);
+
+            return redirect()->route('confirmation', ['id' => $request->id, 'donée' => $request->_token])->with('message', 'Clé de confirmation envoyé avec succès');
+
+
+        } else {
+
+            /*
+            $uri = new ApiConfig();
+            $json = file_get_contents($uri->getUrlAuth().'auth/authorization?client_id='.$uri->getClientId());
+            $result = \GuzzleHttp\json_decode($json);
+            \Illuminate\Support\Facades\Cache::put('access_token', $result->access_token, 60);
+            $value = \Illuminate\Support\Facades\Cache::get('access_token');
+            $donnees = file_get_contents($uri->getUrlRest().'api/categories?client_id='.$uri->getClientId().'&access_token='.\Illuminate\Support\Facades\Cache::get('access_token'));
+            $categoriejson = \GuzzleHttp\json_decode($donnees);
+            $categorie = $categoriejson->data;
+            $nom = \GuzzleHttp\json_decode($categorie);
+            \Illuminate\Support\Facades\Cache::put('nomcategorie', $nom, 1440);
+            $items = file_get_contents($uri->getUrlRest().'api/items?client_id='.$uri->getClientId().'&access_token='.\Illuminate\Support\Facades\Cache::get('access_token'));
+            $produit =  \GuzzleHttp\json_decode($items);
+            $produits = \GuzzleHttp\json_decode($produit->data);
+            \Illuminate\Support\Facades\Cache::put('produits', $produits, 10);
+            return view('acceuil',compact('nom','produits'));
+
+                             'name'  => $nom,
+                            'surname' => $pseudo,
+                            'email' => $email,
+                            'sex' => $sexe,
+                            'flooz' => $flooz,
+                            'phone' => $tel,
+                            'address' => $adresse,
+                            'password' => $password,
+                            'profile' => $profile
+            */
+        }
+    }
 }
+
+

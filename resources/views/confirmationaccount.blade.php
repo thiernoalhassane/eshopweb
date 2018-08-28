@@ -11,6 +11,10 @@
     {!! HTML::style('acceuillogin/styles/main_styles.css') !!}
     {!! HTML::style('acceuillogin/styles/responsive.css') !!}
     {!! HTML::style('inscriptiontemplate/bootstrap.min.css') !!}
+    {!! HTML::style('modal/bootstrap.min.css') !!}
+
+
+
 
     @if(Session::has('message'))
     @include('partials/error', ['type' => 'info', 'message' => Session::get('message') ])
@@ -52,12 +56,42 @@
 
                 </form>
 
-
+                <span class="float-right"><a href="#" class="btn btn-link"  data-toggle="modal" data-target="#myModal">
+  Renvoyer l'email de confirmation !</a></span>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Partie du modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h2 class="modal-title">Email de confirmation</h2>
+            </div>
+            <form action="{{ url('/email') }}" method="post">
+                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="id" value="{{ $id }}">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input id="email" name="email" class="form-control" type="email" required>
+                    <span id="error_lastname" class="text-danger"></span>
+                </div>
+            </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                <button type="submit" value="submit" class="btn btn-primary center" >Envoyer</button>
+            </div>
+        </div>
+
+    </div>
+</div>
 
 <!-- Footer -->
 
@@ -78,6 +112,8 @@
 <script src="{{asset('acceuillogin/plugins/Isotope/isotope.pkgd.min.js')}}"></script>
 <script src="{{asset('acceuillogin/plugins/parallax-js-master/parallax.min.js')}}"></script>
 <script src="{{asset('acceuillogin/js/custom.js')}}"></script>
+{!! HTML::script('modal/jquery.min.js') !!}
+{!! HTML::script('modal/bootstrap.min.js') !!}
 
 </body>
 
