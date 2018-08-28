@@ -61,7 +61,8 @@ Route::post('/inscription', 'InscriptionController@add');
 
 Route::post('/confirmation', 'InscriptionController@validate');
 
-// Pour les produits
+Route::post('/email', 'InscriptionController@resend');
+
 Route::post('/items/add', 'AdminController@addNewItem') ;
 
 //////////////////////////////////////////////////////////////////////
@@ -70,3 +71,5 @@ Route::post('/items/add', 'AdminController@addNewItem') ;
 Route::get("/errors/app_unauthorized", function (){
     return view("/errors/app_unauthorized") ;
 }) ;
+
+
