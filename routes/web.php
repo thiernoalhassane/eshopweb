@@ -60,3 +60,13 @@ Route::post('/connect', 'ConnectionController@connect');
 Route::post('/inscription', 'InscriptionController@add');
 
 Route::post('/confirmation', 'InscriptionController@validate');
+
+// Pour les produits
+Route::post('/items/add', 'AdminController@addNewItem') ;
+
+//////////////////////////////////////////////////////////////////////
+/// Les routes pour afficher des pages sans traitement ///////////////
+/// //////////////////////////////////////////////////////////////////
+Route::get("/errors/app_unauthorized", function (){
+    return view("/errors/app_unauthorized") ;
+}) ;
