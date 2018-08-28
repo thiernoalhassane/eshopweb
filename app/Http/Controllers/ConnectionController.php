@@ -48,23 +48,31 @@ class ConnectionController extends BaseController
 
         } else {
 
-            /*
+
             $uri = new ApiConfig();
             $json = file_get_contents($uri->getUrlAuth().'auth/authorization?client_id='.$uri->getClientId());
             $result = \GuzzleHttp\json_decode($json);
             \Illuminate\Support\Facades\Cache::put('access_token', $result->access_token, 60);
-            $value = \Illuminate\Support\Facades\Cache::get('access_token');
-            $donnees = file_get_contents($uri->getUrlRest().'api/categories?client_id='.$uri->getClientId().'&access_token='.\Illuminate\Support\Facades\Cache::get('access_token'));
-            $categoriejson = \GuzzleHttp\json_decode($donnees);
-            $categorie = $categoriejson->data;
-            $nom = \GuzzleHttp\json_decode($categorie);
-            \Illuminate\Support\Facades\Cache::put('nomcategorie', $nom, 1440);
-            $items = file_get_contents($uri->getUrlRest().'api/items?client_id='.$uri->getClientId().'&access_token='.\Illuminate\Support\Facades\Cache::get('access_token'));
-            $produit =  \GuzzleHttp\json_decode($items);
-            $produits = \GuzzleHttp\json_decode($produit->data);
-            \Illuminate\Support\Facades\Cache::put('produits', $produits, 10);
-            return view('acceuil',compact('nom','produits'));
-            */
+            $access_token = \Illuminate\Support\Facades\Cache::get('access_token') ;
+            try{
+                $response = $client->request('POST',$uri->getUrlRest().'api/user/signin?client_id='.$uri->getClientId().'&access_token='.$access_token,
+                    [
+                        'form_params' =>[
+                            'login' => $login,
+                            'password' => $password,
+                        ]
+                    ]);
+
+            }catch ( RequestException  $e){
+                if ($e->hasResponse()) {
+                    $exception = (string) $e->getResponse()->getBody();
+                    $exception = json_decode($exception);
+                    return redirect('connection')->with('message',$exception->data->message)  ;
+                }
+            }
+
+            return redirect('/')->with('bienvenue','Connection reussie')  ;
+
         }
 
 
