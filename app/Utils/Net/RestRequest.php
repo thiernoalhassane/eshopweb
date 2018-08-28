@@ -119,21 +119,39 @@ class RestRequest
     }
 
     /**
-     * @param string $base_uri L'url de base. ex: https://toto.com/
-     * @param string $path Le chemin par rapport à $base_uri, sans / au début
-     * @param array $multipart_data
-     * @param array $query Les query parameters de l'url. ex: ["client_id"=>"toto"]
-     * @return mixed|\Psr\Http\Message\ResponseInterface
+     * Cette fonction permet de faire une requête post avec l'encode multipart/form-data.
+     * @param string $path Le chemin par rapport à l'URL de base.
+     * @param array $multipart_data Les données en multipart comme le veut GuzzleHttp.
+     * @param array $query Les paramètres de l'URL sous la forme d'un tableau associatif.
+     * @return mixed|null NULL s'il y a une duplication de données
+     *         <p>En cas de succès, un tableau associatif représentant la nouvelle donnée créer</p>
+     * @throws RestRequestException Si le code de réponse est différent de 2001.
      */
-    public function postMultipart(string $base_uri, string $path, array $multipart_data, array $query = [])
+    public function postMultipart(string $path, array $multipart_data, array $query = [])
     {
         $params["multipart"]=$multipart_data;
-        $params["query"]=$query;
-        $params["http_errors"] = false ;
-        $client = new \GuzzleHttp\Client(["base_uri"=>$base_uri]) ;
+        $params["query"] = $query;
+        //var_dump($params["query"]);
+        Log::info("tentative d'ajout sur le web service");
 
-        $response = $client->request("POST", $path, $params);
-        return $response ;
+        $response = $this->httpClient->request("POST", $path, $params);
+        $json= json_decode((string)$response->getBody(), TRUE) ;
+        //var_dump($json) ;
+        //exit(0);
+        //var_dump((string)$response->getBody());
+        $data = json_decode($json["data"], TRUE) ;
+        //echo json_last_error_msg ()  ;
+        if($json["code"] === 2006)
+        {
+            Log::error("... : message rest: {$data["message"]}") ;
+            return null ;
+        }
+        elseif($json["code"] != 2001)
+        {
+            Log::error("impossible de faire un ajout : message rest: {$data["message"]}") ;
+            throw new RestRequestException($data["message"], $json["code"]) ;
+        }
+        return $data ;
     }
 
     /**
