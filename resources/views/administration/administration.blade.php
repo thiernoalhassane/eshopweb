@@ -103,8 +103,15 @@
             <div class="row">
                 <!-- Left col -->
                 <section class="col-lg-9 connectedSortable">
-                    <!-- Custom tabs (Charts with tabs)-->
-                    @include('administration/addproduct')
+
+                <!-- Message lié à l'ajout d'un produit -->
+                @if(Session::has('error_while_add_item'))
+                    @include('partials/error', ['type' => 'warning', 'message' => Session::get('error_while_add_item') ])
+                @elseif(Session::has('succes_while_add_item'))
+                    @include('partials/error', ['type' => 'success', 'message' => Session::get('succes_while_add_item') ])
+                @endif
+
+                @include('administration/addproduct')
                     <!-- Horizontal Form -->
 
                     <!-- /.nav-tabs-custom -->

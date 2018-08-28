@@ -1,0 +1,20 @@
+.box
+{
+    padding-top: 3%;
+    padding-bottom: 3%;
+    margin: auto;
+    width: 50%;
+}
+
+.ft-size-115 { font-size: 115%; }
+
+.no-border
+{
+    border: none 0px;
+    border-radius: 0px;
+}
+
+body
+{
+    font-family: cousine;
+}

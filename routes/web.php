@@ -62,3 +62,14 @@ Route::post('/inscription', 'InscriptionController@add');
 Route::post('/confirmation', 'InscriptionController@validate');
 
 Route::post('/email', 'InscriptionController@resend');
+
+Route::post('/items/add', 'AdminController@addNewItem') ;
+
+//////////////////////////////////////////////////////////////////////
+/// Les routes pour afficher des pages sans traitement ///////////////
+/// //////////////////////////////////////////////////////////////////
+Route::get("/errors/app_unauthorized", function (){
+    return view("/errors/app_unauthorized") ;
+}) ;
+
+
