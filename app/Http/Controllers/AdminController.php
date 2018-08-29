@@ -10,6 +10,7 @@ use \App\Utils\Net\RestRequest as RestRequest ;
 use \App\Utils\Net\RestRequestException as RestRequestException ;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class AdminController extends BaseController
@@ -146,6 +147,12 @@ class AdminController extends BaseController
                     break;
             }
         }
+    }
+
+    public function deconnect(Request $request)
+    {
+        $user = Cache::forget('user');
+        return redirect('/')->with('bienvenue', 'Vous etes déconnectés');
     }
 
     public function showProfile()
