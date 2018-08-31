@@ -155,7 +155,31 @@ class AdminController extends BaseController
 
     public function showProduct()
     {
-        return view('administration/listeproduit');
+        $user_items = null ;
+        try
+        {
+            $user_items = RestRequest::getInstance()->getItemsByUserId("5b809c6d6f9db627c638e57c"
+                , [
+                    "client_id"=>$this->rest_endpoint->getClientId(),
+                    "access_token"=>RestRequest::getInstance()->getAccessToken()
+                ]) ;
+        }catch (RestRequestException $rre)
+        {
+            try
+            {
+                Cache::forget("access_token"); Cache::forget("user:5b809c6d6f9db627c638e57c:items");
+                $user_items = RestRequest::getInstance()->getItemsByUserId("5b809c6d6f9db627c638e57c"
+                    , [
+                        "client_id"=>$this->rest_endpoint->getClientId(),
+                        "access_token"=>RestRequest::getInstance()->getAccessToken()
+                    ]) ;
+            }catch (RestRequestException $rre)
+            {
+                return view("errors/app_unauthorized")  ;
+            }
+        }
+
+        return view('administration/listeproduit', ["user_items"=>$user_items]);
     }
 
     public function showBilan()
