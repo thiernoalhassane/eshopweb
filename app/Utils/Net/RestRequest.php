@@ -177,6 +177,48 @@ class RestRequest
         return Cache::get("access_token") ;
         // Mise en cache
     }
+
+    /**
+     * Récupérer les produits d'un utilisateurs.
+     * Cela se fait soit en appelant le web service ou en utilisant les données du cache.
+     * @param string $user_id L'identifiant de l'utilisateur
+     * @param array $query
+     * @return mixed|null null s'il n'y a aucun produit ou les produits sous forme de tableau associatif.
+     * @throws RestRequestException
+     */
+    public function getItemsByUserId(string $user_id, array $query = [])
+    {
+        if($user_id == null OR strlen($user_id) < 0)
+        {
+            throw new \InvalidArgumentException("l'identifiant doit être non null et différent de \"\"") ;
+        }
+
+        if(!Cache::has("user:{$user_id}:items"))
+        {
+            $path = "api/items/user/{$user_id}";
+
+            $request = $this->get($path, $query);
+
+            $json = json_decode((string)$request->getBody(), TRUE) ;
+            $data = json_decode($json["data"], TRUE) ;
+            if($json["code"] === 2007)
+            {
+                Log::critical("impossible de récupérer les produits de l'utilisateur {$user_id}: code REST: {$json["code"]}");
+                return null ;
+            }
+            elseif ($json["code"] === 2000)
+            {
+                Log::info("Produits de l'utilisateur {$user_id} récupérés") ;
+                Cache::add("user:{$user_id}:items", $data, 180) ;
+            }
+            else
+            {
+                throw new RestRequestException($data['message'], $json["code"]) ;
+            }
+        }
+
+        return Cache::get("user:{$user_id}:items") ;
+    }
 }
 
 /**
