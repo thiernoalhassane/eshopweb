@@ -51,6 +51,16 @@ Route::get('/ecran', function () {
     return view($fichier, array('val' => $val, 'param' => $param));
 });
 
+// pour les produits
+Route::get('/admin/items/{id}/update', function ($id)
+{
+    return view("administration/items/updateForm",
+        [
+            'id'=>$id,
+            'categories'=>\App\Utils\Net\RestRequest::getInstance()->getCategories()
+        ]) ;
+}) ;
+
 /////////////////////////////////////////////////////////////////////
 /// Les Routes en post /////////////////////////////////////////////
 /// ///////////////////////////////////////////////////////////////
