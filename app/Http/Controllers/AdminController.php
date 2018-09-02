@@ -82,22 +82,22 @@ class AdminController extends BaseController
         $multipart = [
             [
                 "name"=>"wording",
-                "contents"=>strip_tags(trim(e(Input::get("wording"))))
+                "contents"=>e(Input::get("wording"))
             ],[
                 "name"=>"description",
-                "contents"=>strip_tags(trim(e(Input::get("description"))))
+                "contents"=>e(Input::get("description"))
             ],[
                 "name"=>"price",
-                "contents"=>strip_tags(trim(e(Input::get("price"))))
+                "contents"=>e(Input::get("price"))
             ],[
                 "name"=>"quantity",
-                "contents"=>strip_tags(trim(e(Input::get("quantity"))))
+                "contents"=>e(Input::get("quantity"))
             ],[
                 "name"=>"tags",
-                "contents"=>strip_tags(trim(e(Input::get("tags"))))
+                "contents"=>e(Input::get("tags"))
             ],[
                 "name"=>"category",
-                "contents"=>strip_tags(trim(e(Input::get("category_id"))))
+                "contents"=>e(Input::get("category_id"))
             ]
         ] ;
 
@@ -105,7 +105,7 @@ class AdminController extends BaseController
         if ($post->file('picture') != null) {
             array_push($multipart, [
                 "name"=>"picture",
-                "contents"=>$post->file("picture")->store("picture"),
+                "contents"=>fopen($post->file("picture")->getRealPath(), "r"),
                 "filename"=>$post->file("picture")->getClientOriginalName()
             ]) ;
         }
@@ -118,12 +118,20 @@ class AdminController extends BaseController
                 ->postMultipart("api/items/user/5b809c6d6f9db627c638e57c",
                     $multipart,
                     ["client_id"=>$this->rest_endpoint->getClientId(),"access_token"=>$access_token]) ;
-            //var_dump($reponse);
-            return redirect()->back(302)->with(
-                [
-                    "succes_while_add_item"=> "Produit ajouter avec succès !",
-                    "new_item"=>$new_item
-                ]);
+
+            // Mise à jour du cache ///////////////////////////////////////////////////////////
+            $new_item["trader"] = null ;
+            $new_item["category"] = null ;
+            $user_items = RestRequest::getInstance()->getItemsByUserId("5b809c6d6f9db627c638e57c"
+                , [
+                    "client_id"=>$this->rest_endpoint->getClientId(),
+                    "access_token"=>RestRequest::getInstance()->getAccessToken()
+                ]) ;
+            array_push($user_items, $new_item) ;
+            Cache::put("user:5b809c6d6f9db627c638e57c:items", $user_items, 60) ;
+            ////////////////////////////////////////////////////////////////////////////////////
+
+            return redirect()->back(302)->with(["succes_while_add_item"=> "Produit ajouter avec succès !"]);
         }catch (RestRequestException $rre)
         {
             switch ($rre->getCode())
