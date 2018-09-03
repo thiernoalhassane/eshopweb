@@ -23,11 +23,25 @@
 
 <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+        <div class="alert-warning">
+            @if(isset($errors))
+                @foreach($errors->all() as $error)
+                    <span class="">{{ $error }}</span>
+                @endforeach
+            @endif
+        </div>
         <!-- Content Header (Page header) -->
 
         <!-- Main content -->
         <section class="content">
             <div class="row">
+                <!-- Message lié à la mise à jour d'un produit -->
+                @if(Session::has('error_while_update_item'))
+                    @include('partials/error', ['type' => 'warning', 'message' => Session::get('error_while_update_item') ])
+                @elseif(Session::has('succes_while_update_item'))
+                    @include('partials/error', ['type' => 'success', 'message' => Session::get('succes_while_update_item') ])
+                @endif
+
                 <div class="col-xs-12">
                     <div class="box box-primary">
                         <div class="box-header with-border">
@@ -124,7 +138,7 @@
 {!! HTML::script('administration/plugins/fastclick/fastclick.js') !!}
 {!! HTML::script('administration/dist/js/app.min.js') !!}
 {!! HTML::script('administration/dist/js/demo.js') !!}
-{!! HTML::script('js/updateFormAjax.js') !!}
+{!! HTML::script('js/adminpanel.js') !!}
 <script>
     $(function () {
         $("#example1").DataTable();
