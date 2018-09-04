@@ -25,53 +25,60 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
             <li class="header">MENU</li>
+
             <li class="treeview">
                 <a href="#">
-                    <i class="fa fa-dashboard"></i> <span>Espace Boutique</span>
+                    <i class="fa fa-dashboard"></i> <span>Espace boutique</span>
                     <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li class="active"><a href="{{ url('/product')  }}"><i class="fa fa-circle-o"></i> Liste
-                            produits</a></li>
-                    <li><a href="{{ url('/bilan')  }}"><i class="fa fa-circle-o"></i> Bilan</a></li>
-                    <li><a href=""><i class="fa fa-files-o"></i>Statistiques</a></li>
-                    <li><a href=""><i class="fa fa-th"></i>Historique</a></li>
-                    <li><a href="#"><i class="fa fa-pie-chart"></i>Commande de vos clients</a></li>
-                </ul>
-            </li>
-
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-laptop"></i>
-                    <span>Vos Dépenses</span>
-                    <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href=""><i class="fa fa-circle-o"></i>Paniers</a></li>
-
-                </ul>
-            </li>
-            <li class="treeview">
-                <a href="#">
-                    <i class="fa fa-edit"></i> <span>Blogs</span>
-                    <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-                </a>
-                <ul class="treeview-menu">
-                    <li><a href=""><i class="fa fa-circle-o"></i> Création d'un Blog</a></li>
-                    <li><a href=""><i class="fa fa-circle-o"></i>Liste des blogs</a>
+                    <li class="active">
+                        <a href="{{ url('/product')  }}"><i class="fa fa-circle-o"></i> Liste des produits</a>
                     </li>
-
+                    <li>
+                        <a href="{{ url('/admin')  }}"><i class="fa fa-circle-o"></i>Ajouter un produit</a>
+                    </li>
+                    <li>
+                        <a href="{{ url('/bilan')  }}"><i class="fa fa-circle-o"></i>Bilan</a>
+                    </li>
+                    <li>
+                        <a href=""><i class="fa fa-pie-chart"></i>Statistiques</a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-shopping-basket"></i>Commandes des clients</a>
+                    </li>
                 </ul>
             </li>
-            <li><a href="{{ url('/trader')  }}"><i class="fa fa-book"></i> <span>Page du trader</span></a></li>
-
-
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-user"></i>
+                    <span>Espace client</span>
+                    <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href=""><i class="fa fa-shopping-bag"></i>Paniers</a></li>
+                    <li><a href=""><i class="fa fa-shopping-basket"></i>Commandes</a></li>
+                </ul>
+            </li>
+            <li class="treeview">
+                <a href="#">
+                    <i class="fa fa-user"></i>
+                    <span>Espace personnel</span>
+                    <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+                </a>
+                <ul class="treeview-menu">
+                    <li><a href="{{url("/profile")}}"><i class="fa fa-user"></i>Profile</a></li>
+                    <li><a href="#"><i class="fa fa-percent"></i>Abonnés</a></li>
+                    <li><a href="#"><i class="fa fa-percent"></i>Abonnement</a></li>
+                    <li><a href="#"><i class="fa fa-eject"></i>Déconnexion</a></li>
+                </ul>
+            </li>
         </ul>
     </section>
     <!-- /.sidebar -->
