@@ -41,22 +41,26 @@
                     <div class="box box-primary">
                         <div class="box-body box-profile">
                             <img class="profile-user-img img-responsive img-circle"
-                                 src="../../dist/img/user4-128x128.jpg" alt="User profile picture">
+                                 src="../../dist/img/user4-128x128.jpg" id="picturePreview" alt="User profile picture">
+                                <form class="col-sm-offset-2">
+                                    <input type="file" onchange="preview(this, 'picturePreview');"
+                                           class="filestyle" data-classButton="btn btn-primary"
+                                           data-input="false" data-classIcon="icon-plus"
+                                           name="profile" accept="image/png image/jpg image/jpeg"
+                                           data-buttonText="Charger une photo">
 
-                            <h3 class="profile-username text-center">Nina Mcintire</h3>
-
+                                    <h3 class="profile-username text-center">Nina Mcintire</h3>
+                                </form>
 
                             <ul class="list-group list-group-unbordered">
                                 <li class="list-group-item">
-                                    <b>Followers</b> <a class="pull-right">1,322</a>
+                                    <b>Abonnements</b> <a class="pull-right">1,322</a>
                                 </li>
                                 <li class="list-group-item">
-                                    <b>Following</b> <a class="pull-right">543</a>
+                                    <b>Abonnés</b> <a class="pull-right">543</a>
                                 </li>
 
                             </ul>
-
-
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -65,29 +69,17 @@
                     <!-- About Me Box -->
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Information Personnel</h3>
+                            <h3 class="box-title">Contacts</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <strong><i class="fa fa-map-marker margin-r-5"></i>Email</strong>
+                            <strong><i class="fa fa-envelope margin-r-5"></i>Email</strong>
 
                             <p class="text-muted">test@gmail.com</p>
 
                             <hr>
 
-                            <strong><i class="fa fa-map-marker margin-r-5"></i>Telephone</strong>
-
-                            <p class="text-muted">90088767</p>
-
-                            <hr>
-
-                            <strong><i class="fa fa-map-marker margin-r-5"></i>Flooz</strong>
-
-                            <p class="text-muted">90088767</p>
-
-                            <hr>
-
-                            <strong><i class="fa fa-map-marker margin-r-5"></i>Tmoney</strong>
+                            <strong><i class="fa fa-phone margin-r-5"></i>Téléphone</strong>
 
                             <p class="text-muted">90088767</p>
                         </div>
@@ -99,70 +91,69 @@
                 <div class="col-md-9">
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a href="#settings" data-toggle="tab">Parametrage</a></li>
+                            <li class="active"><a href="#settings" data-toggle="tab">Informations personnelles</a></li>
                             <li><a href="#timeline" data-toggle="tab">Résumé de vos transactions</a></li>
+                            <li><a href="#password" data-toggle="tab">Mot de passe</a></li>
+                            <li><a href="#danger_zone" data-toggle="tab">Zone dangereuse</a></li>
 
                         </ul>
                         <div class="tab-content">
                             <div class="active tab-pane" id="settings">
-                                <form class="form-horizontal">
+                                <form class="form-horizontal" action="{{url("/admin/profile/update")}}" method="post">
                                     <div class="form-group">
-                                        <label for="inputName" class="col-sm-2 control-label">Pseudo *</label>
+                                        <label for="name" class="col-sm-2 control-label">Nom *</label>
 
                                         <div class="col-sm-10">
-                                            <input type="email" class="form-control" id="inputName" placeholder="Name">
+                                            <input type="text" required class="form-control" id="name" placeholder="Nom">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="inputName" class="col-sm-2 control-label">Mot de Passe</label>
+                                        <label for="surname" class="col-sm-2 control-label">Prénom</label>
 
                                         <div class="col-sm-10">
-                                            <input type="email" class="form-control" id="inputName" placeholder="Name">
+                                            <input type="text" class="form-control" id="surname" placeholder="Prénom">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputEmail" class="col-sm-2 control-label">Email *</label>
+                                        <label for="email" class="col-sm-2 control-label">Email *</label>
 
                                         <div class="col-sm-10">
-                                            <input type="email" class="form-control" id="inputEmail"
-                                                   placeholder="Email">
+                                            <input type="email" required class="form-control" id="email" placeholder="Email">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputName" class="col-sm-2 control-label">Téléphone *</label>
+                                        <label for="phone" class="col-sm-2 control-label">Téléphone *</label>
 
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputName" placeholder="Name">
+                                            <input type="text" required
+                                                   class="form-control" data-inputmask='"mask": "+999 99-99-99-99"' data-mask
+                                                   id="phone" placeholder="+228 99-99-99-99">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputName" class="col-sm-2 control-label">Flooz *</label>
+                                        <label for="flooz" class="col-sm-2 control-label">N° Flooz</label>
 
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputName" placeholder="Name">
+                                        <input type="text"
+                                               class="form-control" data-inputmask='"mask": "+999 99-99-99-99"' data-mask
+                                               id="flooz" placeholder="+228 99-99-99-99">
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputName" class="col-sm-2 control-label">Tmoney *</label>
+                                        <label for="tmoney" class="col-sm-2 control-label">N° Tmoney</label>
 
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="inputName" placeholder="Name">
+                                        <input type="text"
+                                               class="form-control" data-inputmask='"mask": "+999 99-99-99-99"' data-mask
+                                               id="tmoney" placeholder="+228 99-99-99-99">
                                         </div>
                                     </div>
-
-                                    <div class="form-group">
-                                        <label for="inputName" class="col-sm-2 control-label">Photo</label>
-
-                                        <div class="col-sm-10">
-                                            <input type="file" id="exampleInputFile">
-                                        </div>
-                                    </div>
-
 
                                     <div class="form-group">
                                         <div class="col-sm-offset-2 col-sm-10">
-                                            <button type="submit" class="btn btn-danger">Valider</button>
+                                            <button type="submit" class="btn btn-primary">Valider</button>
+                                            <button class="btn btn-warning" type="reset">Effacer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -173,9 +164,7 @@
                                 <ul class="timeline timeline-inverse">
                                     <!-- timeline time label -->
                                     <li class="time-label">
-                        <span class="bg-red">
-                          10 Feb. 2014
-                        </span>
+                                        <span class="bg-red">10 Feb. 2014</span>
                                     </li>
                                     <!-- /.timeline-label -->
                                     <!-- timeline item -->
@@ -237,9 +226,7 @@
                                     <!-- END timeline item -->
                                     <!-- timeline time label -->
                                     <li class="time-label">
-                        <span class="bg-green">
-                          3 Jan. 2014
-                        </span>
+                                        <span class="bg-green">3 Jan. 2014</span>
                                     </li>
                                     <!-- /.timeline-label -->
                                     <!-- timeline item -->
@@ -267,8 +254,69 @@
                                 </ul>
                             </div>
                             <!-- /.tab-pane -->
+                            <div class="tab-pane" id="password">
+                                <form class="form-horizontal">
+                                    <div class="form-group">
+                                        <label for="current_pass" class="col-sm-2 control-label">
+                                            Mot de passe actuelle <i style="color: red">*</i>
+                                        </label>
 
+                                        <div class="col-sm-10">
+                                            <input type="password" class="form-control" id="current_pass" placeholder="Actuel mot de passe">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="new_pass" class="col-sm-2 control-label">
+                                            Nouveau mot de passe <i style="color: red">*</i>
+                                        </label>
 
+                                        <div class="col-sm-10">
+                                            <input type="password" class="form-control" id="new_pass" placeholder="Nouveau mot de passe">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="new_pass_bis" class="col-sm-2 control-label">
+                                            Confirmer le mot de passe <i style="color: red">*</i>
+                                        </label>
+
+                                        <div class="col-sm-10">
+                                            <input type="password" class="form-control" id="new_pass_bis" placeholder="Confirmer le mot de passe">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button class="btn btn-primary" type="submit">Valider</button>
+                                            <button class="btn btn-warning" type="reset">Effacer</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- /.tab-pane -->
+                            <div class="tab-pane" id="danger_zone">
+                                <div class="text-center">
+                                    <div class="alert alert-danger">
+                                        Les actions éffectuées ici sont irréversibles
+                                    </div>
+                                </div>
+                                <div>
+                                    <table class="table table-responsive-sm table-stripped">
+                                        <tbody>
+                                            <tr>
+                                                <td>Supprimer tout les produits</td>
+                                                <td><a class="btn btn-danger"><i class="fa fa-trash"></i></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Supprimer tour les abonnements</td>
+                                                <td><a class="btn btn-danger"><i class="fa fa-trash"></i></a></td>
+                                            </tr>
+                                            <tr>
+                                                <td>Supprimer le compte</td>
+                                                <td><a class="btn btn-danger"><i class="fa fa-trash"></i></a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                             <!-- /.tab-pane -->
                         </div>
                         <!-- /.tab-content -->
@@ -278,26 +326,24 @@
                 <!-- /.col -->
             </div>
             <!-- /.row -->
-
         </section>
         <!-- /.content -->
-
 
     </div>
     <!-- /.content-wrapper -->
     @include('administration/footer')
     @include('administration/settings')
+
 </div>
 <!-- ./wrapper -->
 {!! HTML::script('administration/plugins/jQuery/jquery-2.2.3.min.js') !!}
-
-
 {!! HTML::script('administration/bootstrap/js/bootstrap.min.js') !!}
 {!! HTML::script('administration/plugins/fastclick/fastclick.js') !!}
 {!! HTML::script('administration/dist/js/app.min.js') !!}
 {!! HTML::script('administration/plugins/slimScroll/jquery.slimscroll.min.js') !!}
 {!! HTML::script('administration/dist/js/demo.js') !!}
-
+{!! HTML::script('js/adminpanel.js') !!}
+{!! HTML::script('js/bootstrap-filestyle.min.js') !!}
 
 </body>
 </html>
