@@ -71,10 +71,13 @@ Route::post('/inscription', 'InscriptionController@add');
 
 Route::post('/confirmation', 'InscriptionController@validate');
 
+
 // Pour les produits, coté panneau d'administration
 Route::post('/admin/items/add', 'AdminController@addNewItem') ;
 
 Route::post('/admin/items/update', 'AdminController@updateItem') ;
+
+Route::post('/email', 'InscriptionController@resend');
 
 //////////////////////////////////////////////////////////////////////
 /// Les routes pour afficher des pages sans traitement ///////////////

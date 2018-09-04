@@ -97,7 +97,7 @@
                     </div>
                 </div>
                 <div class="panel-footer">
-                    <span class="float-right"><a href="#" class="btn btn-link">S'inscrire !</a></span>
+                    <span class="float-right"><a href="{{ url('/inscription')  }}" class="btn btn-link">S'inscrire !</a></span>
                     <span><a href="#" class="btn btn-link">Mot de passe oublié ?</a></span>
                 </div>
             </div>
