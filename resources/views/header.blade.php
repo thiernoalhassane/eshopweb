@@ -9,15 +9,16 @@
                 <div class="row">
                     <div class="col d-flex flex-row">
                         @if(\Illuminate\Support\Facades\Session::has('user') == true)
-        
-                        <div class="top_bar_contact_item">
-                            <div class="top_bar_icon">
-                                <div class="user_icon"><img src="images/user.svg" alt=""></div>
+                            <div class="top_bar_content ml-auto">
+                                <div class="top_bar_content ml-auto">
+                                    <div class="top_bar_user">
+                                        <div><a href="{{ url('/admin')  }}">Administrer</a></div>
+                                        <div></div>
+                                        <div><a href="{{ url('/deconnecter')  }}">Déconnectez-vous</a></div>
+                                        <div></div>
+                                    </div>
+                                </div>
                             </div>
-
-
-                            <a href="{{ url('/admin')  }}">Administrer</a></div>
-
                         @else
 
                         <div class="top_bar_content ml-auto">

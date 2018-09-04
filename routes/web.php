@@ -119,6 +119,14 @@ Route::post('/admin/items/update', 'AdminController@updateItem') ;
 
 Route::post('/email', 'InscriptionController@resend');
 
+// Pour les infos de l'utilisateir
+Route::post("/admin/profile/password", "AdminController@changePassword") ;
+
+
+Route::post("/admin/profile/update", "AdminController@updateProfile") ;
+
+Route::post('/email', 'InscriptionController@resend');
+
 //////////////////////////////////////////////////////////////////////
 /// Les routes pour afficher des pages sans traitement ///////////////
 /// //////////////////////////////////////////////////////////////////

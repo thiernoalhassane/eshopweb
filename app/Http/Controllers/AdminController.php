@@ -18,13 +18,37 @@ class AdminController extends BaseController
 
     protected $rest_endpoint ;
 
+    protected $user_profil ;
+
     public function __construct()
     {
         $this->rest_endpoint = new ApiConfig() ;
+        $this->user_profil = [
+            "name"=>Session::get("user")["name"],
+            "surname"=>Session::get("user")["surname"],
+            "profil"=>Session::get("user")["profil"],
+            "email"=>Session::get("user")["email"],
+            "phone"=>Session::get("user")["phone"],
+            "address"=>Session::get("user")["address"]
+        ] ;
     }
 
     public function show()
     {
+        if(!Session::has("user") || is_null(Session::get("user")) || !is_array(Session::get("user")))
+        {
+            return redirect("/connection", 302)->with(["error_while_access_to_backend"=>"Vous devez être connecté pour accéder à tout le site"]) ;
+        }
+
+        $user_profil = [
+            "name"=>Session::get("user")["name"],
+            "surname"=>Session::get("user")["surname"],
+            "profil"=>Session::get("user")["profil"],
+            "email"=>Session::get("user")["email"],
+            "phone"=>Session::get("user")["phone"],
+            "address"=>Session::get("user")["address"]
+        ] ;
+
         $categories = null ;
         try
         {
@@ -41,24 +65,41 @@ class AdminController extends BaseController
             }
         }
 
-        return view('administration/administration', ["categories"=>$categories]);
+        return view('administration/administration', ["categories"=>$categories, "user_profil"=>$user_profil]);
     }
 
+    /**
+     * Traite le formulaire de modification d'un produit.
+     * @param Request $post
+     * @return $this|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * <p>
+     *  En cas de succès redirige vers la page d'administration avec un tableau associatif.<br/>
+     *  Les deux clé sont:
+     *  <ul>
+     *      <li>succes_while_update_item: le message de succès</li>
+     * </ul>
+     * </p>
+     */
     public function updateItem(Request $post)
     {
+        if(!Session::has("user") || is_null(Session::get("user")) || !is_array(Session::get("user")))
+        {
+            return redirect("/connection", 302)->with(["error_while_access_to_backend"=>"Vous devez être connecté pour accéder à tout le site"]) ;
+        }
+
         $validator = $this->validateItemForm($post) ;
         if($validator->fails())
         {
             return redirect("/product", 302)->withErrors($validator) ;
         }
         $data = [
-                "wording"=>e(Input::get("wording")),
-                "description"=>e(Input::get("description")),
-                "price"=>(double)e(Input::get("price")),
-                "quantity"=>(int)e(Input::get("quantity")),
-                "category"=>["id"=>e(Input::get("category_id"))],
-                "tags"=>explode(",", e(Input::get("tags")))
-            ] ;
+            "wording"=>e(Input::get("wording")),
+            "description"=>e(Input::get("description")),
+            "price"=>(double)e(Input::get("price")),
+            "quantity"=>(int)e(Input::get("quantity")),
+            "category"=>["id"=>e(Input::get("category_id"))],
+            "tags"=>explode(",", e(Input::get("tags")))
+        ] ;
 
         if($post->file("picture") != null)
         {
@@ -74,7 +115,7 @@ class AdminController extends BaseController
                 $data, [
                 "client_id"=>$this->rest_endpoint->getClientId(),
                 "access_token"=>RestRequest::getInstance()->getAccessToken(),
-                ]);
+            ]);
             $json_response = json_decode((string) $request->getBody(), TRUE) ;
 
             if($json_response['status'] == "success")
@@ -97,7 +138,7 @@ class AdminController extends BaseController
 
                     // Cette redirection provoque une grave exception
                     return redirect("/admin/items/update", 302)->withInput()->with(["retry"=>1]) ;
-                break;
+                    break;
                 case 4004:
                     return redirect("/errors/unregistereduser", 302);
                 default:
@@ -152,6 +193,11 @@ class AdminController extends BaseController
      */
     public function addNewItem(Request $post)
     {
+        if(!Session::has("user") || is_null(Session::get("user")) || !is_array(Session::get("user")))
+        {
+            return redirect("/connection", 302)->with(["error_while_access_to_backend"=>"Vous devez être connecté pour accéder à tout le site"]) ;
+        }
+
         $validator = $this->validateItemForm($post);
         if($validator->fails())
         {
@@ -193,9 +239,10 @@ class AdminController extends BaseController
         // Tentative d'ajout d'un produit
         try
         {
+            $user_id = Session::get("user")['id'] ;
             $access_token = RestRequest::getInstance()->getAccessToken() ;
             $new_item = RestRequest::getInstance()
-                ->postMultipart("api/items/user/5b809c6d6f9db627c638e57c",
+                ->postMultipart("api/items/user/{$user_id}",
                     $multipart,
                     ["client_id"=>$this->rest_endpoint->getClientId(),"access_token"=>$access_token]) ;
 
@@ -245,15 +292,44 @@ class AdminController extends BaseController
 
     public function showProfile()
     {
-        return view('administration/profile ');
+        if(!Session::has("user") || is_null(Session::get("user")) || !is_array(Session::get("user")))
+        {
+            return redirect("/connection", 302)->with(["error_while_access_to_backend"=>"Vous devez être connecté pour accéder à tout le site"]) ;
+        }
+
+        $user_profil = [
+            "name"=>Session::get("user")["name"],
+            "surname"=>Session::get("user")["surname"],
+            "profil"=>Session::get("user")["profil"],
+            "email"=>Session::get("user")["email"],
+            "phone"=>Session::get("user")["phone"],
+            "address"=>Session::get("user")["address"]
+        ] ;
+
+        return view('administration/profile', ["user_profil"=>$user_profil]);
     }
 
     public function showProduct()
     {
+        if(!Session::has("user") || is_null(Session::get("user")) || !is_array(Session::get("user")))
+        {
+            return redirect("/connection", 302)->with(["error_while_access_to_backend"=>"Vous devez être connecté pour accéder à tout le site"]) ;
+        }
+
         $user_items = null ;
+        $user_id = Session::get("user")['id'] ;
+        $user_profil = [
+            "name"=>Session::get("user")["name"],
+            "surname"=>Session::get("user")["surname"],
+            "profil"=>Session::get("user")["profil"],
+            "email"=>Session::get("user")["email"],
+            "phone"=>Session::get("user")["phone"],
+            "address"=>Session::get("user")["address"]
+        ] ;
+
         try
         {
-            $user_items = RestRequest::getInstance()->getItemsByUserId("5b809c6d6f9db627c638e57c"
+            $user_items = RestRequest::getInstance()->getItemsByUserId($user_id
                 , [
                     "client_id"=>$this->rest_endpoint->getClientId(),
                     "access_token"=>RestRequest::getInstance()->getAccessToken(),
@@ -263,8 +339,8 @@ class AdminController extends BaseController
         {
             try
             {
-                Cache::forget("access_token"); Cache::forget("user:5b809c6d6f9db627c638e57c:items");
-                $user_items = RestRequest::getInstance()->getItemsByUserId("5b809c6d6f9db627c638e57c"
+                Cache::forget("access_token"); Cache::forget("user:5b34e9635390fd229c90b3d6:items");
+                $user_items = RestRequest::getInstance()->getItemsByUserId("5b34e9635390fd229c90b3d6"
                     , [
                         "client_id"=>$this->rest_endpoint->getClientId(),
                         "access_token"=>RestRequest::getInstance()->getAccessToken()
@@ -275,16 +351,36 @@ class AdminController extends BaseController
             }
         }
 
-        return view('administration/listeproduit', ["user_items"=>$user_items]);
+        return view('administration/listeproduit', ["user_items"=>$user_items, "user_profil"=>$user_profil]);
     }
 
     public function showBilan()
     {
-        return view('administration/bilan');
+        if(!Session::has("user") || is_null(Session::get("user")) || !is_array(Session::get("user")))
+        {
+            return redirect("/connection", 302)->with(["error_while_access_to_backend"=>"Vous devez être connecté pour accéder à tout le site"]) ;
+        }
+
+        $user_profil = [
+            "name"=>Session::get("user")["name"],
+            "surname"=>Session::get("user")["surname"],
+            "profil"=>Session::get("user")["profil"],
+            "email"=>Session::get("user")["email"],
+            "phone"=>Session::get("user")["phone"],
+            "address"=>Session::get("user")["address"]
+        ] ;
+
+
+        return view('administration/bilan', ["user_profil"=>$user_profil]);
     }
 
     public function showTrader($id)
     {
+        if(!Session::has("user") || is_null(Session::get("user")) || !is_array(Session::get("user")))
+        {
+            return redirect("/connection", 302)->with(["error_while_access_to_backend"=>"Vous devez être connecté pour accéder à tout le site"]) ;
+        }
+
         if (\Illuminate\Support\Facades\Cache::has('access_token') && \Illuminate\Support\Facades\Cache::has('nomcategorie')) {
 
             $nom = \Illuminate\Support\Facades\Cache::get('nomcategorie');
@@ -314,4 +410,67 @@ class AdminController extends BaseController
 
         }
     }
+
+    /**.
+     * Traite le formulaire de modification du mot de passe.
+     * @param Request $post
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
+    public function changePassword(Request $post)
+    {
+        if(!Session::has("user") || is_null(Session::get("user")) || !is_array(Session::get("user")))
+        {
+            return redirect("/connection", 302)->with(["error_while_access_to_backend"=>"Vous devez être connecté pour accéder à tout le site"]) ;
+        }
+
+        $validation = Validator::make($post->all(),
+            [
+                "current_pass"=>"required",
+                "new_pass"=>"required",
+                "new_pass_bis"=>"required"
+            ],[
+                "required"=>"Le champ :attribute est obligatoire"
+            ]) ;
+
+        if($validation->fails())
+        {
+            return redirect()->back(302)->withErrors($validation) ;
+        }
+
+        $data = [
+            "old_pass"=>e(Input::get("current_pass")),
+            "new_pass"=>e(Input::get("new_pass")),
+            "new_pass_bis"=>e(Input::get("new_pass_bis"))
+        ] ;
+
+        try
+        {
+            $access_token = RestRequest::getInstance()->getAccessToken() ;
+            $user_id = Session::get("user")['id'] ;
+            $request = RestRequest::getInstance()->put("api/user/{$user_id}/password", "form_params", $data,
+            [
+                "access_token"=>$access_token,
+                "client_id"=>$this->rest_endpoint->getClientId()
+            ]) ;
+
+            $response = json_decode((string) $request->getBody(), TRUE) ;
+
+            if($response["status"] == "success")
+            {
+                return redirect()->back(302)->with(
+                    ["success_while_submit_form"=>$response["data"]["message"]]) ;
+            }
+
+            return redirect()->back(302)->with(
+                ["error_while_submit_form"=>$response["data"]["message"]]) ;
+
+        }catch (RestRequestException $rre)
+        {
+            Cache::forget("access_token") ;
+            return redirect()->back(302)->with(
+                ["error_while_submit_form"=>$rre->getMessage()]) ;
+        }
+    }
+
+
 }
