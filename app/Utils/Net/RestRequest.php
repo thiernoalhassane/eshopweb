@@ -8,6 +8,7 @@
 
 namespace App\Utils\Net;
 use GuzzleHttp\Exception\RequestException;
+
 use Throwable;
 use \Illuminate\Support\Facades\Cache as Cache ;
 use \Illuminate\Support\Facades\Log as Log ;
@@ -48,33 +49,6 @@ class RestRequest
             self::$singleton = new RestRequest();
         }
         return self::$singleton ;
-    }
-
-    /**
-     * Cette fonction permet de faire une requête Http::GET et c'est tout.
-     * @param string $base_uri L'url de base. ex: https://toto.com/
-     * @param string $path Le chemin par rapport à $base_uri, sans / au début
-     * @param array $query Les query parameters de l'url
-     * @return mixed|\Psr\Http\Message\ResponseInterface
-     */
-    public function simpleGet(string $base_uri, string $path, array $query = [])
-    {
-        $params["http_errors"]=false ;
-        $params["query"]=$query;
-        $client = new \GuzzleHttp\Client(["base_uri"=>$base_uri]) ;
-        $response = $client->request("GET", $path, $params) ;
-        return $response ;
-    }
-
-    /**
-     * @param string $path Chemin depuis l'url de base de l'API Open Trade.
-     * @param array $query Les parametres de l'URL.
-     * @return mixed|\Psr\Http\Message\ResponseInterface
-     */
-    public function get(string $path, array $query = [])
-    {
-        $params["query"] = $query ;
-        return $this->httpClient->request("GET", $path, $params) ;
     }
 
     /**
@@ -119,6 +93,55 @@ class RestRequest
     }
 
     /**
+     * Récupérer le jetton d'accès à l'api REST.</br>
+     * Soit depuis le cache ou en faisant une requête Http::GET.
+     * @return mixed Le jetton d'acces.
+     * @throws RestRequestException Si il est impossible de récupérer l'access_token.
+     */
+    public function getAccessToken()
+    {
+        //echo $this->appConfig->getUrlAuth();
+        // Vérification dans le cache
+        if (!Cache::has('access_token')) {
+            $response = $this->simpleGet($this->appConfig->getUrlAuth(), "auth/authorization", ["client_id" => $this->appConfig->getClientId()]);
+            if ($response->getStatusCode() != 200) {
+                throw new RestRequestException($response->getBody()->getContents());
+            }
+            $access_token = json_decode((string)$response->getBody(), TRUE)["access_token"];
+            Cache::add("access_token", $access_token, 60);
+        }
+        return Cache::get("access_token");
+        // Mise en cache
+    }
+
+    /**
+     * Cette fonction permet de faire une requête Http::GET et c'est tout.
+     * @param string $base_uri L'url de base. ex: https://toto.com/
+     * @param string $path Le chemin par rapport à $base_uri, sans / au début
+     * @param array $query Les query parameters de l'url
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     */
+    public function simpleGet(String $base_uri, String $path, array $query = [])
+    {
+        $params["http_errors"] = false;
+        $params["query"] = $query;
+        $client = new \GuzzleHttp\Client(["base_uri" => $base_uri]);
+        $response = $client->request("GET", $path, $params);
+        return $response;
+    }
+
+    /**
+     * @param string $path Chemin depuis l'url de base de l'API Open Trade.
+     * @param array $query Les parametres de l'URL.
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     */
+    public function get(string $path, array $query = [])
+    {
+        $params["query"] = $query;
+        return $this->httpClient->request("GET", $path, $params);
+    }
+
+    /**
      * Cette fonction permet de faire une requête post avec l'encode multipart/form-data.
      * @param string $path Le chemin par rapport à l'URL de base.
      * @param array $multipart_data Les données en multipart comme le veut GuzzleHttp.
@@ -153,6 +176,7 @@ class RestRequest
         }
         return $data ;
     }
+
 
     /**
      * Récupérer le jetton d'accès à l'api REST.</br>
@@ -241,6 +265,8 @@ class RestRequest
         //dd($params) ;
         return $this->httpClient->request("PUT", $path, $params) ;
     }
+
+
 }
 
 /**

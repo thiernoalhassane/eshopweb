@@ -259,7 +259,7 @@
                                 <a href="{{ url('/profile')  }}" class="btn btn-default btn-flat">Profile</a>
                             </div>
                             <div class="pull-right">
-                                <a href="{{ url('/acceuil')  }}" class="btn btn-default btn-flat">Déconnection</a>
+                                <a href="{{ url('/deconnecter')  }}" class="btn btn-default btn-flat">Déconnection</a>
                             </div>
                         </li>
                     </ul>

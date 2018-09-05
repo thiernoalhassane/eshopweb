@@ -17,7 +17,9 @@ Route::get('/test', function () {
 /////////////////////////////////////////////////////
 /// Les Routes get /////////////////////////////////
 /// ///////////////////////////////////////////////
-Route::get('/', 'AcceuilController@show');
+Route::get('/', 'AcceuilController@show')->name('home');
+
+Route::get('/deconnecter', 'AdminController@deconnect');
 
 Route::get('/inscription', 'InscriptionController@show');
 
@@ -71,6 +73,7 @@ Route::post('/inscription', 'InscriptionController@add');
 
 Route::post('/confirmation', 'InscriptionController@validate');
 
+
 // Pour les produits, coté panneau d'administration
 Route::post('/admin/items/add', 'AdminController@addNewItem') ;
 
@@ -78,6 +81,8 @@ Route::post('/admin/items/update', 'AdminController@updateItem') ;
 
 // Pour les infos de l'utilisateir
 Route::post("/admin/profile/password", "AdminController@changePassword") ;
+
+Route::post('/email', 'InscriptionController@resend');
 
 //////////////////////////////////////////////////////////////////////
 /// Les routes pour afficher des pages sans traitement ///////////////
