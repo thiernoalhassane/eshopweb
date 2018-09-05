@@ -43,6 +43,18 @@ class AdminController extends BaseController
         return view('administration/administration', ["categories"=>$categories]);
     }
 
+    /**
+     * Traite le formulaire de modification d'un produit.
+     * @param Request $post
+     * @return $this|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * <p>
+     *  En cas de succès redirige vers la page d'administration avec un tableau associatif.<br/>
+     *  Les deux clé sont:
+     *  <ul>
+     *      <li>succes_while_update_item: le message de succès</li>
+     * </ul>
+     * </p>
+     */
     public function updateItem(Request $post)
     {
         $validator = $this->validateItemForm($post) ;
@@ -227,7 +239,7 @@ class AdminController extends BaseController
         $user_items = null ;
         try
         {
-            $user_items = RestRequest::getInstance()->getItemsByUserId("5b809c6d6f9db627c638e57c"
+            $user_items = RestRequest::getInstance()->getItemsByUserId("5b34e9635390fd229c90b3d6"
                 , [
                     "client_id"=>$this->rest_endpoint->getClientId(),
                     "access_token"=>RestRequest::getInstance()->getAccessToken(),
@@ -237,8 +249,8 @@ class AdminController extends BaseController
         {
             try
             {
-                Cache::forget("access_token"); Cache::forget("user:5b809c6d6f9db627c638e57c:items");
-                $user_items = RestRequest::getInstance()->getItemsByUserId("5b809c6d6f9db627c638e57c"
+                Cache::forget("access_token"); Cache::forget("user:5b34e9635390fd229c90b3d6:items");
+                $user_items = RestRequest::getInstance()->getItemsByUserId("5b34e9635390fd229c90b3d6"
                     , [
                         "client_id"=>$this->rest_endpoint->getClientId(),
                         "access_token"=>RestRequest::getInstance()->getAccessToken()
@@ -289,6 +301,11 @@ class AdminController extends BaseController
         }
     }
 
+    /**
+     * Valide le formulaire d'ajout ou de modification d'un produit.
+     * @param Request $post
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
     private function validateItemForm(Request $post)
     {
         // validation du formulaire
@@ -306,5 +323,60 @@ class AdminController extends BaseController
                 "not_regex"=>"Veullez saisir seulement des caractères alphanumériques"
             ]
         ]) ;
+    }
+
+    /**
+     * Traite le formulaire de modification du mot de passe.
+     * @param Request $post
+     * @return $this|\Illuminate\Http\RedirectResponse
+     */
+    public function changePassword(Request $post)
+    {
+        $validation = Validator::make($post->all(),
+            [
+                "current_pass"=>"required",
+                "new_pass"=>"required",
+                "new_pass_bis"=>"required"
+            ],[
+                "required"=>"Le champ :attribute est obligatoire"
+            ]) ;
+
+        if($validation->fails())
+        {
+            return redirect()->back(302)->withErrors($validation) ;
+        }
+
+        $data = [
+            "old_pass"=>e(Input::get("current_pass")),
+            "new_pass"=>e(Input::get("new_pass")),
+            "new_pass_bis"=>e(Input::get("new_pass_bis"))
+        ] ;
+
+        try
+        {
+            $access_token = RestRequest::getInstance()->getAccessToken() ;
+            $request = RestRequest::getInstance()->put("api/user/5b34e9635390fd229c90b3d6/password", "form_params", $data,
+            [
+                "access_token"=>$access_token,
+                "client_id"=>$this->rest_endpoint->getClientId()
+            ]) ;
+
+            $response = json_decode((string) $request->getBody(), TRUE) ;
+
+            if($response["status"] == "success")
+            {
+                return redirect()->back(302)->with(
+                    ["success_while_submit_form"=>$response["data"]["message"]]) ;
+            }
+
+            return redirect()->back(302)->with(
+                ["error_while_submit_form"=>$response["data"]["message"]]) ;
+
+        }catch (RestRequestException $rre)
+        {
+            Cache::forget("access_token") ;
+            return redirect()->back(302)->with(
+                ["error_while_submit_form"=>$rre->getMessage()]) ;
+        }
     }
 }

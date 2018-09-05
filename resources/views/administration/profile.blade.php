@@ -89,6 +89,16 @@
                 </div>
                 <!-- /.col -->
                 <div class="col-md-9">
+
+                    <!-- Gestion des méssages d'erreur et de succès pour le formulaire du mot de passe -->
+                    @if(Session::has("error_while_submit_form"))
+                        @include("partials.error",
+                        ["type"=>"warning", "message"=>Session::get("error_while_submit_form")])
+                    @elseif(Session::has("success_while_submit_form"))
+                        @include("partials.error",
+                        ["type"=>"success", "message"=>Session::get("success_while_submit_form")])
+                    @endif
+
                     <div class="nav-tabs-custom">
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#settings" data-toggle="tab">Informations personnelles</a></li>
@@ -255,14 +265,26 @@
                             </div>
                             <!-- /.tab-pane -->
                             <div class="tab-pane" id="password">
-                                <form class="form-horizontal">
+
+
+                                <!-- Erreur de validation -->
+                                <div class="alert-warning">
+                                    @if(isset($errors))
+                                        @foreach($errors->all() as $error)
+                                            <span class="">{{ $error }}</span>
+                                        @endforeach
+                                    @endif
+                                </div>
+
+                                <form action="{{url("/admin/profile/password")}}" method="post" class="form-horizontal">
+                                    {{csrf_field()}}
                                     <div class="form-group">
                                         <label for="current_pass" class="col-sm-2 control-label">
                                             Mot de passe actuelle <i style="color: red">*</i>
                                         </label>
 
                                         <div class="col-sm-10">
-                                            <input type="password" class="form-control" id="current_pass" placeholder="Actuel mot de passe">
+                                            <input type="password" class="form-control" name="current_pass" id="current_pass" placeholder="Actuel mot de passe">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -271,7 +293,7 @@
                                         </label>
 
                                         <div class="col-sm-10">
-                                            <input type="password" class="form-control" id="new_pass" placeholder="Nouveau mot de passe">
+                                            <input type="password" class="form-control" id="new_pass" name="new_pass" placeholder="Nouveau mot de passe">
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -280,7 +302,7 @@
                                         </label>
 
                                         <div class="col-sm-10">
-                                            <input type="password" class="form-control" id="new_pass_bis" placeholder="Confirmer le mot de passe">
+                                            <input type="password" class="form-control" id="new_pass_bis" name="new_pass_bis" placeholder="Confirmer le mot de passe">
                                         </div>
                                     </div>
                                     <div class="form-group">

@@ -5,7 +5,7 @@
  * Date: 31/08/18
  * Time: 07:35
  */
-    $items = \App\Utils\Net\RestRequest::getInstance()->getItemsByUserId("5b809c6d6f9db627c638e57c") ;
+    $items = \App\Utils\Net\RestRequest::getInstance()->getItemsByUserId("5b34e9635390fd229c90b3d6") ;
     $nbre_items = count($items) ;
     $item = null ;
     for($i=0; $i<$nbre_items/2; $i++)

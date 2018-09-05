@@ -76,6 +76,9 @@ Route::post('/admin/items/add', 'AdminController@addNewItem') ;
 
 Route::post('/admin/items/update', 'AdminController@updateItem') ;
 
+// Pour les infos de l'utilisateir
+Route::post("/admin/profile/password", "AdminController@changePassword") ;
+
 //////////////////////////////////////////////////////////////////////
 /// Les routes pour afficher des pages sans traitement ///////////////
 /// //////////////////////////////////////////////////////////////////
