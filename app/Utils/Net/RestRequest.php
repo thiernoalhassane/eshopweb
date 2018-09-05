@@ -176,6 +176,97 @@ class RestRequest
         }
         return $data ;
     }
+
+
+    /**
+     * Récupérer le jetton d'accès à l'api REST.</br>
+     * Soit depuis le cache ou en faisant une requête Http::GET.
+     * @return mixed Le jetton d'acces.
+     * @throws RestRequestException Si il est impossible de récupérer l'access_token.
+     */
+    public function getAccessToken()
+    {
+        //echo $this->appConfig->getUrlAuth();
+        // Vérification dans le cache
+        if(!Cache::has('access_token'))
+        {
+            $response = $this->simpleGet($this->appConfig->getUrlAuth(),"auth/authorization", ["client_id"=>$this->appConfig->getClientId()]) ;
+            if($response->getStatusCode() != 200)
+            {
+                throw new RestRequestException($response->getBody()->getContents()) ;
+            }
+            $access_token = json_decode((string) $response->getBody(), TRUE)["access_token"] ;
+            Cache::add("access_token", $access_token, 60) ;
+        }
+        return Cache::get("access_token") ;
+        // Mise en cache
+    }
+
+    /**
+     * Récupérer les produits d'un utilisateurs.
+     * Cela se fait soit en appelant le web service ou en utilisant les données du cache.
+     * @param string $user_id L'identifiant de l'utilisateur
+     * @param array $query
+     * @return mixed|null null s'il n'y a aucun produit ou les produits sous forme de tableau associatif.
+     * @throws RestRequestException
+     */
+    public function getItemsByUserId(string $user_id, array $query = [])
+    {
+        if($user_id == null OR strlen($user_id) < 0)
+        {
+            throw new \InvalidArgumentException("l'identifiant doit être non null et différent de \"\"") ;
+        }
+
+        if(!Cache::has("user:{$user_id}:items"))
+        {
+            $path = "api/items/user/{$user_id}";
+
+            $request = $this->get($path, $query);
+
+            $json = json_decode((string)$request->getBody(), TRUE) ;
+            $data = json_decode($json["data"], TRUE) ;
+            if($json["code"] === 2007)
+            {
+                Log::critical("impossible de récupérer les produits de l'utilisateur {$user_id}: code REST: {$json["code"]}");
+                return null ;
+            }
+            elseif ($json["code"] === 2000)
+            {
+                Log::info("Produits de l'utilisateur {$user_id} récupérés") ;
+                Cache::add("user:{$user_id}:items", $data, 180) ;
+            }
+            else
+            {
+                throw new RestRequestException($data['message'], $json["code"]) ;
+            }
+        }
+
+        return Cache::get("user:{$user_id}:items") ;
+    }
+
+    /**
+     * Fait une requête HTTP::PUT
+     * @param string $path
+     * @param string $body_type 'multipart', 'form_params', 'json'
+     * @param array $data
+     * @param array $query
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     * @throws \InvalidArgumentException si $body_type ne correspond à aucune valeur prédéfinie.
+     */
+    public function put(string $path, string $body_type, array $data, array $query = [])
+    {
+        $body_types = ['multipart', 'form_params', 'json'] ;
+        if(!in_array($body_type, $body_types))
+        {
+            throw new InvalidArgumentException("body_type doit avoir une des valeurs suivante: multipart, form_params ou json") ;
+        }
+        $params["query"]=$query;
+        $params[$body_type]=$data;
+        //dd($params) ;
+        return $this->httpClient->request("PUT", $path, $params) ;
+    }
+
+
 }
 
 /**

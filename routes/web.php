@@ -53,6 +53,16 @@ Route::get('/ecran', function () {
     return view($fichier, array('val' => $val, 'param' => $param));
 });
 
+// Renvoie le code HTML du formulaire de modification d'un produits
+Route::get('/admin/items/{id}/update', function ($id)
+{
+    return view("administration/items/updateForm",
+        [
+            'id'=>$id,
+            'categories'=>\App\Utils\Net\RestRequest::getInstance()->getCategories()
+        ]) ;
+}) ;
+
 /////////////////////////////////////////////////////////////////////
 /// Les Routes en post /////////////////////////////////////////////
 /// ///////////////////////////////////////////////////////////////
@@ -63,9 +73,13 @@ Route::post('/inscription', 'InscriptionController@add');
 
 Route::post('/confirmation', 'InscriptionController@validate');
 
-Route::post('/email', 'InscriptionController@resend');
 
-Route::post('/items/add', 'AdminController@addNewItem') ;
+// Pour les produits, coté panneau d'administration
+Route::post('/admin/items/add', 'AdminController@addNewItem') ;
+
+Route::post('/admin/items/update', 'AdminController@updateItem') ;
+
+Route::post('/email', 'InscriptionController@resend');
 
 //////////////////////////////////////////////////////////////////////
 /// Les routes pour afficher des pages sans traitement ///////////////
@@ -74,4 +88,6 @@ Route::get("/errors/app_unauthorized", function (){
     return view("/errors/app_unauthorized") ;
 }) ;
 
-
+Route::get("/errors/unregistereduser", function (){
+    return view("/errors/unregistered_user") ;
+}) ;

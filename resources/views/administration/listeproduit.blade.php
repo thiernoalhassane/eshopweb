@@ -21,64 +21,73 @@
     <!-- Left side column. contains the logo and sidebar -->
     @include('administration/menu')
 
-    <!-- Content Wrapper. Contains page content -->
+<!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+        <div class="alert-warning">
+            @if(isset($errors))
+                @foreach($errors->all() as $error)
+                    <span class="">{{ $error }}</span>
+                @endforeach
+            @endif
+        </div>
         <!-- Content Header (Page header) -->
-
 
         <!-- Main content -->
         <section class="content">
             <div class="row">
+                <!-- Message lié à la mise à jour d'un produit -->
+                @if(Session::has('error_while_update_item'))
+                    @include('partials/error', ['type' => 'warning', 'message' => Session::get('error_while_update_item') ])
+                @elseif(Session::has('succes_while_update_item'))
+                    @include('partials/error', ['type' => 'success', 'message' => Session::get('succes_while_update_item') ])
+                @endif
+
                 <div class="col-xs-12">
-
-
-                    <div class="box">
-                        <div class="box-header">
-                            <h3 class="box-title">Listes de vos produits</h3>
+                    <div class="box box-primary">
+                        <div class="box-header with-border">
+                            <h3 class="box-title">Liste de vos produits</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <table id="example1" class="table table-bordered table-striped">
-                                <thead>
-                                <tr>
-                                    <th>Nom du produit</th>
-                                    <th>Prix</th>
-                                    <th>Quantité</th>
-                                    <th>Actions</th>
+                            @if($user_items != null)
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Libellé</th>
+                                            <th>Prix</th>
+                                            <th>Quantité</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($user_items as $item)
+                                        <tr>
+                                            <td>{{ $item["wording"] }}</td>
+                                            <td>{{ $item["price"] }} FCFA</td>
+                                            <td>{{ $item["quantity"] }}</td>
+                                            <td>
+                                                <a title="consulter" href="{{ url("/explore/{$item['id']}") }}" class="btn btn-success"><i class="fa fa-eye"></i></a>
+                                                <button title="supprimer" class="btn btn-danger"><i class="fa fa-trash"></i></button>
 
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <td>Trident</td>
-                                    <td>Internet
-                                        Explorer 4.0
-                                    </td>
-                                    <td>Win 95+</td>
-                                    <td>
-                                        <form method="get" action="">
-                                            <input type="hidden" name="_token" value="">
-                                            <input type="hidden" name="id" value="">
-                                            <button class="b">Modifier</span>
-                                            </button>
-                                        </form>
-
-                                        <form method="POST" action="">
-                                            <input type="hidden" name="_token" value="{{csrf_token()}}">
-                                            <input type="hidden" name="id" value="">
-                                            <button class="b"
-                                                    onclick="return confirm('Voulez vous supprimer cet produit?')">
-                                                Supprimer</span>
-                                            </button>
-
-
-                                    </td>
-
-                                </tr>
-
-                                </tbody>
-
-                            </table>
+                                                <button type="button" onclick="@php echo "callItemUpdateForm('{$item['id']}')" @endphp"
+                                                        data-toggle="modal"
+                                                        data-target="#itemUpdateFormModal"
+                                                        title="modifier"
+                                                        class="btn btn-primary">
+                                                    <i class="fa fa-pencil"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            @else
+                                <div class="alert alert-primary">
+                                    <div class="text-muted text-center" style="font-family: Cousine; font-size: 2em">
+                                        Vous n'avez aucun produit enregistré !
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -90,6 +99,27 @@
 
         </section>
         <!-- /.content -->
+        <!-- modal for item update form -->
+        <div class="container">
+            <div class="modal fade" role="dialog" id="itemUpdateFormModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="bg-primary modal-header">
+                            <button type="button" class="close" data-dismiss="modal">X</button>
+                            <div class="modal-title">
+                                <h3 class="text-center">Modification</h3>
+                            </div>
+
+                        </div>
+                        <div class="modal-body">
+                            <div id="itemUpdateForm">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
     </div>
@@ -108,6 +138,7 @@
 {!! HTML::script('administration/plugins/fastclick/fastclick.js') !!}
 {!! HTML::script('administration/dist/js/app.min.js') !!}
 {!! HTML::script('administration/dist/js/demo.js') !!}
+{!! HTML::script('js/adminpanel.js') !!}
 <script>
     $(function () {
         $("#example1").DataTable();

@@ -19,7 +19,7 @@
                 <div class="form-group">
                     <label for="wording" class="col-sm-2 control-label">Libellé <i style="color: red">*</i></label>
                     <div class="col-sm-5">
-                        <input id="wording" type="text" name="wording" placeholder="Coca cola zéro" value="{{ old("wording") }}" required>
+                        <input class="form-control" id="wording" type="text" name="wording" placeholder="Coca cola zéro" value="{{ old("wording") }}" required>
                     </div>
                 </div>
 
