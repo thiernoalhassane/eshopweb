@@ -6,8 +6,11 @@ namespace App\Http\Controllers;
 use App\ApiConfig;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use Illuminate\Filesystem\Cache;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Session;
 
 class ConnectionController extends BaseController
 {
@@ -17,7 +20,7 @@ class ConnectionController extends BaseController
         return view("connection", $data);
     }
 
-    public function connect()
+    public function connect(Request $request)
     {
         $login= e(Input::get('name'));
         $password = e(Input::get('password'));
@@ -42,8 +45,16 @@ class ConnectionController extends BaseController
                     return redirect('connection')->with('message',$exception->data->message)  ;
                 }
             }
+            $jsonid = \GuzzleHttp\json_decode($response->getBody()->getContents());
+            $data = \GuzzleHttp\json_decode($jsonid->data, true);
 
-            return redirect('/')->with('bienvenue','Connection reussie')  ;
+
+            $user = \Illuminate\Support\Facades\Cache::put('user', $data, 180);
+
+
+            return redirect()->route('home')->with('bienvenue', 'Connection reussie');
+
+            // return redirect()->with('bienvenue','Connection reussie', compact('user'))  ;
 
 
         } else {
@@ -70,8 +81,17 @@ class ConnectionController extends BaseController
                     return redirect('connection')->with('message',$exception->data->message)  ;
                 }
             }
+            $jsonid = \GuzzleHttp\json_decode($response->getBody()->getContents());
+            $data = \GuzzleHttp\json_decode($jsonid->data, true);
+            $user = \Illuminate\Support\Facades\Cache::put('user', $data, 180);
 
-            return redirect('/')->with('bienvenue','Connection reussie')  ;
+
+            return redirect()->route('home')->with('bienvenue', 'Connection reussie');
+
+
+
+
+
 
         }
 
