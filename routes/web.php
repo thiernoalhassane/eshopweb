@@ -17,7 +17,9 @@ Route::get('/test', function () {
 /////////////////////////////////////////////////////
 /// Les Routes get /////////////////////////////////
 /// ///////////////////////////////////////////////
-Route::get('/', 'AcceuilController@show');
+Route::get('/', 'AcceuilController@show')->name('home');
+
+Route::get('/deconnecter', 'AdminController@deconnect');
 
 Route::get('/inscription', 'InscriptionController@show');
 

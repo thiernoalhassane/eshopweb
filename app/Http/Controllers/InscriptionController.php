@@ -10,8 +10,7 @@ use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Input;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
+
 
 class InscriptionController extends BaseController
 {
@@ -240,12 +239,13 @@ class InscriptionController extends BaseController
                 if ($e->hasResponse()) {
                     $exception = (string)$e->getResponse()->getBody();
                     $exception = json_decode($exception);
-                    //return redirect()->route('confirmation',['id' => $request->id])->with('message',$exception)  ;
+
                     return redirect()->route('confirmation', ['id' => $request->id, 'donée' => $request->_token])->with('message', $exception->data->message);
                 }
             }
             $jsonid = \GuzzleHttp\json_decode($response->getBody()->getContents());
-            $data = \GuzzleHttp\json_decode($jsonid->data);
+            $data = \GuzzleHttp\json_decode($jsonid->data, true);
+            $user = \Illuminate\Support\Facades\Cache::put('user', $data, 180);
 
             return redirect('/')->with('bienvenue', 'Vous etes inscrit au site bonne navigation');
 
@@ -278,7 +278,10 @@ class InscriptionController extends BaseController
             $jsonid = \GuzzleHttp\json_decode($response->getBody()->getContents());
             $data = \GuzzleHttp\json_decode($jsonid->data);
 
+            $user = \Illuminate\Support\Facades\Cache::put('user', $data->user, 180);
+
             return redirect('/')->with('bienvenue', 'Vous etes inscrit au site bonne navigation');
+
         }
     }
 
