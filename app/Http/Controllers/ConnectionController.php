@@ -49,7 +49,7 @@ class ConnectionController extends BaseController
             $data = \GuzzleHttp\json_decode($jsonid->data, true);
 
 
-            $user = Session::put('user', $data);
+            $user = Session::put('user', $data['user']);
 
 
             return redirect()->route('home')->with('bienvenue', 'Connection reussie');
@@ -83,7 +83,8 @@ class ConnectionController extends BaseController
             }
             $jsonid = \GuzzleHttp\json_decode($response->getBody()->getContents());
             $data = \GuzzleHttp\json_decode($jsonid->data, true);
-            $user = Session::put('user', $data);
+
+            $user = Session::put('user', $data['user']);
 
 
             return redirect()->route('home')->with('bienvenue', 'Connection reussie');

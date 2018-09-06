@@ -245,7 +245,7 @@ class InscriptionController extends BaseController
             }
             $jsonid = \GuzzleHttp\json_decode($response->getBody()->getContents());
             $data = \GuzzleHttp\json_decode($jsonid->data, true);
-            $user = Session::put('user', $data);
+            $user = Session::put('user', $data['user']);
 
             return redirect('/')->with('bienvenue', 'Vous etes inscrit au site bonne navigation');
 
@@ -278,7 +278,7 @@ class InscriptionController extends BaseController
             $jsonid = \GuzzleHttp\json_decode($response->getBody()->getContents());
             $data = \GuzzleHttp\json_decode($jsonid->data);
 
-            $user = Session::put('user', $data);
+            $user = Session::put('user', $data['user']);
 
             return redirect('/')->with('bienvenue', 'Vous etes inscrit au site bonne navigation');
 
