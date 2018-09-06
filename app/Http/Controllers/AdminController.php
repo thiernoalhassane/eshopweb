@@ -118,6 +118,25 @@ class AdminController extends BaseController
         }
     }
 
+    private function validateItemForm(Request $post)
+    {
+        // validation du formulaire
+        return Validator::make($post->all(),
+            [
+                "wording" => "required|not_regex:/^[ \\._@!?,;\\d]+$/|",
+                "description" => "nullable|not_regex:/^[ \\._@!?,;\\d]+$/",
+                "price" => "required|min:1",
+                "quantity" => "required|min:1",
+                "picture" => "nullable|mimetypes:image/png,image/jpeg,image/jpg",
+                "category_id" => "required"
+                , [
+                "required" => "Le champ :attribute est obligatoire !",
+                "mimetypes" => "Les images doivent être de ce type :mimtypes",
+                "not_regex" => "Veullez saisir seulement des caractères alphanumériques"
+            ]
+            ]);
+    }
+
     /**
      * Traite le formulaire d'ajout d'un produit.
      * @param Request $post
@@ -220,7 +239,7 @@ class AdminController extends BaseController
 
     public function deconnect(Request $request)
     {
-        $user = Cache::forget('user');
+        $user = Session::forget('user');
         return redirect('/')->with('bienvenue', 'Vous etes déconnectés');
     }
 
@@ -294,24 +313,5 @@ class AdminController extends BaseController
             return view('administration/vendeur', compact('nom', 'vendeur'));
 
         }
-    }
-
-    private function validateItemForm(Request $post)
-    {
-        // validation du formulaire
-        return Validator::make($post->all(),
-        [
-            "wording"=>"required|not_regex:/^[ \\._@!?,;\\d]+$/|",
-            "description"=>"nullable|not_regex:/^[ \\._@!?,;\\d]+$/",
-            "price"=>"required|min:1",
-            "quantity"=>"required|min:1",
-            "picture"=>"nullable|mimetypes:image/png,image/jpeg,image/jpg",
-            "category_id"=>"required"
-            ,[
-                "required"=>"Le champ :attribute est obligatoire !",
-                "mimetypes"=>"Les images doivent être de ce type :mimtypes",
-                "not_regex"=>"Veullez saisir seulement des caractères alphanumériques"
-            ]
-        ]) ;
     }
 }
