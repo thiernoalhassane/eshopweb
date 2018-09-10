@@ -3,17 +3,244 @@
 namespace App\Http\Controllers;
 
 use App\ApiConfig;
-use Illuminate\Foundation\Bus\DispatchesJobs;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use \Illuminate\Support\Facades\Cache as Cache;
+use \App\Utils\Net\RestRequest as RestRequest ;
+use \App\Utils\Net\RestRequestException as RestRequestException ;
+use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends BaseController
 {
 
+    protected $rest_endpoint ;
+
+    public function __construct()
+    {
+        $this->rest_endpoint = new ApiConfig() ;
+    }
+
     public function show()
     {
-        return view('administration/administration ');
+        $categories = null ;
+        try
+        {
+            $categories = RestRequest::getInstance()->getCategories() ;
+        }catch (RestRequestException $rre)
+        {
+            try
+            {
+                Cache::forget("access_token"); Cache::forget("categories");
+                $categories = RestRequest::getInstance()->getCategories() ;
+            }catch (RestRequestException $rre)
+            {
+                return view("errors/app_unauthorized")  ;
+            }
+        }
+
+        return view('administration/administration', ["categories"=>$categories]);
+    }
+
+    public function updateItem(Request $post)
+    {
+        $validator = $this->validateItemForm($post) ;
+        if($validator->fails())
+        {
+            return redirect("/product", 302)->withErrors($validator) ;
+        }
+        $data = [
+                "wording"=>e(Input::get("wording")),
+                "description"=>e(Input::get("description")),
+                "price"=>(double)e(Input::get("price")),
+                "quantity"=>(int)e(Input::get("quantity")),
+                "category"=>["id"=>e(Input::get("category_id"))],
+                "tags"=>explode(",", e(Input::get("tags")))
+            ] ;
+
+        if($post->file("picture") != null)
+        {
+            $data["picture"] = "data:image/{$post->file('picture')->extension()};base64,".base64_encode(file_get_contents($post->file('picture')->getRealPath())) ;
+        }
+
+        try
+        {
+            // Le requête vers le web service
+            $request = RestRequest::getInstance()->put(
+                "api/items/user/5b809c6d6f9db627c638e57c/".e(Input::get("id")),
+                "json",
+                $data, [
+                "client_id"=>$this->rest_endpoint->getClientId(),
+                "access_token"=>RestRequest::getInstance()->getAccessToken(),
+                ]);
+            $json_response = json_decode((string) $request->getBody(), TRUE) ;
+
+            if($json_response['status'] == "success")
+            {
+                Cache::forget("user:5b809c6d6f9db627c638e57c:items") ;
+
+                // Retour vers la page précédente
+                return redirect()->back(302)->with(["succes_while_update_item"=> "Produit modifié avec succès !"]);
+            }
+
+            switch ((int)$json_response["code"])
+            {
+                case 4001:
+                    if(Session::has("retry") AND Session::has("retry") != null)
+                    {
+                        Session::forget(["retry"]) ;
+                        return redirect("/errors/app_unauthorized", 302) ;
+                    }
+                    Cache::forget("access_token") ;
+
+                    // Cette redirection provoque une grave exception
+                    return redirect("/admin/items/update", 302)->withInput()->with(["retry"=>1]) ;
+                break;
+                case 4004:
+                    return redirect("/errors/unregistereduser", 302);
+                default:
+                    return redirect()->back()->with(["error_while_update_item"=>$json_response['data']['message']]) ;
+                    break;
+            }
+        }catch (RestRequestException $rre)
+        {
+            if(Session::has("retry") AND Session::has("retry") != null)
+            {
+                Session::forget(["retry"]) ;
+                return redirect("/errors/app_unauthorized", 302) ;
+            }
+            Cache::forget("access_token") ;
+
+            // Cette redirection provoque une grave exception
+            return redirect("/admin/items/update", 302)->withInput()->with(["retry"=>1]) ;
+        }
+    }
+
+    private function validateItemForm(Request $post)
+    {
+        // validation du formulaire
+        return Validator::make($post->all(),
+            [
+                "wording" => "required|not_regex:/^[ \\._@!?,;\\d]+$/|",
+                "description" => "nullable|not_regex:/^[ \\._@!?,;\\d]+$/",
+                "price" => "required|min:1",
+                "quantity" => "required|min:1",
+                "picture" => "nullable|mimetypes:image/png,image/jpeg,image/jpg",
+                "category_id" => "required"
+                , [
+                "required" => "Le champ :attribute est obligatoire !",
+                "mimetypes" => "Les images doivent être de ce type :mimtypes",
+                "not_regex" => "Veullez saisir seulement des caractères alphanumériques"
+            ]
+            ]);
+    }
+
+    /**
+     * Traite le formulaire d'ajout d'un produit.
+     * @param Request $post
+     * @return $this|\Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\View\View
+     * <p>
+     *  En cas de succès redirige vers la page d'administration avec un tableau associatif.<br/>
+     *  Les deux clé sont:
+     *  <ul>
+     *      <li>succes_while_add_item: le message de succès</li>
+     *      <li>new_item: le produit sous la forme d'un tableau associatif</li>
+     * </ul>
+     * </p>
+     */
+    public function addNewItem(Request $post)
+    {
+        $validator = $this->validateItemForm($post);
+        if($validator->fails())
+        {
+            $errors = $validator->errors() ;
+            return redirect("/admin")->withInput()->withErrors($validator) ;
+        }
+        // Requête vers le web service
+        $multipart = [
+            [
+                "name"=>"wording",
+                "contents"=>e(Input::get("wording"))
+            ],[
+                "name"=>"description",
+                "contents"=>e(Input::get("description"))
+            ],[
+                "name"=>"price",
+                "contents"=>e(Input::get("price"))
+            ],[
+                "name"=>"quantity",
+                "contents"=>e(Input::get("quantity"))
+            ],[
+                "name"=>"tags",
+                "contents"=>e(Input::get("tags"))
+            ],[
+                "name"=>"category",
+                "contents"=>e(Input::get("category_id"))
+            ]
+        ] ;
+
+        // Ajout de l'image dans le tableau
+        if ($post->file('picture') != null) {
+            array_push($multipart, [
+                "name"=>"picture",
+                "contents"=>fopen($post->file("picture")->getRealPath(), "r"),
+                "filename"=>$post->file("picture")->getClientOriginalName()
+            ]) ;
+        }
+
+        // Tentative d'ajout d'un produit
+        try
+        {
+            $access_token = RestRequest::getInstance()->getAccessToken() ;
+            $new_item = RestRequest::getInstance()
+                ->postMultipart("api/items/user/5b809c6d6f9db627c638e57c",
+                    $multipart,
+                    ["client_id"=>$this->rest_endpoint->getClientId(),"access_token"=>$access_token]) ;
+
+            // Mise à jour du cache ///////////////////////////////////////////////////////////
+            $new_item["trader"] = null ;
+            $new_item["category"] = null ;
+            $user_items = RestRequest::getInstance()->getItemsByUserId("5b809c6d6f9db627c638e57c"
+                , [
+                    "client_id"=>$this->rest_endpoint->getClientId(),
+                    "access_token"=>RestRequest::getInstance()->getAccessToken(),
+                    "limit"=>100
+                ]) ;
+            array_push($user_items, $new_item) ;
+            Cache::put("user:5b809c6d6f9db627c638e57c:items", $user_items, 60) ;
+            ////////////////////////////////////////////////////////////////////////////////////
+
+            return redirect()->back(302)->with(["succes_while_add_item"=> "Produit ajouter avec succès !"]);
+        }catch (RestRequestException $rre)
+        {
+            switch ($rre->getCode())
+            {
+                case 4001:
+                    // Si on a déjà essayer de retraiter le formulaire on affiche la page d'erreur.
+                    if(e(Input::get("retry")) != null)
+                    {
+                        return view("errors/app_unauthorized") ;
+                    }
+                    // Nouvelle tentative d'envoie
+                    Cache::forget("access_token"); Cache::forget("categories");
+                    return redirect("/items/add?retry=1", 302)->withInput($multipart) ;
+                    break;
+                case 4004:
+                    break;
+                    return view("errors/non_registered_user") ;
+                default:
+                    return redirect("/items/add")->with("error_while_add_item", $rre->getMessage())->withInput($multipart) ;
+                    break;
+            }
+        }
+    }
+
+    public function deconnect(Request $request)
+    {
+        $user = Session::forget('user');
+        return redirect('/')->with('bienvenue', 'Vous etes déconnectés');
     }
 
     public function showProfile()
@@ -23,7 +250,32 @@ class AdminController extends BaseController
 
     public function showProduct()
     {
-        return view('administration/listeproduit');
+        $user_items = null ;
+        try
+        {
+            $user_items = RestRequest::getInstance()->getItemsByUserId("5b809c6d6f9db627c638e57c"
+                , [
+                    "client_id"=>$this->rest_endpoint->getClientId(),
+                    "access_token"=>RestRequest::getInstance()->getAccessToken(),
+                    "limit"=>100
+                ]) ;
+        }catch (RestRequestException $rre)
+        {
+            try
+            {
+                Cache::forget("access_token"); Cache::forget("user:5b809c6d6f9db627c638e57c:items");
+                $user_items = RestRequest::getInstance()->getItemsByUserId("5b809c6d6f9db627c638e57c"
+                    , [
+                        "client_id"=>$this->rest_endpoint->getClientId(),
+                        "access_token"=>RestRequest::getInstance()->getAccessToken()
+                    ]) ;
+            }catch (RestRequestException $rre)
+            {
+                return view("errors/app_unauthorized")  ;
+            }
+        }
+
+        return view('administration/listeproduit', ["user_items"=>$user_items]);
     }
 
     public function showBilan()
@@ -62,6 +314,4 @@ class AdminController extends BaseController
 
         }
     }
-
-
 }

@@ -10,19 +10,17 @@
 
                     <div class="form-group">
                         <label for="name">Nom * </label>
-                        <input id="name" name="name" class="form-control" type="text" required>
+                        <input id="name" name="name" class="form-control" type="text" value="{{ old('name') }}"
+                               required>
                         <span id="error_name" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label for="usurname">Prénom </label>
-                        <input id="usurname" name="usurname" class="form-control" type="text">
+                        <label for="surname">Prénom * </label>
+                        <input id="surname" name="surname" class="form-control" type="text"
+                               value="{{ old('surname') }}">
                         <span id="error_lastname" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
-                        <label for="surname">Pseudo *</label>
-                        <input id="surname" name="surname" class="form-control" type="text" required>
-                        <span id="error_age" class="text-danger"></span>
-                    </div>
+
                     <div class="form-group">
                         <label for="password">Mot de Passe</label>
                         <input id="password" name="password" class="form-control" type="text" required>
@@ -30,7 +28,8 @@
                     </div>
                     <div class="form-group">
                         <label for="email">Email *</label>
-                        <input type="email" id="email" name="email" class="form-control" required>
+                        <input type="email" id="email" name="email" class="form-control" value="{{ old('email') }}"
+                               required>
                         <span id="error_phone" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -38,14 +37,16 @@
                         <div class="input-group">
 
                             <input type="text" id="phone" name="phone" class="form-control"
-                                   data-inputmask='"mask": "+999 99-99-99-99"' data-mask required>
+                                   data-inputmask='"mask": "+999 99-99-99-99"' data-mask value="{{ old('phone') }}"
+                                   required>
                         </div>
                         <span id="error_dob" class="text-danger"></span>
                     </div>
 
                     <div class="form-group">
                         <label for="address">Adresse *</label>
-                        <input type="text" id="address" name="address" class="form-control" required>
+                        <input type="text" id="address" name="address" class="form-control" value="{{ old('address') }}"
+                               required>
                         <span id="error_phone" class="text-danger"></span>
                     </div>
 

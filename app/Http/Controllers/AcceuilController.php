@@ -5,16 +5,24 @@ namespace App\Http\Controllers;
 use App\ApiConfig;
 use Illuminate\Routing\Controller as BaseController;
 use GuzzleHttp\Client;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Session;
 
 class AcceuilController extends BaseController
 {
 
   public function show()
   {
+
       if(\Illuminate\Support\Facades\Cache::has('access_token') && \Illuminate\Support\Facades\Cache::has('nomcategorie') && \Illuminate\Support\Facades\Cache::has('produits')){
 
           $nom = \Illuminate\Support\Facades\Cache::get('nomcategorie');
           $produits =   \Illuminate\Support\Facades\Cache::get('produits');
+
+          if (Session::has('user')) {
+              $user = Session::get('user');
+              return view('acceuil', compact('nom', 'produits', 'user'));
+          }
           return view('acceuil',compact('nom','produits'));
       } else {
 
@@ -33,6 +41,10 @@ class AcceuilController extends BaseController
           $produit =  \GuzzleHttp\json_decode($items);
           $produits = \GuzzleHttp\json_decode($produit->data);
           \Illuminate\Support\Facades\Cache::put('produits', $produits, 10);
+          if (Session::has('user')) {
+              $user = Session::get('user');
+              return view('acceuil', compact('nom', 'produits', 'user'));
+          }
           return view('acceuil',compact('nom','produits'));
      }
 

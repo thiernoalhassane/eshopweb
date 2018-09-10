@@ -8,12 +8,7 @@
         <div class="container">
             <div class="row">
                 <div class="col d-flex flex-row">
-                    <div class="top_bar_contact_item">
-                        <div class="top_bar_icon">
-                            <div class="user_icon"><img src="images/user.svg" alt=""></div>
-                        </div>
 
-                        <a href="{{ url('/admin')  }}">Administrer</a></div>
                     <div class="top_bar_content ml-auto">
                         <div class="top_bar_user">
                             <div class="user_icon"><img src="../images/user.svg" alt=""></div>
