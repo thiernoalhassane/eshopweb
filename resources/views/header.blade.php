@@ -8,7 +8,7 @@
             <div class="container">
                 <div class="row">
                     <div class="col d-flex flex-row">
-                        @if(\Illuminate\Support\Facades\Cache::has('user') == true)
+                        @if(\Illuminate\Support\Facades\Session::has('user') == true)
         
                         <div class="top_bar_contact_item">
                             <div class="top_bar_icon">

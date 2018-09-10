@@ -184,23 +184,7 @@ class RestRequest
      * @return mixed Le jetton d'acces.
      * @throws RestRequestException Si il est impossible de récupérer l'access_token.
      */
-    public function getAccessToken()
-    {
-        //echo $this->appConfig->getUrlAuth();
-        // Vérification dans le cache
-        if(!Cache::has('access_token'))
-        {
-            $response = $this->simpleGet($this->appConfig->getUrlAuth(),"auth/authorization", ["client_id"=>$this->appConfig->getClientId()]) ;
-            if($response->getStatusCode() != 200)
-            {
-                throw new RestRequestException($response->getBody()->getContents()) ;
-            }
-            $access_token = json_decode((string) $response->getBody(), TRUE)["access_token"] ;
-            Cache::add("access_token", $access_token, 60) ;
-        }
-        return Cache::get("access_token") ;
-        // Mise en cache
-    }
+
 
     /**
      * Récupérer les produits d'un utilisateurs.

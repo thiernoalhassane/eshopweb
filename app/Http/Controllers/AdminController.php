@@ -232,7 +232,7 @@ class AdminController extends BaseController
 
     public function deconnect(Request $request)
     {
-        $user = Cache::forget('user');
+        $user = Session::forget('user');
         return redirect('/')->with('bienvenue', 'Vous etes déconnectés');
     }
 

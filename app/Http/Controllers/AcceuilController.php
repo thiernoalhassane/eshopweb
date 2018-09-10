@@ -6,6 +6,7 @@ use App\ApiConfig;
 use Illuminate\Routing\Controller as BaseController;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Session;
 
 class AcceuilController extends BaseController
 {
@@ -18,8 +19,8 @@ class AcceuilController extends BaseController
           $nom = \Illuminate\Support\Facades\Cache::get('nomcategorie');
           $produits =   \Illuminate\Support\Facades\Cache::get('produits');
 
-          if (Cache::has('user')) {
-              $user = Cache::get('user');
+          if (Session::has('user')) {
+              $user = Session::get('user');
               return view('acceuil', compact('nom', 'produits', 'user'));
           }
           return view('acceuil',compact('nom','produits'));
@@ -40,8 +41,8 @@ class AcceuilController extends BaseController
           $produit =  \GuzzleHttp\json_decode($items);
           $produits = \GuzzleHttp\json_decode($produit->data);
           \Illuminate\Support\Facades\Cache::put('produits', $produits, 10);
-          if (Cache::has('user')) {
-              $user = Cache::get('user');
+          if (Session::has('user')) {
+              $user = Session::get('user');
               return view('acceuil', compact('nom', 'produits', 'user'));
           }
           return view('acceuil',compact('nom','produits'));
