@@ -76,7 +76,7 @@
                     <li><a href="{{url("/profile")}}"><i class="fa fa-user"></i>Profile</a></li>
                     <li><a href="#"><i class="fa fa-percent"></i>Abonnés</a></li>
                     <li><a href="#"><i class="fa fa-percent"></i>Abonnement</a></li>
-                    <li><a href="#"><i class="fa fa-eject"></i>Déconnexion</a></li>
+                    <li><a href="{{url("/deconnecter")}}"><i class="fa fa-eject"></i>Déconnexion</a></li>
                 </ul>
             </li>
         </ul>
