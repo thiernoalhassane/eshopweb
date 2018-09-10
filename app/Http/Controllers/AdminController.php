@@ -18,9 +18,19 @@ class AdminController extends BaseController
 
     protected $rest_endpoint ;
 
+    protected $user_profil ;
+
     public function __construct()
     {
         $this->rest_endpoint = new ApiConfig() ;
+        $this->user_profil = [
+            "name"=>Session::get("user")["name"],
+            "surname"=>Session::get("user")["surname"],
+            "profil"=>Session::get("user")["profil"],
+            "email"=>Session::get("user")["email"],
+            "phone"=>Session::get("user")["phone"],
+            "address"=>Session::get("user")["address"]
+        ] ;
     }
 
     public function show()
@@ -29,6 +39,15 @@ class AdminController extends BaseController
         {
             return redirect("/connection", 302)->with(["error_while_access_to_backend"=>"Vous devez être connecté pour accéder à tout le site"]) ;
         }
+
+        $user_profil = [
+            "name"=>Session::get("user")["name"],
+            "surname"=>Session::get("user")["surname"],
+            "profil"=>Session::get("user")["profil"],
+            "email"=>Session::get("user")["email"],
+            "phone"=>Session::get("user")["phone"],
+            "address"=>Session::get("user")["address"]
+        ] ;
 
         $categories = null ;
         try
@@ -46,7 +65,7 @@ class AdminController extends BaseController
             }
         }
 
-        return view('administration/administration', ["categories"=>$categories]);
+        return view('administration/administration', ["categories"=>$categories, "user_profil"=>$user_profil]);
     }
 
     /**
@@ -201,9 +220,10 @@ class AdminController extends BaseController
         // Tentative d'ajout d'un produit
         try
         {
+            $user_id = Session::get("user")['id'] ;
             $access_token = RestRequest::getInstance()->getAccessToken() ;
             $new_item = RestRequest::getInstance()
-                ->postMultipart("api/items/user/5b809c6d6f9db627c638e57c",
+                ->postMultipart("api/items/user/{$user_id}",
                     $multipart,
                     ["client_id"=>$this->rest_endpoint->getClientId(),"access_token"=>$access_token]) ;
 
@@ -258,7 +278,16 @@ class AdminController extends BaseController
             return redirect("/connection", 302)->with(["error_while_access_to_backend"=>"Vous devez être connecté pour accéder à tout le site"]) ;
         }
 
-        return view('administration/profile ');
+        $user_profil = [
+            "name"=>Session::get("user")["name"],
+            "surname"=>Session::get("user")["surname"],
+            "profil"=>Session::get("user")["profil"],
+            "email"=>Session::get("user")["email"],
+            "phone"=>Session::get("user")["phone"],
+            "address"=>Session::get("user")["address"]
+        ] ;
+
+        return view('administration/profile', ["user_profil"=>$user_profil]);
     }
 
     public function showProduct()
@@ -269,9 +298,19 @@ class AdminController extends BaseController
         }
 
         $user_items = null ;
+        $user_id = Session::get("user")['id'] ;
+        $user_profil = [
+            "name"=>Session::get("user")["name"],
+            "surname"=>Session::get("user")["surname"],
+            "profil"=>Session::get("user")["profil"],
+            "email"=>Session::get("user")["email"],
+            "phone"=>Session::get("user")["phone"],
+            "address"=>Session::get("user")["address"]
+        ] ;
+
         try
         {
-            $user_items = RestRequest::getInstance()->getItemsByUserId("5b34e9635390fd229c90b3d6"
+            $user_items = RestRequest::getInstance()->getItemsByUserId($user_id
                 , [
                     "client_id"=>$this->rest_endpoint->getClientId(),
                     "access_token"=>RestRequest::getInstance()->getAccessToken(),
@@ -293,7 +332,7 @@ class AdminController extends BaseController
             }
         }
 
-        return view('administration/listeproduit', ["user_items"=>$user_items]);
+        return view('administration/listeproduit', ["user_items"=>$user_items, "user_profil"=>$user_profil]);
     }
 
     public function showBilan()
@@ -303,7 +342,17 @@ class AdminController extends BaseController
             return redirect("/connection", 302)->with(["error_while_access_to_backend"=>"Vous devez être connecté pour accéder à tout le site"]) ;
         }
 
-        return view('administration/bilan');
+        $user_profil = [
+            "name"=>Session::get("user")["name"],
+            "surname"=>Session::get("user")["surname"],
+            "profil"=>Session::get("user")["profil"],
+            "email"=>Session::get("user")["email"],
+            "phone"=>Session::get("user")["phone"],
+            "address"=>Session::get("user")["address"]
+        ] ;
+
+
+        return view('administration/bilan', ["user_profil"=>$user_profil]);
     }
 
     public function showTrader($id)
@@ -358,7 +407,7 @@ class AdminController extends BaseController
         // validation du formulaire
         return Validator::make($post->all(),
             [
-                "wording"=>"required|not_regex:/^[ \\._@!?,;\\d]+$/|",
+                "wording"=>"required|not_regex:/^[ \\._@!?,;\\d]+$/",
                 "description"=>"nullable|not_regex:/^[ \\._@!?,;\\d]+$/",
                 "price"=>"required|min:1",
                 "quantity"=>"required|min:1",
@@ -407,7 +456,8 @@ class AdminController extends BaseController
         try
         {
             $access_token = RestRequest::getInstance()->getAccessToken() ;
-            $request = RestRequest::getInstance()->put("api/user/5b34e9635390fd229c90b3d6/password", "form_params", $data,
+            $user_id = Session::get("user")['id'] ;
+            $request = RestRequest::getInstance()->put("api/user/{$user_id}/password", "form_params", $data,
             [
                 "access_token"=>$access_token,
                 "client_id"=>$this->rest_endpoint->getClientId()
@@ -431,4 +481,6 @@ class AdminController extends BaseController
                 ["error_while_submit_form"=>$rre->getMessage()]) ;
         }
     }
+
+
 }

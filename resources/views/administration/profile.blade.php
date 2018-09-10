@@ -41,7 +41,7 @@
                     <div class="box box-primary">
                         <div class="box-body box-profile">
                             <img class="profile-user-img img-responsive img-circle"
-                                 src="../../dist/img/user4-128x128.jpg" id="picturePreview" alt="User profile picture">
+                                 src="{{$user_profil["profil"]}}" id="picturePreview" alt="User profile picture">
                                 <form class="col-sm-offset-2">
                                     <input type="file" onchange="preview(this, 'picturePreview');"
                                            class="filestyle" data-classButton="btn btn-primary"
@@ -49,7 +49,7 @@
                                            name="profile" accept="image/png image/jpg image/jpeg"
                                            data-buttonText="Charger une photo">
 
-                                    <h3 class="profile-username text-center">Nina Mcintire</h3>
+                                    <h3 class="profile-username text-center">{{ucfirst($user_profil["name"])." ".ucfirst($user_profil["surname"])}}</h3>
                                 </form>
 
                             <ul class="list-group list-group-unbordered">
@@ -75,13 +75,13 @@
                         <div class="box-body">
                             <strong><i class="fa fa-envelope margin-r-5"></i>Email</strong>
 
-                            <p class="text-muted">test@gmail.com</p>
+                            <p class="text-muted">{{$user_profil["email"]}}</p>
 
                             <hr>
 
                             <strong><i class="fa fa-phone margin-r-5"></i>Téléphone</strong>
 
-                            <p class="text-muted">90088767</p>
+                            <p class="text-muted">{{$user_profil["phone"]}}</p>
                         </div>
                         <!-- /.box-body -->
                     </div>
@@ -110,11 +110,12 @@
                         <div class="tab-content">
                             <div class="active tab-pane" id="settings">
                                 <form class="form-horizontal" action="{{url("/admin/profile/update")}}" method="post">
+                                    {{ csrf_field() }}
                                     <div class="form-group">
                                         <label for="name" class="col-sm-2 control-label">Nom *</label>
 
                                         <div class="col-sm-10">
-                                            <input type="text" required class="form-control" id="name" placeholder="Nom">
+                                            <input type="text" value="{{$user_profil["name"]}}" class="form-control" id="name" name="name">
                                         </div>
                                     </div>
 
@@ -122,41 +123,23 @@
                                         <label for="surname" class="col-sm-2 control-label">Prénom</label>
 
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" id="surname" placeholder="Prénom">
+                                            <input type="text" value="{{$user_profil["surname"]}}" class="form-control" id="surname" name="surname">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="email" class="col-sm-2 control-label">Email *</label>
 
                                         <div class="col-sm-10">
-                                            <input type="email" required class="form-control" id="email" placeholder="Email">
+                                            <input type="email" value="{{$user_profil["email"]}}" required class="form-control" id="email" name="email">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="phone" class="col-sm-2 control-label">Téléphone *</label>
 
                                         <div class="col-sm-10">
-                                            <input type="text" required
+                                            <input type="text" required value="{{$user_profil["phone"]}}"
                                                    class="form-control" data-inputmask='"mask": "+999 99-99-99-99"' data-mask
-                                                   id="phone" placeholder="+228 99-99-99-99">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="flooz" class="col-sm-2 control-label">N° Flooz</label>
-
-                                        <div class="col-sm-10">
-                                        <input type="text"
-                                               class="form-control" data-inputmask='"mask": "+999 99-99-99-99"' data-mask
-                                               id="flooz" placeholder="+228 99-99-99-99">
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="tmoney" class="col-sm-2 control-label">N° Tmoney</label>
-
-                                        <div class="col-sm-10">
-                                        <input type="text"
-                                               class="form-control" data-inputmask='"mask": "+999 99-99-99-99"' data-mask
-                                               id="tmoney" placeholder="+228 99-99-99-99">
+                                                   id="phone" name="phone" placeholder="+228 99-99-99-99">
                                         </div>
                                     </div>
 
