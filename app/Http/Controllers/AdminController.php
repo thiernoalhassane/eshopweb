@@ -482,5 +482,66 @@ class AdminController extends BaseController
         }
     }
 
+    public function updateProfile(Request $post)
+    {
+        if(!Session::has("user") || is_null(Session::get("user")) || !is_array(Session::get("user")))
+        {
+            return redirect("/connection", 302)->with(["error_while_access_to_backend"=>"Vous devez être connecté pour accéder à tout le site"]) ;
+        }
 
+        $validator= Validator::make($post->all(),[
+            "name"=>"required|regex:/^[a-zA-Z -]+$/",
+            "surname"=>"nullable|regex:/^[a-zA-Z -]+$/",
+            "phone"=>"required|regex:/^\\+228 [0-9]{2}-[0-9]{2}-[0-9]{2}-[0-9]{2}$/",
+            "email"=>"required|email"
+        ], ["required"=>"Le champ :attribute est obligatoire", "email"=>"Veuillez saisir un email valide"]) ;
+
+        if($validator->fails())
+        {
+            return redirect()->back(302)->withErrors($validator) ;
+        }
+
+        $put_data = [
+            "name"=>e(Input::get("name")),
+            "surname"=>e(Input::get("surname")),
+            "phone"=>e(Input::get("phone")),
+            "email"=>e(Input::get("email")),
+        ] ;
+
+        try
+        {
+            $access_token = RestRequest::getInstance()->getAccessToken() ;
+            $user_id = Session::get("user")['id'] ;
+
+            $request = RestRequest::getInstance()->put("api/user/{$user_id}", "json", $put_data,
+            [
+                "access_token"=>$access_token,
+                "client_id"=>$this->rest_endpoint->getClientId()
+            ]);
+            $response = json_decode((string)$request->getBody(), TRUE) ;
+
+            if($response["status"] == "success")
+            {
+                $user = Session::get("user") ;
+                Session::forget("user") ;
+                $user["name"] = $put_data["name"] ;
+                $user["surname"] = $put_data["surname"] ;
+                $user["phone"] = $put_data["phone"] ;
+                $user["email"] = $put_data["email"] ;
+                Session::put("user", $user) ;
+
+                return redirect()->back(302)->with(
+                    ["success_while_submit_form"=>"Profil modifié avec succès"]) ;
+            }
+
+            return redirect()->back(302)->with(
+                ["error_while_submit_form"=>$response["data"]["message"]]) ;
+
+        }catch (RestRequestException $rre)
+        {
+            Cache::forget("access_token") ;
+            return redirect()->back(302)->with(
+                ["error_while_submit_form"=>$rre->getMessage()]) ;
+        }
+    }
 }
