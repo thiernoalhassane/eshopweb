@@ -117,6 +117,11 @@ Route::post('/admin/items/add', 'AdminController@addNewItem') ;
 
 Route::post('/admin/items/update', 'AdminController@updateItem') ;
 
+// Pour les infos de l'utilisateir
+Route::post("/admin/profile/password", "AdminController@changePassword") ;
+
+Route::post("/admin/profile/update", "AdminController@updateProfile") ;
+
 Route::post('/email', 'InscriptionController@resend');
 
 //////////////////////////////////////////////////////////////////////

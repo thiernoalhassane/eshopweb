@@ -51,7 +51,7 @@
                     </div>
 
                     <div class="form-group">
-                        <label> Sexe</label
+                        <label> Sexe</label>
                         <div>
                             <div class="radio">
                                 <label>
