@@ -91,7 +91,7 @@ class ProduitsController extends BaseController
         try
         {
             $access_token = RestRequest::getInstance()->getAccessToken() ;
-            $path = ($category !== "..." && $category !== "") ? "api/category{$category}/items" : "api/items";
+            $path = ($category !== "..." && $category !== "") ? "api/category/{$category}/items" : "api/items";
             $request = RestRequest::getInstance()->get($path, [
                 "client_id"=>$this->rest_endpoint->getClientId(),
                 "access_token"=>$access_token,

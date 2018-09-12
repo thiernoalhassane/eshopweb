@@ -27,7 +27,7 @@
                     <div class="footer_title">Les Catégories</div>
                     <ul class="footer_list">
                         @foreach($footer as $nom)
-                        <li><a href="#">{!! $nom->description  !!}</a></li>
+                            <li><a href="{{ url("/search?category_id={$nom->id}") }}">{!! $nom->description !!}</a></li>
                         @endforeach
                     </ul>
                 </div>
