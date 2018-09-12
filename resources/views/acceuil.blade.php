@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="commerce boutique en ligne togo">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta name="google-site-verification" content="v7yj5By2zNbEhFzY6eXZVyQp2gKIbGVpK0dslyFspdA" />
 
     <link rel="stylesheet" href="{{ asset('acceuillogin/styles/bootstrap4/bootstrap.min.css')}} ">
     <link rel="stylesheet" href="{{ asset('acceuillogin/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css')}}">

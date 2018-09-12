@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="OneTech shop project">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="google-site-verification" content="v7yj5By2zNbEhFzY6eXZVyQp2gKIbGVpK0dslyFspdA" />
+
     {!! HTML::style('acceuillogin/styles/bootstrap4/bootstrap.min.css') !!}
     {!! HTML::style('acceuillogin/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css') !!}
     {!! HTML::style('acceuillogin/styles/cart_responsive.css') !!}
     {!! HTML::style('acceuillogin/styles/cart_styles.css') !!}
-
-
 </head>
 
 <body>
