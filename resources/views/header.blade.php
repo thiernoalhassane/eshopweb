@@ -54,8 +54,9 @@
                         <div class="header_search">
                             <div class="header_search_content">
                                 <div class="header_search_form_container">
-                                    <form action="#" class="header_search_form clearfix">
-                                        <input type="search" required="required" class="header_search_input" placeholder="Le nom de votre recherche...">
+                                    <form action="{{url("/search")}}" method="get" class="header_search_form clearfix">
+                                        <input type="text" name="keyword" required="required" class="header_search_input" placeholder="Le nom de votre recherche...">
+                                        <input id="category_input" name="category_id" value="" hidden type="text">
                                         <div class="custom_dropdown">
                                             <div class="custom_dropdown_list">
                                                 <span class="custom_dropdown_placeholder clc">Les catégories</span>
@@ -63,13 +64,20 @@
                                                 <?php     $categorie = $nom       ?>
 
                                                 <ul class="custom_list clc">
-                                                    <li><a class="clc" href="#">Les Catégories</a></li>
+                                                    <li><a onclick="setCategoryInputValue('...')" class="clc" href="#">Toute les catégories</a></li>
                                                     @foreach($categorie as $categorie)
-                                                    <li><a class="clc" href="#">{!! $categorie->description !!}</a></li>
+                                                    <li><a onclick="setCategoryInputValue('{!! $categorie->id !!}')" class="clc" href="#">{!! $categorie->description !!}</a></li>
                                                     @endforeach
                                                 </ul>
                                             </div>
                                         </div>
+                                        <script>
+                                            function setCategoryInputValue(value) {
+                                                var category_input = $("#category_input");
+                                                category_input.attr("value", value) ;
+                                                console.log('category_id: '+category_input.attr("value")) ;
+                                            }
+                                        </script>
                                         <button type="submit" class="header_search_button trans_300" value="Submit"><img
                                                     src="../images/search.png" alt=""></button>
                                     </form>
