@@ -6,10 +6,11 @@
  * Time: 15:38
  */
 ?>
-        <!DOCTYPE html>
-<html lang="en">
+
+<!DOCTYPE html>
+<html lang="fr">
 <head>
-    <title>OpenTrade Bienvenue</title>
+    <title>OpenTrade - Recherche</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="commerce boutique en ligne togo">
@@ -37,9 +38,7 @@
 <div class="super_container">
 
     <!-- Header -->
-
     @include('header')
-
 
     <div class="home">
         <div class="home_background parallax-window" data-parallax="scroll"
@@ -51,92 +50,57 @@
     </div>
 
     <!-- Deals of the week -->
-    <?php          $footer = $nom                     ?>
+    <?php $footer = $nom ?>
     <div class="new_arrivals">
         <div class="container">
             <div class="row">
                 <div class="col">
                     <div class="tabbed_container">
                         <div class="tabs clearfix tabs-right">
-                            <div class="new_arrivals_title">Les Produits</div>
+                            <div class="new_arrivals_title">Résultats de la recherche</div>
                             <ul class="clearfix">
-                                <li class="active">La Liste</li>
+                                <li class="active"></li>
 
                             </ul>
                             <div class="tabs_line"><span></span></div>
                         </div>
-                        <div class="col-lg-9">
+                        <div class="col-lg-12">
 
                             <!-- Shop Content -->
 
                             <div class="shop_content">
-
-
                                 <div class="product_grid">
                                     <div class="product_grid_border"></div>
-
-                                <!-- Product Item  Pour les produits nouveaux
-                                    <div class="product_item is_new">
-                                        <div class="product_border"></div>
-                                        <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="images/new_5.jpg" alt=""></div>
-                                        <div class="product_content">
-                                            <div class="product_price">$225</div>
-                                            <div class="product_name"><div><a href="{{ url('/explore')}}" tabindex="0">Philips BT6900A</a></div></div>
-                                        </div>
-                                        <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                        <ul class="product_marks">
-                                            <li class="product_mark product_discount">-25%</li>
-                                            <li class="product_mark product_new">new</li>
-                                        </ul>
+                                    <div id="item_list">
+                                        @if($items != null && count($items)>0)
+                                            @foreach($items as $item)
+                                                <div class="product_item">
+                                                    <div class="product_border"></div>
+                                                    <div class="product_image d-flex flex-column align-items-center justify-content-center">
+                                                        <a href="{{ url("/explore/{$item['id']}")}}" >
+                                                            <img width="115" height="115" src="{!! $item['picture'] !!}" alt="">
+                                                        </a>
+                                                    </div>
+                                                    <div class="product_content">
+                                                        <div class="product_price">{!! $item['price'] !!} CFA</div>
+                                                        <div class="product_name"><div><a href="{{ url("/explore/{$item['id']}")}}"  tabindex="0">{!! $item['wording']!!}</a></div></div>
+                                                    </div>
+                                                    <div class="product_fav"><i class="fas fa-heart"></i></div>
+                                                    <ul class="product_marks">
+                                                        <li class="product_mark product_new">new</li>
+                                                    </ul>
+                                                </div>
+                                            @endforeach
+                                        @else
+                                            Aucun produit trouvé !
+                                        @endif
                                     </div>
-
-                                    <!-- Product Item  Pour les produits en rabais
-                                    <div class="product_item discount">
-                                        <div class="product_border"></div>
-                                        <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="images/featured_1.png" alt=""></div>
-                                        <div class="product_content">
-                                            <div class="product_price">$225<span>$300</span></div>
-                                            <div class="product_name"><div><a href="{{ url('/explore')}}" tabindex="0">Huawei MediaPad...</a></div></div>
-                                        </div>
-                                        <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                        <ul class="product_marks">
-                                            <li class="product_mark product_discount">-25%</li>
-                                            <li class="product_mark product_new">new</li>
-                                        </ul>
-                                    </div>
-
-                                    -->
-                                    @foreach($produits as $produits)
-
-
-
-                                        <div class="product_item is_new">
-                                            <div class="product_border"></div>
-                                            <div class="product_image d-flex flex-column align-items-center justify-content-center"><a href="{{ url('/explore', $id= $produits->id)}}" ><img src="images/new_5.jpg" alt=""></a></div>
-                                            <div class="product_content">
-                                                <div class="product_price">{!! $produits->price !!} CFA</div>
-                                                <div class="product_name"><div><a href="{{ url('/explore', $id= $produits->id)}}"  tabindex="0">{!! $produits->wording !!}</a></div></div>
-                                            </div>
-                                            <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                            <ul class="product_marks">
-                                                <li class="product_mark product_new">new</li>
-                                            </ul>
-                                        </div>
-
-                                    @endforeach
-
-
-
                                 </div>
-
-                                <!-- Shop Page Navigation -->
-
-
-
+                                <ul class="pager">
+                                    <li><a class="btn btn-primary" onclick="displayMoreItems()">Voir plus</a></li>
+                                </ul>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -152,10 +116,8 @@
                     <div class="popular_categories_content">
                         <div class="popular_categories_title">Catégories Populaires</div>
                         <div class="popular_categories_slider_nav">
-                            <div class="popular_categories_prev popular_categories_nav"><i
-                                        class="fas fa-angle-left ml-auto"></i></div>
-                            <div class="popular_categories_next popular_categories_nav"><i
-                                        class="fas fa-angle-right ml-auto"></i></div>
+                            <div class="popular_categories_prev popular_categories_nav"><i class="fas fa-angle-left ml-auto"></i></div>
+                            <div class="popular_categories_next popular_categories_nav"><i class="fas fa-angle-right ml-auto"></i></div>
                         </div>
 
                     </div>
@@ -167,11 +129,6 @@
                     <div class="popular_categories_slider_container">
                         <div class="owl-carousel owl-theme popular_categories_slider">
 
-                            <!-- Popular Categories Item -->
-
-
-
-                            <!-- Popular Categories Item -->
                             @foreach($nom as $nom)
                                 <div class="owl-item">
                                     <div class="popular_category d-flex flex-column align-items-center justify-content-center">
@@ -179,13 +136,7 @@
                                         <div class="popular_category_text">{{ $nom->description}}</div>
                                     </div>
                                 </div>
-                        @endforeach
-
-                        <!-- Popular Categories Item -->
-
-
-                            <!-- Popular Categories Item -->
-
+                            @endforeach
 
                         </div>
                     </div>
@@ -194,146 +145,7 @@
         </div>
     </div>
     <!-- Reviews -->
-<!-- Partie du Blog
-    <div class="reviews">
-        <div class="container">
-            <div class="row">
-                <div class="col">
 
-                    <div class="reviews_title_container">
-                        <h3 class="reviews_title">Blog : Nouvautés</h3>
-                        <div class="reviews_all ml-auto"><a href="{{ url('/blog')  }}">voir tous les <span>blogs</span></a>
-                        </div>
-                    </div>
-
-                    <div class="reviews_slider_container">
-
-
-                        <div class="owl-carousel owl-theme reviews_slider">
-
-
-                            <div class="owl-item">
-                                <div class="review d-flex flex-row align-items-start justify-content-start">
-                                    <div>
-                                        <div class="review_image"><img src="images/review_1.jpg" alt=""></div>
-                                    </div>
-                                    <div class="review_content">
-                                        <div class="review_name">Roberto Sanchez</div>
-                                        <div class="review_rating_container">
-                                            <div class="rating_r rating_r_4 review_rating">
-                                                <i></i><i></i><i></i><i></i><i></i></div>
-                                            <div class="review_time">2 day ago</div>
-                                        </div>
-                                        <div class="review_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing
-                                                elit. Maecenas fermentum laoreet.</p></div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="owl-item">
-                                <div class="review d-flex flex-row align-items-start justify-content-start">
-                                    <div>
-                                        <div class="review_image"><img src="images/review_2.jpg" alt=""></div>
-                                    </div>
-                                    <div class="review_content">
-                                        <div class="review_name">Brandon Flowers</div>
-                                        <div class="review_rating_container">
-                                            <div class="rating_r rating_r_4 review_rating">
-                                                <i></i><i></i><i></i><i></i><i></i></div>
-                                            <div class="review_time">2 day ago</div>
-                                        </div>
-                                        <div class="review_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing
-                                                elit. Maecenas fermentum laoreet.</p></div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="owl-item">
-                                <div class="review d-flex flex-row align-items-start justify-content-start">
-                                    <div>
-                                        <div class="review_image"><img src="images/review_3.jpg" alt=""></div>
-                                    </div>
-                                    <div class="review_content">
-                                        <div class="review_name">Emilia Clarke</div>
-                                        <div class="review_rating_container">
-                                            <div class="rating_r rating_r_4 review_rating">
-                                                <i></i><i></i><i></i><i></i><i></i></div>
-                                            <div class="review_time">2 day ago</div>
-                                        </div>
-                                        <div class="review_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing
-                                                elit. Maecenas fermentum laoreet.</p></div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="owl-item">
-                                <div class="review d-flex flex-row align-items-start justify-content-start">
-                                    <div>
-                                        <div class="review_image"><img src="images/review_1.jpg" alt=""></div>
-                                    </div>
-                                    <div class="review_content">
-                                        <div class="review_name">Roberto Sanchez</div>
-                                        <div class="review_rating_container">
-                                            <div class="rating_r rating_r_4 review_rating">
-                                                <i></i><i></i><i></i><i></i><i></i></div>
-                                            <div class="review_time">2 day ago</div>
-                                        </div>
-                                        <div class="review_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing
-                                                elit. Maecenas fermentum laoreet.</p></div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="owl-item">
-                                <div class="review d-flex flex-row align-items-start justify-content-start">
-                                    <div>
-                                        <div class="review_image"><img src="images/review_2.jpg" alt=""></div>
-                                    </div>
-                                    <div class="review_content">
-                                        <div class="review_name">Brandon Flowers</div>
-                                        <div class="review_rating_container">
-                                            <div class="rating_r rating_r_4 review_rating">
-                                                <i></i><i></i><i></i><i></i><i></i></div>
-                                            <div class="review_time">2 day ago</div>
-                                        </div>
-                                        <div class="review_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing
-                                                elit. Maecenas fermentum laoreet.</p></div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                            <div class="owl-item">
-                                <div class="review d-flex flex-row align-items-start justify-content-start">
-                                    <div>
-                                        <div class="review_image"><img src="images/review_3.jpg" alt=""></div>
-                                    </div>
-                                    <div class="review_content">
-                                        <div class="review_name">Emilia Clarke</div>
-                                        <div class="review_rating_container">
-                                            <div class="rating_r rating_r_4 review_rating">
-                                                <i></i><i></i><i></i><i></i><i></i></div>
-                                            <div class="review_time">2 day ago</div>
-                                        </div>
-                                        <div class="review_text"><p>Lorem ipsum dolor sit amet, consectetur adipiscing
-                                                elit. Maecenas fermentum laoreet.</p></div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="reviews_dots"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    -->
     <div class="characteristics">
         <div class="container">
             <div class="row">
@@ -430,6 +242,32 @@
 <script src="{{asset('acceuillogin/plugins/Isotope/isotope.pkgd.min.js')}}"></script>
 <script src="{{asset('acceuillogin/plugins/parallax-js-master/parallax.min.js')}}"></script>
 <script src="{{asset('acceuillogin/js/custom.js')}}"></script>
+
+<script>
+    var page_num=0 ;
+    function displayMoreItems() {
+
+        var request = $.ajax(
+            {
+                url: '/search/more',
+                type: "GET",
+                data:
+                    {
+                        offset: page_num,
+                        category:'{!! e(\Illuminate\Support\Facades\Input::get("category_id")) !!}',
+                        keyword:'{!! e(\Illuminate\Support\Facades\Input::get("keyword")) !!}'
+                    },
+                dataType: "html"
+            }
+        );
+        request.done( function (msg) {
+            $('#item_list').html(msg)
+        }) ;
+
+        page_num++ ;
+        console.log("page number: "+page_num) ;
+    }
+</script>
 
 </body>
 

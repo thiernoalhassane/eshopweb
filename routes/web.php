@@ -63,6 +63,44 @@ Route::get('/admin/items/{id}/update', function ($id)
         ]) ;
 }) ;
 
+
+// Pages des résultats d'un recherche
+Route::get("/search", "ProduitsController@search") ;
+// Résultat de pagination
+Route::get("/search/more", function ()
+{
+    $keyword = e(\Illuminate\Support\Facades\Input::get("keyword")) ;
+    $category = e(\Illuminate\Support\Facades\Input::get("category_id")) ;
+    $offset= e(\Illuminate\Support\Facades\Input::get('offset')) ;
+    $items = null ;
+    try
+    {
+        $access_token = \App\Utils\Net\RestRequest::getInstance()->getAccessToken() ;
+        $path = ($category !== "..." && $category !== "") ? "api/category{$category}/items" : "api/items";
+        $request = \App\Utils\Net\RestRequest::getInstance()->get($path, [
+            "client_id"=>(new \App\ApiConfig())->getClientId(),
+            "access_token"=>$access_token,
+            "limit"=>10,
+            "offset"=>$offset,
+            "keyword"=>$keyword
+        ]) ;
+
+        $response = json_decode((string) $request->getBody(), TRUE);
+
+        if($response["code"] == 2000)
+        {
+            $items = json_decode($response["data"], TRUE) ;
+        }
+
+        return view("items/bodypart/items",["items"=>$items]) ;
+
+    }catch (\App\Utils\Net\RestRequestException $rre)
+    {
+        \Illuminate\Support\Facades\Cache::forget("access_token") ;
+        return redirect("/search", 302)->withInput(["keyword"=>$keyword, "category_id"=>$category]) ;
+    }
+}) ;
+
 /////////////////////////////////////////////////////////////////////
 /// Les Routes en post /////////////////////////////////////////////
 /// ///////////////////////////////////////////////////////////////
