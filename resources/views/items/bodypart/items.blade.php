@@ -21,8 +21,9 @@
     <script src="{{asset('acceuillogin/plugins/Isotope/isotope.pkgd.min.js')}}"></script>
     <script src="{{asset('acceuillogin/plugins/parallax-js-master/parallax.min.js')}}"></script>
     <script src="{{asset('acceuillogin/js/custom.js')}}"></script>
+
     @foreach($items as $item)
-        <div class="product_item is_new">
+        <div class="product_item">
             <div class="product_border"></div>
             <div class="product_image d-flex flex-column align-items-center justify-content-center">
                 <a href="{{ url("/explore/{$item['id']}")}}" >

@@ -65,7 +65,7 @@
                             <div class="sidebar_title">Les Categories</div>
                             <ul class="sidebar_categories">
                                 @foreach($nom as $nom)
-                                <li><a href="#">{!! $nom->description !!}</a></li>
+                                <li><a href="{{ url("/search?category={$nom->id}") }}">{!! $nom->description !!}</a></li>
                                 @endforeach
                             </ul>
                         </div>
@@ -109,47 +109,18 @@
                         <div class="product_grid">
                             <div class="product_grid_border"></div>
 
-                            <!-- Product Item
-                            <div class="product_item is_new">
-                                <div class="product_border"></div>
-                                <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="images/new_5.jpg" alt=""></div>
-                                <div class="product_content">
-                                    <div class="product_price">$225</div>
-                                    <div class="product_name"><div><a href="{{ url('/explore')}}" tabindex="0">Philips BT6900A</a></div></div>
-                                </div>
-                                <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                <ul class="product_marks">
-                                    <li class="product_mark product_discount">-25%</li>
-                                    <li class="product_mark product_new">new</li>
-                                </ul>
-                            </div>
-
-                            <!-- Product Item
-                            <div class="product_item discount">
-                                <div class="product_border"></div>
-                                <div class="product_image d-flex flex-column align-items-center justify-content-center" ><img src="images/featured_1.png" alt=""></div>
-                                <div class="product_content">
-                                    <div class="product_price">$225<span>$300</span></div>
-                                    <div class="product_name"><div><a href="{{ url('/explore')}}" tabindex="0">Huawei MediaPad...</a></div></div>
-                                </div>
-                                <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                <ul class="product_marks">
-                                    <li class="product_mark product_discount">-25%</li>
-                                    <li class="product_mark product_new">new</li>
-                                </ul>
-                            </div>
-                             -->
                             @foreach($produits as $produits)
-                            <div class="product_item is_new">
+                            <div class="product_item">
                                 <div class="product_border"></div>
                                 <div class="product_image d-flex flex-column align-items-center justify-content-center">
-                                    <a href="{{ url('/explore', $id= $produits->id)}}"><img src="images/new_5.jpg"
-                                                                                            alt=""></a></div>
+                                    <a href="{{ url('/explore', $id= $produits->id)}}">
+                                        <img height="115" width="115" src="{{$produits->picture}}" alt="">
+                                    </a>
+                                </div>
                                 <div class="product_content">
                                     <div class="product_price">{!! $produits->price !!} CFA</div>
                                     <div class="product_name">
-                                        <div><a href="{{ url('/explore', $id= $produits->id)}}" tabindex="0">{!!
-                                                $produits->wording !!}</a></div>
+                                        <div><a href="{{ url('/explore', $id= $produits->id)}}" tabindex="0">{!! $produits->wording !!}</a></div>
                                     </div>
                                 </div>
                                 <div class="product_fav"><i class="fas fa-heart"></i></div>

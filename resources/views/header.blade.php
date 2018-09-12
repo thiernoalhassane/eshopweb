@@ -78,8 +78,9 @@
                                                 console.log('category_id: '+category_input.attr("value")) ;
                                             }
                                         </script>
-                                        <button type="submit" class="header_search_button trans_300" value="Submit"><img
-                                                    src="../images/search.png" alt=""></button>
+                                        <button type="submit" class="header_search_button trans_300" value="Submit">
+                                            <img src="../images/search.png" alt="">
+                                        </button>
                                     </form>
                                 </div>
                             </div>
