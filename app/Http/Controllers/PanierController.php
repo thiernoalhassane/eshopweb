@@ -2,23 +2,69 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Bus\DispatchesJobs;
+use App\ApiConfig;
 use Illuminate\Http\Request ;
+use \App\Utils\Net\RestRequest;
+use \App\Utils\Net\RestRequestException;
 use Illuminate\Routing\Controller as BaseController;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Session;
-use MongoDB\BSON\ObjectID;
+use \Illuminate\Support\Facades\Cache ;
 
 class PanierController extends BaseController
 {
+    protected $rest_endpoint ;
 
-  public function show()
-  {
-    return view('panier');
+    public function __construct()
+    {
+        $this->rest_endpoint = new ApiConfig() ;
+    }
+
+    public function show()
+    {
+        /* Récuération des catégories dans le style de barry */
+        $nom = [] ;
+        if(!Cache::has("nomcategorie"))
+        {
+            $request = RestRequest::getInstance()->get("api/cetegories",
+                [
+                    "client_id"=>$this->rest_endpoint->getClientId(),
+                    "access_token"=>RestRequest::getInstance()->getAccessToken()
+                ]);
+            $response = json_decode((string) $request->getBody(), TRUE) ;
+            if($response["code"] == 2000)
+            {
+                $nom = json_decode($response["data"]) ;
+                Cache::put('nomcategorie', $nom, 1440);
+            }
+        }
+        else {$nom = Cache::get("nomcategorie");}
+
+        // Récupération des produits du panier
+        $items = null ;
+        if(Session::has("basket"))
+        {
+            try
+            {
+                $basket = Session::get("basket") ;
+                $path = "api/items/";
+                $access_token = RestRequest::getInstance()->getAccessToken() ;
+                $request = RestRequest::getInstance()->get($path.join(",", array_keys($basket)), [
+                    "client_id"=>$this->rest_endpoint->getClientId($access_token),
+                    "access_token"=>$access_token
+                ]) ;
+                $response = json_decode($request->getBody()->getContents(), TRUE) ;
+                if($response["code"] === 2000)
+                {
+                    $items = json_decode($response["data"], TRUE) ;
+                }
+            }catch(RestRequestException $rre)
+            {
+                \Illuminate\Support\Facades\Log::critical($rre->getMessage()) ;
+            }
+        }
+
+        return view('panier', compact("nom", "items", "basket"));
   }
 
     /**
@@ -35,7 +81,6 @@ class PanierController extends BaseController
       {
           Session::put("basket", null) ;
       }
-
 
       $item_id  = e(Input::get("item_id")) ;
       $item_quantity = e(Input::get("item_quantity")) ;

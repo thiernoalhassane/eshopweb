@@ -103,7 +103,7 @@ class RestRequest
         //echo $this->appConfig->getUrlAuth();
         // Vérification dans le cache
         if (!Cache::has('access_token')) {
-            $response = $this->simpleGet($this->appConfig->getUrlAuth(), "auth/authorization", ["client_id" => $this->appConfig->getClientId()]);
+            $response = $this->get("api/oauth/authorization", ["client_id" => $this->appConfig->getClientId()]);
             if ($response->getStatusCode() != 200) {
                 throw new RestRequestException($response->getBody()->getContents());
             }
@@ -112,22 +112,6 @@ class RestRequest
         }
         return Cache::get("access_token");
         // Mise en cache
-    }
-
-    /**
-     * Cette fonction permet de faire une requête Http::GET et c'est tout.
-     * @param string $base_uri L'url de base. ex: https://toto.com/
-     * @param string $path Le chemin par rapport à $base_uri, sans / au début
-     * @param array $query Les query parameters de l'url
-     * @return mixed|\Psr\Http\Message\ResponseInterface
-     */
-    public function simpleGet(String $base_uri, String $path, array $query = [])
-    {
-        $params["http_errors"] = false;
-        $params["query"] = $query;
-        $client = new \GuzzleHttp\Client(["base_uri" => $base_uri]);
-        $response = $client->request("GET", $path, $params);
-        return $response;
     }
 
     /**
@@ -240,7 +224,6 @@ class RestRequest
         //dd($params) ;
         return $this->httpClient->request("PUT", $path, $params) ;
     }
-
 
 }
 
