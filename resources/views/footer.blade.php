@@ -71,6 +71,8 @@
     </div>
 </div>
 
+<script type="text/javascript" src="{{asset("js/basket.js")}}"></script>
+
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-125640217-1"></script>
 <script>
