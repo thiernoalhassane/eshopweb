@@ -18,19 +18,9 @@ class AdminController extends BaseController
 
     protected $rest_endpoint ;
 
-    protected $user_profil ;
-
     public function __construct()
     {
         $this->rest_endpoint = new ApiConfig() ;
-        $this->user_profil = [
-            "name"=>Session::get("user")["name"],
-            "surname"=>Session::get("user")["surname"],
-            "profil"=>Session::get("user")["profil"],
-            "email"=>Session::get("user")["email"],
-            "phone"=>Session::get("user")["phone"],
-            "address"=>Session::get("user")["address"]
-        ] ;
     }
 
     public function show()
