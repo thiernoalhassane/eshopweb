@@ -3,7 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\ApiConfig;
+
+use App\Utils\Net\RestRequest;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
+use App\Utils\Net\RestRequestException;
+
 use GuzzleHttp\Client;
+
 use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
@@ -12,6 +19,12 @@ use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class ProduitsController extends BaseController
 {
+    protected $rest_endpoint ;
+
+    public function __construct()
+    {
+        $this->rest_endpoint = new ApiConfig() ;
+    }
 
   public function show()
   {
@@ -82,6 +95,40 @@ class ProduitsController extends BaseController
 
     }
 
+
+    public function search()
+    {
+        $keyword = e(Input::get("keyword")) ;
+        $category = e(Input::get("category_id")) ;
+        $items = null ;
+        try
+        {
+            $access_token = RestRequest::getInstance()->getAccessToken() ;
+            $path = ($category !== "..." && $category !== "") ? "api/category/{$category}/items" : "api/items";
+            $request = RestRequest::getInstance()->get($path, [
+                "client_id"=>$this->rest_endpoint->getClientId(),
+                "access_token"=>$access_token,
+                "limit"=>10,
+                "keyword"=>$keyword
+            ]) ;
+
+            $response = json_decode((string) $request->getBody(), TRUE);
+
+            if($response["code"] == 2000)
+            {
+                $items = json_decode($response["data"], TRUE) ;
+            }
+
+            $nom = \Illuminate\Support\Facades\Cache::get('nomcategorie');
+            return view("search", compact("nom", "items")) ;
+
+        }catch (RestRequestException $rre)
+        {
+            \Illuminate\Support\Facades\Cache::forget("access_token") ;
+            return redirect("/search", 302)->withInput(["keyword"=>$keyword, "category_id"=>$category]) ;
+        }
+    }
+
     public function addComment(Request $request)
     {
         $userid = $request->userid;
@@ -147,5 +194,6 @@ class ProduitsController extends BaseController
 
         }
     }
+
 
 }

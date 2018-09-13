@@ -392,6 +392,9 @@ class AdminController extends BaseController
         }
     }
 
+
+    /**.
+
     /**
      * Valide le formulaire d'ajout ou de modification d'un produit.
      * @param Request $post
@@ -422,6 +425,7 @@ class AdminController extends BaseController
     }
 
     /**
+
      * Traite le formulaire de modification du mot de passe.
      * @param Request $post
      * @return $this|\Illuminate\Http\RedirectResponse

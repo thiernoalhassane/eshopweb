@@ -27,7 +27,7 @@
                     <div class="footer_title">Les Catégories</div>
                     <ul class="footer_list">
                         @foreach($footer as $nom)
-                        <li><a href="#">{!! $nom->description  !!}</a></li>
+                            <li><a href="{{ url("/search?category_id={$nom->id}") }}">{!! $nom->description !!}</a></li>
                         @endforeach
                     </ul>
                 </div>
@@ -70,3 +70,13 @@
         </div>
     </div>
 </div>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-125640217-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-125640217-1');
+</script>

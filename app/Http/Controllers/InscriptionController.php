@@ -223,8 +223,6 @@ class InscriptionController extends BaseController
         $client = new Client();
         if (\Illuminate\Support\Facades\Cache::has('access_token')) {
             $uri = new ApiConfig();
-
-
             try {
                 $response = $client->request('POST', $uri->getUrlRest() . 'api/user/account/confirm/' . $request->id . '?client_id=' . $uri->getClientId() . '&access_token=' . \Illuminate\Support\Facades\Cache::get('access_token'),
                     [
@@ -235,6 +233,12 @@ class InscriptionController extends BaseController
                     ]);
 
 
+                $jsonid = \GuzzleHttp\json_decode($response->getBody()->getContents());
+                $data = \GuzzleHttp\json_decode($jsonid->data, true);
+                $user = Session::put('user', $data);
+
+                return redirect('/')->with('bienvenue', 'Vous etes inscrit au site bonne navigation');
+
             } catch (RequestException  $e) {
                 if ($e->hasResponse()) {
                     $exception = (string)$e->getResponse()->getBody();
@@ -243,11 +247,8 @@ class InscriptionController extends BaseController
                     return redirect()->route('confirmation', ['id' => $request->id, 'donée' => $request->_token])->with('message', $exception->data->message);
                 }
             }
-            $jsonid = \GuzzleHttp\json_decode($response->getBody()->getContents());
-            $data = \GuzzleHttp\json_decode($jsonid->data, true);
-            $user = Session::put('user', $data['user']);
 
-            return redirect('/')->with('bienvenue', 'Vous etes inscrit au site bonne navigation');
+
 
 
         } else {
@@ -265,7 +266,12 @@ class InscriptionController extends BaseController
                         ]
 
                     ]);
+                $jsonid = \GuzzleHttp\json_decode($response->getBody()->getContents());
+                $data = \GuzzleHttp\json_decode($jsonid->data);
 
+                $user = Session::put('user', $data);
+
+                return redirect('/')->with('bienvenue', 'Vous etes inscrit au site bonne navigation');
 
             } catch (RequestException  $e) {
                 if ($e->hasResponse()) {
@@ -275,13 +281,6 @@ class InscriptionController extends BaseController
                     return redirect()->route('confirmation', ['id' => $request->id, 'donée' => $request->_token])->with('message', $exception->data->message);
                 }
             }
-            $jsonid = \GuzzleHttp\json_decode($response->getBody()->getContents());
-            $data = \GuzzleHttp\json_decode($jsonid->data);
-
-            $user = Session::put('user', $data['user']);
-
-            return redirect('/')->with('bienvenue', 'Vous etes inscrit au site bonne navigation');
-
         }
     }
 

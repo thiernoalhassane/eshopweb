@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="commerce boutique en ligne togo">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta name="google-site-verification" content="v7yj5By2zNbEhFzY6eXZVyQp2gKIbGVpK0dslyFspdA" />
 
     <link rel="stylesheet" href="{{ asset('acceuillogin/styles/bootstrap4/bootstrap.min.css')}} ">
     <link rel="stylesheet" href="{{ asset('acceuillogin/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css')}}">
@@ -67,44 +67,11 @@
                                 <div class="product_grid">
                                     <div class="product_grid_border  details"></div>
 
-                                    <!-- Product Item  Pour les produits nouveaux
-                                    <div class="product_item is_new">
+                                    @foreach($produits as $produits)
+
+                                    <div class="product_item">
                                         <div class="product_border"></div>
-                                        <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="images/new_5.jpg" alt=""></div>
-                                        <div class="product_content">
-                                            <div class="product_price">$225</div>
-                                            <div class="product_name"><div><a href="{{ url('/explore')}}" tabindex="0">Philips BT6900A</a></div></div>
-                                        </div>
-                                        <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                        <ul class="product_marks">
-                                            <li class="product_mark product_discount">-25%</li>
-                                            <li class="product_mark product_new">new</li>
-                                        </ul>
-                                    </div>
-
-                                    <!-- Product Item  Pour les produits en rabais
-                                    <div class="product_item discount">
-                                        <div class="product_border"></div>
-                                        <div class="product_image d-flex flex-column align-items-center justify-content-center"><img src="images/featured_1.png" alt=""></div>
-                                        <div class="product_content">
-                                            <div class="product_price">$225<span>$300</span></div>
-                                            <div class="product_name"><div><a href="{{ url('/explore')}}" tabindex="0">Huawei MediaPad...</a></div></div>
-                                        </div>
-                                        <div class="product_fav"><i class="fas fa-heart"></i></div>
-                                        <ul class="product_marks">
-                                            <li class="product_mark product_discount">-25%</li>
-                                            <li class="product_mark product_new">new</li>
-                                        </ul>
-                                    </div>
-
-                                    -->
-                                     @foreach($produits as $produits)
-
-
-
-                                    <div class="product_item is_new">
-                                        <div class="product_border"></div>
-                                        <div class="product_image d-flex flex-column align-items-center justify-content-center"><a href="{{ url('/explore', $id= $produits->id)}}" ><img src="images/new_5.jpg" alt=""></a></div>
+                                        <div class="product_image d-flex flex-column align-items-center justify-content-center"><a href="{{ url('/explore', $id= $produits->id)}}" ><img height="115" width="115" src="{{$produits->picture}}" alt=""></a></div>
                                         <div class="product_content">
                                             <div class="product_price">{!! $produits->price !!} CFA</div>
                                             <div class="product_name"><div><a href="{{ url('/explore', $id= $produits->id)}}"  tabindex="0">{!! $produits->wording !!}</a></div></div>

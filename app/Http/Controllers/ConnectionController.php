@@ -38,6 +38,14 @@ class ConnectionController extends BaseController
                         ]
                     ]);
 
+                $jsonid = \GuzzleHttp\json_decode($response->getBody()->getContents());
+                $data = \GuzzleHttp\json_decode($jsonid->data, true);
+
+                $user = Session::put('user', $data);
+
+
+                return redirect()->route('home')->with('bienvenue', 'Connection reussie');
+
             }catch ( RequestException  $e){
                 if ($e->hasResponse()) {
                     $exception = (string) $e->getResponse()->getBody();
@@ -45,15 +53,6 @@ class ConnectionController extends BaseController
                     return redirect('connection')->with('message',$exception->data->message)  ;
                 }
             }
-            $jsonid = \GuzzleHttp\json_decode($response->getBody()->getContents());
-            $data = \GuzzleHttp\json_decode($jsonid->data, true);
-
-
-            $user = Session::put('user', $data['user']);
-
-
-            return redirect()->route('home')->with('bienvenue', 'Connection reussie');
-
             // return redirect()->with('bienvenue','Connection reussie', compact('user'))  ;
 
 
@@ -74,6 +73,12 @@ class ConnectionController extends BaseController
                         ]
                     ]);
 
+                $jsonid = \GuzzleHttp\json_decode($response->getBody()->getContents());
+                $data = \GuzzleHttp\json_decode($jsonid->data, true);
+
+                $user = Session::put('user', $data);
+                return redirect()->route('home')->with('bienvenue', 'Connection reussie');
+
             }catch ( RequestException  $e){
                 if ($e->hasResponse()) {
                     $exception = (string) $e->getResponse()->getBody();
@@ -81,21 +86,7 @@ class ConnectionController extends BaseController
                     return redirect('connection')->with('message',$exception->data->message)  ;
                 }
             }
-            $jsonid = \GuzzleHttp\json_decode($response->getBody()->getContents());
-            $data = \GuzzleHttp\json_decode($jsonid->data, true);
-
-            $user = Session::put('user', $data['user']);
-
-
-            return redirect()->route('home')->with('bienvenue', 'Connection reussie');
-
-
-
-
-
 
         }
-
-
     }
 }

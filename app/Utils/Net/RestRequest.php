@@ -177,15 +177,6 @@ class RestRequest
         return $data ;
     }
 
-
-    /**
-     * Récupérer le jetton d'accès à l'api REST.</br>
-     * Soit depuis le cache ou en faisant une requête Http::GET.
-     * @return mixed Le jetton d'acces.
-     * @throws RestRequestException Si il est impossible de récupérer l'access_token.
-     */
-
-
     /**
      * Récupérer les produits d'un utilisateurs.
      * Cela se fait soit en appelant le web service ou en utilisant les données du cache.
