@@ -14,10 +14,15 @@ class AcceuilController extends BaseController
   public function show()
   {
 
-      if(\Illuminate\Support\Facades\Cache::has('access_token') && \Illuminate\Support\Facades\Cache::has('nomcategorie') && \Illuminate\Support\Facades\Cache::has('produits')){
-
+      if (\Illuminate\Support\Facades\Cache::has('access_token') && \Illuminate\Support\Facades\Cache::has('nomcategorie')) {
+          $uri = new ApiConfig();
+          $limit = 10;
+          $offset = 1;
           $nom = \Illuminate\Support\Facades\Cache::get('nomcategorie');
-          $produits =   \Illuminate\Support\Facades\Cache::get('produits');
+          $items = file_get_contents($uri->getUrlRest() . 'api/items?client_id=' . $uri->getClientId() . '&limit=' . $limit . '&offset=' . $offset . '&access_token=' . \Illuminate\Support\Facades\Cache::get('access_token'));
+          $produit = \GuzzleHttp\json_decode($items);
+          $produits = \GuzzleHttp\json_decode($produit->data);
+
 
           if (Session::has('user')) {
               $user = Session::get('user');
@@ -37,10 +42,12 @@ class AcceuilController extends BaseController
           $categorie = $categoriejson->data;
           $nom = \GuzzleHttp\json_decode($categorie);
           \Illuminate\Support\Facades\Cache::put('nomcategorie', $nom, 1440);
-          $items = file_get_contents($uri->getUrlRest().'api/items?client_id='.$uri->getClientId().'&access_token='.\Illuminate\Support\Facades\Cache::get('access_token'));
+          $limit = 10;
+          $offset = 1;
+          $items = file_get_contents($uri->getUrlRest() . 'api/items?client_id=' . $uri->getClientId() . '&limit=' . $limit . '&offset=' . $offset . '&access_token=' . \Illuminate\Support\Facades\Cache::get('access_token'));
           $produit =  \GuzzleHttp\json_decode($items);
           $produits = \GuzzleHttp\json_decode($produit->data);
-          \Illuminate\Support\Facades\Cache::put('produits', $produits, 10);
+
           if (Session::has('user')) {
               $user = Session::get('user');
               return view('acceuil', compact('nom', 'produits', 'user'));
