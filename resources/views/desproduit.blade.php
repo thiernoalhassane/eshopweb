@@ -23,7 +23,9 @@
 <body>
 
 <div class="super_container">
-
+    @if(Session::has('message'))
+    @include('partials/error', ['type' => 'info', 'message' => Session::get('message') ])
+    @endif
     <!-- Header -->
 
 
@@ -56,10 +58,9 @@
                             <img class="img-responsive pad" src="../dist/img/photo2.png" alt="Photo">
 
                             <p></p>
-                            <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i> Share
+                            <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i> Partager
                             </button>
-                            <button type="button" class="btn btn-default btn-xs"><i class="fa fa-thumbs-o-up"></i> Like
-                            </button>
+
                             <span class="pull-right text-muted">Nombre de  likes - Nombre de comments</span>
                         </div>
                         <!-- /.box-body -->
@@ -96,17 +97,27 @@
                             <!-- /.box-comment -->
                         </div>
                         <!-- /.box-footer -->
+                        @if(\Illuminate\Support\Facades\Session::has('user') == true)
                         <div class="box-footer">
-                            <form action="#" method="post">
+                            <?php
+                            $user = \Illuminate\Support\Facades\Session::get('user');
+
+                            ?>
+
+                            <form action="{{ url('/addcomment' ) }}" method="post">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <input type="hidden" name="userid" value="{{ $user['id'] }}">
+                                <input type="hidden" name="itemid" value="{{ $produits->id }}">
                                 <img class="img-responsive img-circle img-sm" src="../dist/img/user4-128x128.jpg"
                                      alt="Alt Text">
                                 <!-- .img-push is used to add margin to elements next to floating images -->
                                 <div class="img-push">
-                                    <input type="text" class="form-control input-sm"
-                                           placeholder="Press enter to post comment">
+                                    <input type="text" class="form-control input-sm" name="comment"
+                                           placeholder="Votre commentaire">
                                 </div>
                             </form>
                         </div>
+                        @endif
                         <!-- /.box-footer -->
                     </div>
                     <!-- /.box -->

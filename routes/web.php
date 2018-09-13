@@ -39,7 +39,9 @@ Route::get('/bilan', 'AdminController@showBilan');
 
 Route::get('/trader/{id}', 'AdminController@showTrader');
 
-Route::get('/explore/{id}', 'ProduitsController@explore');
+Route::get('/explore/{id}', 'ProduitsController@explore')->name('explore');
+
+
 
 Route::get('/confirmationaccount/{id}', 'InscriptionController@confirmation')->name('confirmation');
 
@@ -111,11 +113,17 @@ Route::post('/inscription', 'InscriptionController@add');
 
 Route::post('/confirmation', 'InscriptionController@validate');
 
+Route::post('/addcomment', 'ProduitsController@addComment');
 
 // Pour les produits, coté panneau d'administration
 Route::post('/admin/items/add', 'AdminController@addNewItem') ;
 
 Route::post('/admin/items/update', 'AdminController@updateItem') ;
+
+// Pour les infos de l'utilisateir
+Route::post("/admin/profile/password", "AdminController@changePassword") ;
+
+Route::post("/admin/profile/update", "AdminController@updateProfile") ;
 
 Route::post('/email', 'InscriptionController@resend');
 
@@ -137,3 +145,4 @@ Route::get("/errors/app_unauthorized", function (){
 Route::get("/errors/unregistereduser", function (){
     return view("/errors/unregistered_user") ;
 }) ;
+

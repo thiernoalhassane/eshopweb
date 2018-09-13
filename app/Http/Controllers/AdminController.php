@@ -159,25 +159,6 @@ class AdminController extends BaseController
         }
     }
 
-    private function validateItemForm(Request $post)
-    {
-        // validation du formulaire
-        return Validator::make($post->all(),
-            [
-                "wording" => "required|not_regex:/^[ \\._@!?,;\\d]+$/|",
-                "description" => "nullable|not_regex:/^[ \\._@!?,;\\d]+$/",
-                "price" => "required|min:1",
-                "quantity" => "required|min:1",
-                "picture" => "nullable|mimetypes:image/png,image/jpeg,image/jpg",
-                "category_id" => "required"
-                , [
-                "required" => "Le champ :attribute est obligatoire !",
-                "mimetypes" => "Les images doivent être de ce type :mimtypes",
-                "not_regex" => "Veullez saisir seulement des caractères alphanumériques"
-            ]
-            ]);
-    }
-
     /**
      * Traite le formulaire d'ajout d'un produit.
      * @param Request $post
@@ -411,7 +392,40 @@ class AdminController extends BaseController
         }
     }
 
+
     /**.
+
+    /**
+     * Valide le formulaire d'ajout ou de modification d'un produit.
+     * @param Request $post
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    private function validateItemForm(Request $post)
+    {
+        if(!Session::has("user") || is_null(Session::get("user")) || !is_array(Session::get("user")))
+        {
+            return redirect("/connection", 302)->with(["error_while_access_to_backend"=>"Vous devez être connecté pour accéder à tout le site"]) ;
+        }
+
+        // validation du formulaire
+        return Validator::make($post->all(),
+            [
+                "wording"=>"required|not_regex:/^[ \\._@!?,;\\d]+$/",
+                "description"=>"nullable|not_regex:/^[ \\._@!?,;\\d]+$/",
+                "price"=>"required|min:1",
+                "quantity"=>"required|min:1",
+                "picture"=>"nullable|mimetypes:image/png,image/jpeg,image/jpg",
+                "category_id"=>"required"
+                ,[
+                "required"=>"Le champ :attribute est obligatoire !",
+                "mimetypes"=>"Les images doivent être de ce type :mimtypes",
+                "not_regex"=>"Veullez saisir seulement des caractères alphanumériques"
+            ]
+            ]) ;
+    }
+
+    /**
+
      * Traite le formulaire de modification du mot de passe.
      * @param Request $post
      * @return $this|\Illuminate\Http\RedirectResponse
