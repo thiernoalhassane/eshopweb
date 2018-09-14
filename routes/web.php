@@ -65,6 +65,7 @@ Route::get('/admin/items/{id}/update', function ($id)
         ]) ;
 }) ;
 
+Route::get('/admin/baskets', "AdminController@showBaskets") ;
 
 // Pages des résultats d'un recherche
 Route::get("/search", "ProduitsController@search") ;
@@ -103,6 +104,9 @@ Route::get("/search/more", function ()
     }
 }) ;
 
+// Enregistrer un panier temporaire
+Route::get('/basket/save', 'PanierController@saveBasket') ;
+
 /////////////////////////////////////////////////////////////////////
 /// Les Routes en post /////////////////////////////////////////////
 /// ///////////////////////////////////////////////////////////////
@@ -127,13 +131,7 @@ Route::post("/admin/profile/update", "AdminController@updateProfile") ;
 
 Route::post('/email', 'InscriptionController@resend');
 
-// Pour les infos de l'utilisateir
-Route::post("/admin/profile/password", "AdminController@changePassword") ;
-
-
-Route::post("/admin/profile/update", "AdminController@updateProfile") ;
-
-Route::post('/email', 'InscriptionController@resend');
+Route::post('/basket/create', 'PanierController@createBasket') ;
 
 //////////////////////////////////////////////////////////////////////
 /// Les routes pour afficher des pages sans traitement ///////////////
@@ -146,3 +144,9 @@ Route::get("/errors/unregistereduser", function (){
     return view("/errors/unregistered_user") ;
 }) ;
 
+///////////////////////////////////////////////////////////////////////
+/// Les Routes delete /////////////////////////////////////////////////
+/// ///////////////////////////////////////////////////////////////////
+
+// Supprimer un produit à l'intérieur d'un panier temporaire
+Route::delete("/baskets/item/{item_id}", "PanierController@deleteOneInBasket") ;

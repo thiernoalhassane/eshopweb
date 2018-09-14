@@ -20,7 +20,8 @@
 
     <!-- Header -->
 
-    @include('headerothers')
+    <?php          $footer = $nom        ;             ?>
+    @include('header')
 
     <!-- Cart -->
 
@@ -28,55 +29,77 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 offset-lg-1">
-                    <div class="cart_container">
-                        <div class="cart_title">Votre Panier</div>
-                        <div class="cart_items">
+                    <div id="cart_container" class="cart_container">
+                        @if($items != null && count($items) > 0)
+                            <div class="cart_title">Votre Panier</div>
+                            <div class="cart_items">
                             <ul class="cart_list">
-                                <li class="cart_item clearfix">
-                                    <div class="cart_item_image"><img src="images/shopping_cart.jpg" alt=""></div>
-                                    <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
-                                        <div class="cart_item_name cart_info_col">
-                                            <div class="cart_item_title">Name</div>
-                                            <div class="cart_item_text">MacBook Air 13</div>
-                                        </div>
-
-                                        <div class="cart_item_quantity cart_info_col">
-                                            <div class="cart_item_title">Quantity</div>
-                                            <div class="cart_item_text">1</div>
-                                        </div>
-                                        <div class="cart_item_price cart_info_col">
-                                            <div class="cart_item_title">Price</div>
-                                            <div class="cart_item_text">$2000</div>
-                                        </div>
-                                        <div class="cart_item_total cart_info_col">
-                                            <div class="cart_item_title">Total</div>
-                                            <div class="cart_item_text">$2000</div>
-                                        </div>
-                                        <div class="cart_item_total cart_info_col">
-                                            <div class="cart_item_title">Supprimer</div>
-                                            <div class="cart_item_text">
-                                                <button type="button" class="btn btn-box-tool" data-widget="remove"
-                                                        onclick="return confirm('Voulez vous supprimer cet produit?')">
-                                                    <i class="fa fa-times"></i></button>
+                                    @foreach($items as $item)
+                                        <li id="{!! $item["id"] !!}" class="cart_item clearfix">
+                                            <div class="cart_item_image"><img src="{{$item["picture"]}}" alt=""></div>
+                                            <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
+                                                <div class="cart_item_name cart_info_col">
+                                                    <div class="cart_item_title">Libellé</div>
+                                                    <div class="cart_item_text">{{$item["wording"]}}</div>
+                                                </div>
+                                                <div class="cart_item_quantity cart_info_col">
+                                                    <div class="cart_item_title">Quantité</div>
+                                                    <div class="cart_item_text">{{$basket[$item["id"]]["quantity"]}}</div>
+                                                </div>
+                                                <div class="cart_item_price cart_info_col">
+                                                    <div class="cart_item_title">Prix</div>
+                                                    <div class="cart_item_text">{{$item["price"]}} FCFA</div>
+                                                </div>
+                                                <div class="cart_item_total cart_info_col">
+                                                    <div class="cart_item_title">Total</div>
+                                                    <div class="cart_item_text">{{$item["price"]*$basket[$item["id"]]["quantity"]}} FCFA</div>
+                                                </div>
+                                                <div class="cart_item_total cart_info_col">
+                                                    <div class="cart_item_title">Supprimer</div>
+                                                    <div class="cart_item_text">
+                                                        <button type="button" title="supprimer" class="btn btn-danger" data-widget="remove"
+                                                                onclick="deleteOneInBasket('{!! $item['id'] !!}', '{!! csrf_token() !!}')">
+                                                            <i class="fa fa-times"></i>
+                                                        </button>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                </li>
+                                        </li>
+                                @endforeach
                             </ul>
                         </div>
-
-                        <!-- Order Total -->
-                        <div class="order_total">
-                            <div class="order_total_content text-md-right">
-                                <div class="order_total_title">Order Total:</div>
-                                <div class="order_total_amount">$2000</div>
+                            <!-- Order Total -->
+                            <div class="order_total">
+                                <div class="order_total_content text-md-right">
+                                    <div class="order_total_title">Total du panier:</div>
+                                    <div id="order_total_amount" class="order_total_amount">
+                                        <?php
+                                        $item_total_price=0.0;
+                                        $total_item=0;
+                                        if(\Illuminate\Support\Facades\Session::get("basket", null) != null)
+                                        {
+                                            $total_item = count(\Illuminate\Support\Facades\Session::get("basket")) ;
+                                            foreach (\Illuminate\Support\Facades\Session::get("basket") as $value)
+                                            {
+                                                $item_total_price += (double)$value["total_price"]*$value["quantity"] ;
+                                            }
+                                            echo $item_total_price." FCFA" ;
+                                        }
+                                        ?>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
+                        @else
+                            <div class="text-center text-muted fa-2x">Votre panier est vide</div>
+                        @endif
 
-                        <div class="cart_buttons">
-                            <button type="button" class="button cart_button_clear">Add to Cart</button>
-                            <button type="button" class="button cart_button_checkout">Add to Cart</button>
-                        </div>
+                        @if(\Illuminate\Support\Facades\Session::has("basket") && \Illuminate\Support\Facades\Session::get("basket") != null)
+                            <div class="cart_buttons">
+                                <button type="button" onclick="saveBasket()" class="button cart_button_clear">Enregister</button>
+                                <button type="button" class="button cart_button_checkout">Commander</button>
+                            </div>
+                        @endif
+
                     </div>
                 </div>
             </div>
