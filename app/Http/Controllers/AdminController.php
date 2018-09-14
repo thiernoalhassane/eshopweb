@@ -329,11 +329,11 @@ class AdminController extends BaseController
         {
             try
             {
-                Cache::forget("access_token"); Cache::forget("user:5b34e9635390fd229c90b3d6:items");
-                $user_items = RestRequest::getInstance()->getItemsByUserId("5b34e9635390fd229c90b3d6"
-                    , [
+                Cache::forget("access_token"); Cache::forget("user:{$user_id}:items");
+                $user_items = RestRequest::getInstance()->getItemsByUserId("$user_id" , [
                         "client_id"=>$this->rest_endpoint->getClientId(),
-                        "access_token"=>RestRequest::getInstance()->getAccessToken()
+                        "access_token"=>RestRequest::getInstance()->getAccessToken(),
+                        "limit"=>100
                     ]) ;
             }catch (RestRequestException $rre)
             {
@@ -399,6 +399,55 @@ class AdminController extends BaseController
             return view('administration/vendeur', compact('nom', 'vendeur'));
 
         }
+    }
+
+    public function showBaskets()
+    {
+        if(!Session::has("user") || is_null(Session::get("user")) || !is_array(Session::get("user")))
+        {
+            return redirect("/connection", 302)->with(["error_while_access_to_backend"=>"Vous devez être connecté pour accéder à tout le site"]) ;
+        }
+        // Récupération des paniers.
+
+        $user_baskets = null ;
+        $user_id = Session::get("user")['id'] ;
+        $user_profil = [
+            "name"=>Session::get("user")["name"],
+            "surname"=>Session::get("user")["surname"],
+            "profil"=>Session::get("user")["profil"],
+            "email"=>Session::get("user")["email"],
+            "phone"=>Session::get("user")["phone"],
+            "address"=>Session::get("user")["address"]
+        ] ;
+
+        try
+        {
+            $request = RestRequest::getInstance()->get("api/baskets/user/{$user_id}" , [
+                    "client_id"=>$this->rest_endpoint->getClientId(),
+                    "access_token"=>RestRequest::getInstance()->getAccessToken()
+                ]) ;
+            $response = json_decode((string) $request->getBody(), TRUE) ;
+            if($response["code"] == 2000)
+            {
+                $user_baskets = json_decode($response["data"], TRUE) ;
+                //dd($user_baskets) ;
+            }
+        }catch (RestRequestException $rre)
+        {
+            try
+            {
+                Cache::forget("access_token");
+                $user_baskets = RestRequest::getInstance()->get("api/baskets/{$user_id}" , [
+                    "client_id"=>$this->rest_endpoint->getClientId(),
+                    "access_token"=>RestRequest::getInstance()->getAccessToken()
+                ]) ;
+            }catch (RestRequestException $rre)
+            {
+                return view("errors/app_unauthorized")  ;
+            }
+        }
+
+        return view('administration.baskets.main', ["user_baskets"=>$user_baskets, "user_profil"=>$user_profil]);
     }
 
     /**.

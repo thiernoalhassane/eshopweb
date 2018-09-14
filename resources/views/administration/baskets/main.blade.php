@@ -13,7 +13,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Liste Des Produits</title>
+    <title>Liste Des Paniers</title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     {!! HTML::style('administration/bootstrap/css/bootstrap.min.css') !!}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -55,12 +55,52 @@
                 <div class="col-xs-12">
                     <div class="box box-primary">
                         <div class="box-header with-border">
-                            <h3 class="box-title">Liste de vos produits</h3>
+                            <h3 class="box-title">Liste de vos paniers</h3>
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
                             @if($user_baskets != null)
+                                @foreach($user_baskets as $basket)
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h4>Panier n° {{$basket["id"]}}, crée le {{$basket['date']}}</h4>
+                                            <p>Total: {{$basket["total"]}} FCFA</p>
+                                        </div>
+                                        <div class="panel-body">
+                                            <table id="" class="table table-bordered table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>Aperçu</th>
+                                                    <th>Produit</th>
+                                                    <th>Quantité</th>
+                                                    <th>PU</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                @foreach($basket['purchases'] as $purchase)
+                                                    <tr>
+                                                        <td>
+                                                            <img height="50" width="50" src="{{ $purchase["item"]["picture"] }}" alt="{{ $purchase["item"]["wording"] }}" title="{{ $purchase["item"]["wording"] }}" />
+                                                        </td>
+                                                        <td>{{ $purchase["item"]["wording"] }}</td>
+                                                        <td>{{ $purchase["quantity"] }}</td>
+                                                        <td>{{ $purchase["item"]["price"] }}</td>
+                                                        <td>
+                                                            <a title="consulter" href="{{url("/explore/{$purchase["item"]["id"]}")}}" class="btn btn-success"><i class="fa fa-eye"></i></a>
+                                                            <!--<button title="supprimer" class="btn btn-danger"><i class="fa fa-trash"></i></button>
 
+                                                            <button type="button" title="modifier" class="btn btn-primary">
+                                                                <i class="fa fa-pencil"></i>
+                                                            </button>-->
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                </div>
+                                @endforeach
                             @else
                                 <div class="alert alert-primary">
                                     <div class="text-muted text-center" style="font-family: Cousine; font-size: 2em">

@@ -65,6 +65,7 @@ Route::get('/admin/items/{id}/update', function ($id)
         ]) ;
 }) ;
 
+Route::get('/admin/baskets', "AdminController@showBaskets") ;
 
 // Pages des résultats d'un recherche
 Route::get("/search", "ProduitsController@search") ;
@@ -102,6 +103,9 @@ Route::get("/search/more", function ()
         return redirect("/search", 302)->withInput(["keyword"=>$keyword, "category_id"=>$category]) ;
     }
 }) ;
+
+// Enregistrer un panier temporaire
+Route::get('/basket/save', 'PanierController@saveBasket') ;
 
 /////////////////////////////////////////////////////////////////////
 /// Les Routes en post /////////////////////////////////////////////
