@@ -9,6 +9,7 @@
 namespace App\Utils\Net;
 use GuzzleHttp\Exception\RequestException;
 
+use InvalidArgumentException;
 use Throwable;
 use \Illuminate\Support\Facades\Cache as Cache ;
 use \Illuminate\Support\Facades\Log as Log ;
@@ -223,6 +224,28 @@ class RestRequest
         $params[$body_type]=$data;
         //dd($params) ;
         return $this->httpClient->request("PUT", $path, $params) ;
+    }
+
+    /**
+     * Fait une requête HTTP::POST
+     * @param string $path
+     * @param string $body_type 'multipart', 'form_params', 'json'
+     * @param array $data
+     * @param array $query
+     * @return mixed|\Psr\Http\Message\ResponseInterface
+     * @throws \InvalidArgumentException si $body_type ne correspond à aucune valeur prédéfinie.
+     */
+    public function post(string $path, string $body_type, array $data, array $query = [])
+    {
+        $body_types = ['multipart', 'form_params', 'json'] ;
+        if(!in_array($body_type, $body_types))
+        {
+            throw new InvalidArgumentException("body_type doit avoir une des valeurs suivante: multipart, form_params ou json") ;
+        }
+        $params["query"]=$query;
+        $params[$body_type]=$data;
+        //dd($params) ;
+        return $this->httpClient->request("POST", $path, $params) ;
     }
 
 }
