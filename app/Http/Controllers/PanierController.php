@@ -118,4 +118,23 @@ class PanierController extends BaseController
       return ["total_item"=>$total_item, "item_total_price"=>$item_total_price] ;
   }
 
+  public function deleteOneInBasket(string $item_id)
+  {
+      if(Session::has("basket") && Session::get("basket") != null)
+      {
+          // suppression
+          $basket = Session::get("basket") ;
+          array_forget($basket, $item_id) ;
+          // Calcul
+          $total_item = count($basket) ;
+          $item_total_price = 0.0 ;
+          foreach ($basket as $value)
+          {
+              $item_total_price += (double)$value["total_price"]*$value["quantity"] ;
+          }
+          Session::put("basket", $basket) ;
+          return ["total_item"=>$total_item, "item_total_price"=>$item_total_price] ;
+      }
+  }
+
 }

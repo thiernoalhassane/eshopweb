@@ -140,3 +140,9 @@ Route::get("/errors/unregistereduser", function (){
     return view("/errors/unregistered_user") ;
 }) ;
 
+///////////////////////////////////////////////////////////////////////
+/// Les Routes delete /////////////////////////////////////////////////
+/// ///////////////////////////////////////////////////////////////////
+
+// Supprimer un produit à l'intérieur d'un panier temporaire
+Route::delete("/baskets/item/{item_id}", "PanierController@deleteOneInBasket") ;

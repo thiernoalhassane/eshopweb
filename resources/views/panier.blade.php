@@ -29,13 +29,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-10 offset-lg-1">
-                    <div class="cart_container">
+                    <div id="cart_container" class="cart_container">
                         @if($items != null && count($items) > 0)
                             <div class="cart_title">Votre Panier</div>
                             <div class="cart_items">
                             <ul class="cart_list">
                                     @foreach($items as $item)
-                                        <li class="cart_item clearfix">
+                                        <li id="{!! $item["id"] !!}" class="cart_item clearfix">
                                             <div class="cart_item_image"><img src="{{$item["picture"]}}" alt=""></div>
                                             <div class="cart_item_info d-flex flex-md-row flex-column justify-content-between">
                                                 <div class="cart_item_name cart_info_col">
@@ -57,8 +57,9 @@
                                                 <div class="cart_item_total cart_info_col">
                                                     <div class="cart_item_title">Supprimer</div>
                                                     <div class="cart_item_text">
-                                                        <button type="button" class="btn btn-danger" data-widget="remove" onclick="return confirm('Voulez vous supprimer cet produit?')">
-                                                            <i s class="fa fa-times"></i>
+                                                        <button type="button" class="btn btn-danger" data-widget="remove"
+                                                                onclick="deleteOneInBasket('{!! $item['id'] !!}', '{!! csrf_token() !!}')">
+                                                            <i class="fa fa-times"></i>
                                                         </button>
                                                     </div>
                                                 </div>
@@ -71,7 +72,7 @@
                             <div class="order_total">
                                 <div class="order_total_content text-md-right">
                                     <div class="order_total_title">Total du panier:</div>
-                                    <div class="order_total_amount">
+                                    <div id="order_total_amount" class="order_total_amount">
                                         <?php
                                         $item_total_price=0.0;
                                         $total_item=0;
