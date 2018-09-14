@@ -57,7 +57,7 @@
                                                 <div class="cart_item_total cart_info_col">
                                                     <div class="cart_item_title">Supprimer</div>
                                                     <div class="cart_item_text">
-                                                        <button type="button" class="btn btn-danger" data-widget="remove"
+                                                        <button type="button" title="supprimer" class="btn btn-danger" data-widget="remove"
                                                                 onclick="deleteOneInBasket('{!! $item['id'] !!}', '{!! csrf_token() !!}')">
                                                             <i class="fa fa-times"></i>
                                                         </button>
@@ -93,11 +93,13 @@
                             <div class="text-center text-muted fa-2x">Votre panier est vide</div>
                         @endif
 
+                        @if(\Illuminate\Support\Facades\Session::has("basket") && \Illuminate\Support\Facades\Session::get("basket") != null)
+                            <div class="cart_buttons">
+                                <button type="button" onclick="saveBasket()" class="button cart_button_clear">Enregister</button>
+                                <button type="button" class="button cart_button_checkout">Commander</button>
+                            </div>
+                        @endif
 
-                        <!--<div class="cart_buttons">
-                            <button type="button" class="button cart_button_clear">Add to Cart</button>
-                            <button type="button" class="button cart_button_checkout">Add to Cart</button>
-                        </div>-->
                     </div>
                 </div>
             </div>

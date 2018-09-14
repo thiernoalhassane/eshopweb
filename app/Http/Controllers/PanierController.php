@@ -8,6 +8,7 @@ use \App\Utils\Net\RestRequest;
 use \App\Utils\Net\RestRequestException;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Facades\Input;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Session;
 use \Illuminate\Support\Facades\Cache ;
 
@@ -137,4 +138,51 @@ class PanierController extends BaseController
       }
   }
 
+  public function saveBasket()
+  {
+      if(!Session::has("user") || is_null(Session::get("user")) || !is_array(Session::get("user")))
+      {
+          return Response::make("Vous devez être connecté pour éffectuer cette action !", 401);
+      }
+
+      if(Session::has("basket") && Session::get("basket") != null)
+      {
+          $path = "api/baskets/".Session::get('user')['id'] ;
+
+          try
+          {
+              $purchases = join(",", array_keys(Session::get("basket"))) ;
+              $quantities_array= [] ;
+              foreach (Session::get("basket") as $value)
+              {
+                  array_push($quantities_array, $value["quantity"]) ;
+              }
+              $quantities = join(",", $quantities_array) ;
+
+              $data["quantities"] = $quantities ;
+              $data["items"] = $purchases ;
+              $access_token = RestRequest::getInstance()->getAccessToken() ;
+              $request = RestRequest::getInstance()->post($path, "form_params", $data,
+                  [
+                      "access_token"=>$access_token, "client_id"=>$this->rest_endpoint->getClientId()
+                  ]) ;
+              $response = json_decode((string) $request->getBody(), TRUE) ;
+
+              // En cas de non succès
+              if($response["code"] != 2001)
+              {
+                  return Response::make("{$response["data"]["message"]} !", "500") ;
+              }
+              // En cas de succes
+              return Response::make("Panier enregistré avec succès !", 200) ;
+          }catch (RestRequestException $rre)
+          {
+              return Response::make($rre->getMessage(), "500") ;
+          }
+      }
+      else
+      {
+          return Response::make("Panier vide !", "500") ;
+      }
+  }
 }

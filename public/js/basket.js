@@ -70,3 +70,25 @@ function deleteOneInBasket(item_id, csrf_token)
         }
     }) ;
 }
+
+function saveBasket()
+{
+    var request = $.ajax({
+        url:'/basket/save',
+        dataType:'text',
+        type:'GET',
+        statusCode:{
+            401: function (_this) {
+                alert(_this.responseText) ;
+                console.log(msg);
+            },
+            500: function (_this) {
+                alert(_this.responseText) ;
+                console.log(msg);
+            }
+        }
+    }).done(function (msg) {
+        console.log(msg);
+        alert(msg) ;
+    }) ;
+}
