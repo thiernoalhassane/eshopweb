@@ -133,6 +133,8 @@ Route::post('/email', 'InscriptionController@resend');
 
 Route::post('/basket/create', 'PanierController@createBasket') ;
 
+// Modifier un commentaire
+Route::post('/comment/update', 'ProduitsController@updateComment') ;
 //////////////////////////////////////////////////////////////////////
 /// Les routes pour afficher des pages sans traitement ///////////////
 /// //////////////////////////////////////////////////////////////////

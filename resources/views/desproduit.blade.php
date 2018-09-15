@@ -84,7 +84,20 @@
                                                 {{$comment->customer->name}} {{$comment->customer->surname}}
                                                 <span class="text-muted pull-right">{{$comment->date}}</span>
                                             </span><!-- /.username -->
-                                           {{$comment->message}}
+                                           <span id="comment_text_original_{{$comment->id}}">{{$comment->message}}</span>
+
+                                            <!-- Formulaire de modification d'un commentaire -->
+                                            <form id="comment_update_form_{{$comment->id}}" class="hidden form-horizontal">
+                                                <input type="text" name="comment_id" hidden value="{{$comment->id}}" />
+                                                <input type="text" name="user_id" hidden value="{{$comment->customer->id}}" />
+                                                <input required name="comment_text" id="comment_text_{{$comment->id}}" type="text" class="form-control input-sm" value="{{$comment->message}}">
+                                                <button type="button" onclick="updateComment('{{$comment->id}}', '{{csrf_token()}}')" title="valider" class="pull-right btn btn-light">
+                                                    <i class="fa fa-check"></i>
+                                                </button>
+                                            </form>
+                                            <span class="pull-right">
+                                                <button title="modifier le commentaire" onclick="displayCommentUpdateForm('{{$comment->id}}', '{{$comment->message}}')" class="btn btn-light"><i class="glyphicon glyphicon-pencil"></i></button>
+                                            </span>
 
                                         </div>
                                         <!-- /.comment-text -->
@@ -111,7 +124,7 @@
                                      alt="Alt Text">
                                 <!-- .img-push is used to add margin to elements next to floating images -->
                                 <div class="img-push">
-                                    <input type="text" class="form-control input-sm" name="comment"
+                                    <input required type="text" class="form-control input-sm" name="comment"
                                            placeholder="Votre commentaire">
                                 </div>
                             </form>
@@ -230,6 +243,65 @@
 <script src="{{asset('administration/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js')}}"></script>
 <script src="{{asset('administration/plugins/slimScroll/jquery.slimscroll.min.js')}}"></script>
 <script src="{{asset('administration/dist/js/demo.js')}}"></script>
+
+<script>
+    function displayCommentUpdateForm(commentTextInputId, commentTextOriginal) {
+
+        // Le contenu du textfield du formulaire de mise à jour
+        var commentTextInput =  $('#comment_text_'+commentTextInputId) ;
+        commentTextInput.val(commentTextOriginal);
+        //commentTextInput.removeClass('hidden') ;
+
+        // Masquage du text original
+        //$('#comment_text_original_'+commentTextInputId).fadeToggle("fast");
+
+        // Le formulaire de mise à jour
+        var commentUpdateForm = $('#comment_update_form_'+commentTextInputId) ;
+        commentUpdateForm.fadeToggle('slow', 'linear', function () {
+            commentUpdateForm.removeClass('hidden') ;
+        }) ;
+    }
+
+    function updateComment(comment_id, csrf_token)
+    {
+        var ajax = $.ajax(
+            {
+                url:"/comment/update",
+                dataType: 'text',
+                data:
+                    {
+                        comment_id:comment_id,
+                        comment_text: $("#comment_text_"+comment_id).val(),
+                        _token:csrf_token
+                    },
+                type:'POST',
+                statusCode:{
+                    400: function (msg) {
+                        alert(msg.responseText) ;
+                        console.log(msg.responseText) ;
+                    },
+                    500: function (msg) {
+                        alert(msg.responseText) ;
+                        console.log(msg.responseText) ;
+                    }
+                }
+            }
+        ).done(function (msg) {
+            console.log(msg) ;
+
+            // Mise à jour du texte
+            $('#comment_text_original_'+comment_id).text(msg) ;
+            $('#comment_text_'+comment_id).val(msg) ;
+
+            // Fondu du formulaire
+            var commentUpdateForm = $('#comment_update_form_'+comment_id) ;
+            commentUpdateForm.fadeToggle('slow', 'linear', function () {
+                commentUpdateForm.removeClass('hidden') ;
+            }) ;
+        }) ;
+    }
+</script>
+
 </body>
 
 </html>

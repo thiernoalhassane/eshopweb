@@ -6,6 +6,7 @@ use App\ApiConfig;
 
 use App\Utils\Net\RestRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Input;
 use App\Utils\Net\RestRequestException;
 
@@ -15,6 +16,7 @@ use Illuminate\Foundation\Bus\DispatchesJobs;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Session;
 
 class ProduitsController extends BaseController
 {
@@ -194,5 +196,41 @@ class ProduitsController extends BaseController
         }
     }
 
+    public function updateComment(Request $post)
+    {
+        if(Session::has('user') && Session::get('user') != null)
+        {
+            $comment_id = e(Input::get("comment_id")) ;
+            $comment_text = e(Input::get("comment_text")) ;
+            $user_id = Session::get('user')['id'] ;
 
+            $path = "api/comments/user/{$user_id}/{$comment_id}" ;
+            $query = [
+                "client_id"=>$this->rest_endpoint->getClientId(),
+                "access_token"=>RestRequest::getInstance()->getAccessToken()
+            ] ;
+
+            try
+            {
+
+                $request = RestRequest::getInstance()->put($path, "form_params", ["comment_text"=>$comment_text], $query) ;
+                $response = json_decode((string)$request->getBody(), TRUE) ;
+                if($response["code"] != 2000)
+                {
+                    return Response::make($response["data"]["message"], $request->getStatusCode()) ;
+                }
+                else
+                {
+                    return Response::make($comment_text, $request->getStatusCode()) ;
+                }
+            }catch (\Exception $e)
+            {
+                return Response::make($e->getMessage(), 500) ;
+            }
+
+        }else
+        {
+            return Response::make('Vous devez être connecté pour effectuer cette action :', 401) ;
+        }
+    }
 }
