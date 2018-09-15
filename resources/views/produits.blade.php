@@ -28,6 +28,8 @@
     <link rel="stylesheet" type="text/css" href="{{asset('acceuillogin/plugins/OwlCarousel2-2.2.1/animate.css')}}">
     <link rel="stylesheet" type="text/css"
           href="{{asset('acceuillogin/plugins/jquery-ui-1.12.1.custom/jquery-ui.css')}}">
+    <link rel="stylesheet" href="{{ asset('acceuillogin/styles/main_styles.css')}} ">
+    <link rel="stylesheet" href="{{ asset('acceuillogin/styles/responsive.css')}} ">
     <link rel="stylesheet" type="text/css" href="{{asset('acceuillogin/styles/shop_styles.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('acceuillogin/styles/shop_responsive.css')}}">
     <link rel="stylesheet" href="{{ asset('acceuillogin/styles/responsive.css')}} ">
@@ -68,6 +70,7 @@
                                 @endforeach
                             </ul>
                         </div>
+                        <!--
                         <div class="sidebar_section filter_by_section">
                             <div class="sidebar_title">Filtrer Par</div>
                             <div class="sidebar_subtitle">Le Prix</div>
@@ -77,6 +80,8 @@
                                 <p><input type="text" id="amount" class="amount" readonly style="border:0; font-weight:bold;"></p>
                             </div>
                         </div>
+
+                        -->
 
 
                     </div>
@@ -105,7 +110,7 @@
                             </div>
                         </div>
 
-                        <div class="product_grid">
+                        <div class="product_grid" id="item_list">
                             <div class="product_grid_border"></div>
 
                             @foreach($produits as $produits)
@@ -131,6 +136,9 @@
                             @endforeach
 
                         </div>
+                        <ul class="pager">
+                            <li><a class="btn btn-primary" onclick="displayMoreItems()">Voir plus</a></li>
+                        </ul>
 
                         <!-- Shop Page Navigation -->
 
@@ -147,8 +155,6 @@
 
 
 
-    <!-- Popular category -->
-    @include('bodypart.popular_category')
 
     <!-- Delivery -->
     @include('bodypart.delivery')
@@ -186,7 +192,31 @@
 <script src="{{asset('acceuillogin/plugins/Isotope/isotope.pkgd.min.js')}}"></script>
 <script src="{{asset('acceuillogin/plugins/jquery-ui-1.12.1.custom/jquery-ui.js')}}"></script>
 <script src="{{asset('acceuillogin/plugins/parallax-js-master/parallax.min.js')}}"></script>
+
 <script src="{{asset('acceuillogin/js/shop_custom.js')}}"></script>
+<script>
+    var page_num = 0;
+    function displayMoreItems() {
+
+        var request = $.ajax(
+            {
+                url: '/search/moreItems',
+                type: "GET",
+                data: {
+                    offset: page_num,
+
+                },
+                dataType: "html"
+            }
+        );
+        request.done(function (msg) {
+            $('#item_list').html(msg)
+        });
+
+        page_num++;
+        console.log("page number: " + page_num);
+    }
+</script>
 
 </body>
 

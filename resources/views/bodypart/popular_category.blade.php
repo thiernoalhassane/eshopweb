@@ -36,7 +36,7 @@
 
 
                         <!-- Popular Categories Item -->
-                        @foreach($nom as $nom)
+                        @foreach($footer as $nom)
                             <div class="owl-item">
                                 <div class="popular_category d-flex flex-column align-items-center justify-content-center">
                                     <div class="popular_category_image"><img src="images/popular_3.png" alt=""></div>

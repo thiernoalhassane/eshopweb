@@ -32,19 +32,15 @@ class InscriptionController extends BaseController
         $tel = e(Input::get('phone'));
         $adresse = e(Input::get('address'));
         $sexe = e(Input::get('sex'));
-        $flooz = e(Input::get('flooz'));
-        $tmoney = e(Input::get('tmoney'));
 
 
         if ($request->file('profil') == null) {
             $profile = "";
         } else {
-            $profile = $request->file('profil')->store('profile_user');
+            $profile = $request->file("profil");
         }
 
 
-        if ($flooz == "" && $tmoney == "")
-            return redirect('inscription')->with('erreur', 'Remplissez soit Tmoney soit Flooz')->withInput();
 
 
         $client = new Client();
@@ -87,17 +83,11 @@ class InscriptionController extends BaseController
                                 'contents' => $password
                             ],
                             [
-                                'name' => 'profil',
-                                'contents' => $profile
+                                "name" => "profile",
+                                "contents" => fopen($profile->getRealPath(), "r"),
+                                "filename" => $profile->getClientOriginalName()
                             ],
-                            [
-                                'name' => 'flooz',
-                                'contents' => $flooz
-                            ],
-                            [
-                                'name' => 'tmoney',
-                                'contents' => $tmoney
-                            ],
+
 
                         ]
 
@@ -121,7 +111,7 @@ class InscriptionController extends BaseController
             $jsonid = \GuzzleHttp\json_decode($response->getBody()->getContents());
             $data = \GuzzleHttp\json_decode($jsonid->data);
 
-            return redirect()->route('confirmation', ['id' => $data->id, 'donée' => $request->_token]);
+            return redirect()->route('confirmation');
 
 
         } else {
@@ -168,17 +158,11 @@ class InscriptionController extends BaseController
                                 'contents' => $password
                             ],
                             [
-                                'name' => 'profil',
-                                'contents' => $profile
+                                "name" => "profile",
+                                "contents" => fopen($profile->getRealPath(), "r"),
+                                "filename" => $profile->getClientOriginalName()
                             ],
-                            [
-                                'name' => 'flooz',
-                                'contents' => $flooz
-                            ],
-                            [
-                                'name' => 'tmoney',
-                                'contents' => $tmoney
-                            ],
+
 
                         ]
 
@@ -202,15 +186,15 @@ class InscriptionController extends BaseController
             $jsonid = \GuzzleHttp\json_decode($response->getBody()->getContents());
             $data = \GuzzleHttp\json_decode($jsonid->data);
 
-            return redirect()->route('confirmation', ['id' => $data->id, 'donée' => $request->_token]);
+            return redirect()->route('confirmation');
 
         }
     }
 
-    public function confirmation($id)
+    public function confirmation()
     {
 
-        return view('confirmationaccount', compact('id'));
+        return view('confirmationaccount');
     }
 
     public function validate(Request $request)
@@ -224,7 +208,7 @@ class InscriptionController extends BaseController
         if (\Illuminate\Support\Facades\Cache::has('access_token')) {
             $uri = new ApiConfig();
             try {
-                $response = $client->request('POST', $uri->getUrlRest() . 'api/user/account/confirm/' . $request->id . '?client_id=' . $uri->getClientId() . '&access_token=' . \Illuminate\Support\Facades\Cache::get('access_token'),
+                $response = $client->request('POST', $uri->getUrlRest() . 'api/user/account/confirm?client_id=' . $uri->getClientId() . '&access_token=' . \Illuminate\Support\Facades\Cache::get('access_token'),
                     [
                         'form_params' => [
                             'token' => $token
@@ -259,7 +243,7 @@ class InscriptionController extends BaseController
             $result = \GuzzleHttp\json_decode($json);
             \Illuminate\Support\Facades\Cache::put('access_token', $result->access_token, 60);
             try {
-                $response = $client->request('POST', $uri->getUrlRest() . 'api/user/account/confirm/' . $request->id . '?client_id=' . $uri->getClientId() . '&access_token=' . \Illuminate\Support\Facades\Cache::get('access_token'),
+                $response = $client->request('POST', $uri->getUrlRest() . 'api/user/account/confirm?client_id=' . $uri->getClientId() . '&access_token=' . \Illuminate\Support\Facades\Cache::get('access_token'),
                     [
                         'form_params' => [
                             'token' => $token
@@ -310,13 +294,13 @@ class InscriptionController extends BaseController
                     $exception = (string)$e->getResponse()->getBody();
                     $exception = json_decode($exception);
                     //return redirect()->route('confirmation',['id' => $request->id])->with('message',$exception)  ;
-                    return redirect()->route('confirmation', ['id' => $request->id, 'donée' => $request->_token])->with('message', $exception->data->message);
+                    return redirect()->route('confirmation')->with('message', $exception->data->message);
                 }
             }
             $jsonid = \GuzzleHttp\json_decode($response->getBody()->getContents());
             $data = \GuzzleHttp\json_decode($jsonid->data);
 
-            return redirect()->route('confirmation', ['id' => $request->id, 'donée' => $request->_token])->with('message', 'Clé de confirmation envoyé avec succès');
+            return redirect()->route('confirmation')->with('message', 'Clé de confirmation envoyé avec succès');
 
 
         } else {
@@ -341,13 +325,13 @@ class InscriptionController extends BaseController
                     $exception = (string)$e->getResponse()->getBody();
                     $exception = json_decode($exception);
                     //return redirect()->route('confirmation',['id' => $request->id])->with('message',$exception)  ;
-                    return redirect()->route('confirmation', ['id' => $request->id, 'donée' => $request->_token])->with('message', $exception->data->message);
+                    return redirect()->route('confirmation')->with('message', $exception->data->message);
                 }
             }
             $jsonid = \GuzzleHttp\json_decode($response->getBody()->getContents());
             $data = \GuzzleHttp\json_decode($jsonid->data);
 
-            return redirect()->route('confirmation', ['id' => $request->id, 'donée' => $request->_token])->with('message', 'Clé de confirmation envoyé avec succès');
+            return redirect()->route('confirmation')->with('message', 'Clé de confirmation envoyé avec succès');
         }
     }
 }

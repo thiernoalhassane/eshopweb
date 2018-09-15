@@ -69,39 +69,14 @@
                         </div>
 
 
-                        <label>Moyen de paiement </label>
                         <div class="form-group">
-                            <label for="flooz">Numéro Flooz</label>
-                            <div class="col-lg-6">
-                                <div class="input-group">
+                            <label for="profil" class=" control-label">
+                                Image
+                                <small class="text-info">(format jpeg/jpg ou png, taille max: 110ko)</small>
+                            </label>
 
-                                    <div class="input-group">
-
-                                        <input type="text" id="flooz" name="flooz" class="form-control"
-                                               data-inputmask='"mask": "+999 99-99-99-99"' data-mask>
-                                    </div>
-                                </div>
-                                <!-- /input-group -->
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label for="tmoney">Numéro Tmoney</label>
-                            <div class="col-lg-6">
-                                <div class="input-group">
-                                    <div class="input-group">
-
-                                        <input type="text" id="tmoney" name="tmoney" class="form-control"
-                                               data-inputmask='"mask": "+999 99-99-99-99"' data-mask>
-                                    </div>
-                                </div>
-                                <!-- /input-group -->
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="profil">Votre Photo</label>
-                            <input type="file" name="profil" id="profil">
-
+                            <input id="profil" type="file" placeholder="Taille maximale 110 ko" name="profil"
+                                   accept="image/png image/jpg image/jpeg" size="200">
 
                         </div>
 
