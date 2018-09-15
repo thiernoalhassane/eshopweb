@@ -23,7 +23,7 @@
 
                     <div class="form-group">
                         <label for="password">Mot de Passe</label>
-                        <input id="password" name="password" class="form-control" type="text" required>
+                        <input id="password" name="password" class="form-control" type="password" required>
                         <span id="error_lastname" class="text-danger"></span>
                     </div>
                     <div class="form-group">

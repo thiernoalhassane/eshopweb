@@ -5,7 +5,7 @@
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form action="{{ url('/items/add')  }}" class="" method="post" enctype="multipart/form-data">
+        <form action="{{ url('/admin/items/add')  }}" class="" method="post" enctype="multipart/form-data">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="alert-warning">
                 @if(isset($errors))
