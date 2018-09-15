@@ -38,7 +38,7 @@ class InscriptionController extends BaseController
         if ($request->file('profil') == null) {
             $profile = "";
         } else {
-            $profile = $request->file("profil");
+            $profile = $request->file('profil')->store('profile_user');
         }
 
 
@@ -84,9 +84,8 @@ class InscriptionController extends BaseController
                                 'contents' => $password
                             ],
                             [
-                                "name" => "profile",
-                                "contents" => fopen($profile->getRealPath(), "r"),
-                                "filename" => $profile->getClientOriginalName()
+                                'name' => 'profil',
+                                'contents' => $profile
                             ],
 
 
@@ -99,7 +98,7 @@ class InscriptionController extends BaseController
 
                 if ($e->hasResponse()) {
                     if ($e->getCode() == 5005) {
-                        return redirect()->route('confirmation', ['id' => $request->_token, 'donée' => $request->_token]);
+                        return redirect()->route('confirmation');
                     }
 
 
@@ -159,9 +158,8 @@ class InscriptionController extends BaseController
                                 'contents' => $password
                             ],
                             [
-                                "name" => "profile",
-                                "contents" => fopen($profile->getRealPath(), "r"),
-                                "filename" => $profile->getClientOriginalName()
+                                'name' => 'profil',
+                                'contents' => $profile
                             ],
 
 
@@ -174,7 +172,7 @@ class InscriptionController extends BaseController
 
                 if ($e->hasResponse()) {
                     if ($e->getCode() == 5005) {
-                        return redirect()->route('confirmation', ['id' => $request->_token, 'donée' => $request->_token]);
+                        return redirect()->route('confirmation');
                     }
 
 
