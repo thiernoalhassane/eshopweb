@@ -64,7 +64,7 @@
                             <div class="shop_content">
 
 
-                                <div class="product_grid">
+                                <div class="product_grid" id="item_list">
                                     <div class="product_grid_border  details"></div>
 
                                     @foreach($produits as $produits)
@@ -85,6 +85,9 @@
                                     @endforeach
 
                                 </div>
+                                <ul class="pager">
+                                    <li><a class="btn btn-primary" onclick="displayMoreItems()">Voir plus</a></li>
+                                </ul>
 
 
                             </div>
@@ -285,35 +288,29 @@
 <script src="{{asset('acceuillogin/plugins/Isotope/isotope.pkgd.min.js')}}"></script>
 <script src="{{asset('acceuillogin/plugins/parallax-js-master/parallax.min.js')}}"></script>
 <script src="{{asset('acceuillogin/js/custom.js')}}"></script>
-<script>
-    var nbClick = 1;
-    var limit = 10;
+    <script>
+        var page_num = 0;
+        function displayMoreItems() {
 
-    $('.new').click(function compter() {
+            var request = $.ajax(
+                {
+                    url: '/search/moreItems',
+                    type: "GET",
+                    data: {
+                        offset: page_num,
 
-        nbClick++;
-        return nbClick;
+                    },
+                    dataType: "html"
+                }
+            );
+            request.done(function (msg) {
+                $('#item_list').html(msg)
+            });
 
-    });
-</script>
-<script>
-    function ecran(
-    function compter()
-    ,
-    idvu, fichier, param
-    )
-    {
-        var req = $.ajax({
-            url: '{{URL::to(' / ecran')}}',
-            type: "GET",
-            data: {val: compter(), fichier: fichier, param: param},
-            dataType: "html"
-        });
-        req.done(function (msg) {
-            $('#' + idvu).html(msg);
-        });
-    }
-</script>
+            page_num++;
+            console.log("page number: " + page_num);
+        }
+    </script>
 </body>
 
 </html>

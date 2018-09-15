@@ -44,7 +44,6 @@
 
                 <form action="{{ url('/confirmation') }}" method="post">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                    <input type="hidden" name="id" value="{{ $id }}">
 
 
                     <div class="form-group">
@@ -77,8 +76,8 @@
             </div>
             <form action="{{ url('/email') }}" method="post">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                <input type="hidden" name="id" value="{{ $id }}">
-            <div class="modal-body">
+
+                <div class="modal-body">
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input id="email" name="email" class="form-control" type="email" required>

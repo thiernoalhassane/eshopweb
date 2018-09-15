@@ -42,8 +42,7 @@ Route::get('/trader/{id}', 'AdminController@showTrader');
 Route::get('/explore/{id}', 'ProduitsController@explore')->name('explore');
 
 
-
-Route::get('/confirmationaccount/{id}', 'InscriptionController@confirmation')->name('confirmation');
+Route::get('/confirmationaccount', 'InscriptionController@confirmation')->name('confirmation');
 
 Route::get('/admin','AdminController@show');
 
@@ -95,6 +94,7 @@ Route::get("/search/more", function ()
             $items = json_decode($response["data"], TRUE) ;
         }
 
+
         return view("items/bodypart/items",["items"=>$items]) ;
 
     }catch (\App\Utils\Net\RestRequestException $rre)
@@ -103,6 +103,37 @@ Route::get("/search/more", function ()
         return redirect("/search", 302)->withInput(["keyword"=>$keyword, "category_id"=>$category]) ;
     }
 }) ;
+
+Route::get("/search/moreItems", function () {
+
+    $offset = e(\Illuminate\Support\Facades\Input::get('offset'));
+    $items = null;
+    try {
+        $access_token = \App\Utils\Net\RestRequest::getInstance()->getAccessToken();
+        $path = "api/items";
+        $request = \App\Utils\Net\RestRequest::getInstance()->get($path, [
+            "client_id" => (new \App\ApiConfig())->getClientId(),
+            "access_token" => $access_token,
+            "limit" => 10,
+            "offset" => $offset,
+
+        ]);
+
+        $response = json_decode((string)$request->getBody(), TRUE);
+
+
+        if ($response["code"] == 2000) {
+            $items = json_decode($response["data"], TRUE);
+        }
+
+
+        return view("items/bodypart/items", ["items" => $items]);
+
+    } catch (\App\Utils\Net\RestRequestException $rre) {
+        \Illuminate\Support\Facades\Cache::forget("access_token");
+        return redirect()->route('home');
+    }
+});
 
 // Enregistrer un panier temporaire
 Route::get('/basket/save', 'PanierController@saveBasket') ;

@@ -14,6 +14,7 @@ class AcceuilController extends BaseController
   public function show()
   {
 
+
       if (\Illuminate\Support\Facades\Cache::has('access_token') && \Illuminate\Support\Facades\Cache::has('nomcategorie')) {
           $uri = new ApiConfig();
           $limit = 10;
