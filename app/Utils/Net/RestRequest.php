@@ -184,7 +184,6 @@ class RestRequest
             $request = $this->get($path, $query);
 
             $json = json_decode((string)$request->getBody(), TRUE) ;
-            $data = json_decode($json["data"], TRUE) ;
             if($json["code"] === 2007)
             {
                 Log::critical("impossible de récupérer les produits de l'utilisateur {$user_id}: code REST: {$json["code"]}");
@@ -192,12 +191,13 @@ class RestRequest
             }
             elseif ($json["code"] === 2000)
             {
+                $data = json_decode($json["data"], TRUE) ;
                 Log::info("Produits de l'utilisateur {$user_id} récupérés") ;
                 Cache::add("user:{$user_id}:items", $data, 180) ;
             }
             else
             {
-                throw new RestRequestException($data['message'], $json["code"]) ;
+                throw new RestRequestException($json['data']['message'], $json["code"]) ;
             }
         }
 
