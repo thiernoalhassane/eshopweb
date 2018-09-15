@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="{{asset('acceuillogin/styles/product_responsive.css')}}">
     <link rel="stylesheet" href="{{asset('administration/bootstrap/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('administration/dist/css/AdminLTE.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('acceuillogin/styles/main_styles.css')}} ">
+    <link rel="stylesheet" href="{{ asset('acceuillogin/styles/responsive.css')}} ">
 
 </head>
 
@@ -45,7 +47,7 @@
                     <div class="box box-widget">
                         <div class="box-header with-border">
                             <div class="user-block">
-                                <img class="img-circle" src="../dist/img/user1-128x128.jpg" alt="User Image">
+                                <img class="img-circle" src="{!! $produits->trader->profil  !!}" alt="profil {!! $produits->trader->name  !!}">
 
                                 <span class="username"><a href="{{ url('/trader', $id= $produits->trader->id)}}">{!! $produits->trader->name  !!} {!! $produits->trader->surname  !!}  </a></span>
                                 <span class="description"></span>
@@ -55,47 +57,44 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <img class="img-responsive pad" src="../dist/img/photo2.png" alt="Photo">
+                            <img class="img-responsive pad" src="{!! $produits->picture  !!}" alt="aperçu {!! $produits->wording !!}">
 
                             <p></p>
                             <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i> Partager
                             </button>
 
-                            <span class="pull-right text-muted">Nombre de  likes - Nombre de comments</span>
+                            <span class="pull-right text-muted">
+                                <div>
+                                    <button class="btn btn-light"><i style="color: cornflowerblue" class="fa fa-thumbs-up"></i> {{$produits->likes->blue}}</button>
+                                    <button class="btn btn-light"><i style="color: red" class="fa fa-thumbs-down"></i> {{$produits->likes->red}}</button>
+                                </div>
+                                Nombre de commentaire <i class="badge">{{count($produits->comments)}}</i></span>
                         </div>
                         <!-- /.box-body -->
                         <div class="box-footer box-comments">
-                            <div class="box-comment">
-                                <!-- User image -->
-                                <img class="img-circle img-sm" src="../dist/img/user3-128x128.jpg" alt="User Image">
+                            @if(count($produits->comments) > 0)
+                                @foreach($produits->comments as $comment)
+                                    <div class="box-comment">
+                                        <!-- User image -->
+                                        <!--<img class="img-circle img-sm" src="../dist/img/user3-128x128.jpg" alt="User Image">-->
+                                        <i class="fa fa-user img-circle img-sm"></i>
 
-                                <div class="comment-text">
-                      <span class="username">
-                        Maria Gonzales
-                        <span class="text-muted pull-right">8:03 PM Today</span>
-                      </span><!-- /.username -->
-                                    It is a long established fact that a reader will be distracted
-                                    by the readable content of a page when looking at its layout.
-                                </div>
-                                <!-- /.comment-text -->
-                            </div>
-                            <!-- /.box-comment -->
-                            <div class="box-comment">
-                                <!-- User image -->
-                                <img class="img-circle img-sm" src="../dist/img/user4-128x128.jpg" alt="User Image">
+                                        <div class="comment-text">
+                                            <span class="username">
+                                                {{$comment->customer->name}} {{$comment->customer->surname}}
+                                                <span class="text-muted pull-right">{{$comment->date}}</span>
+                                            </span><!-- /.username -->
+                                           {{$comment->message}}
 
-                                <div class="comment-text">
-                      <span class="username">
-                        Luna Stark
-                        <span class="text-muted pull-right">8:03 PM Today</span>
-                      </span><!-- /.username -->
-                                    It is a long established fact that a reader will be distracted
-                                    by the readable content of a page when looking at its layout.
-                                </div>
-                                <!-- /.comment-text -->
-                            </div>
-                            <!-- /.box-comment -->
+                                        </div>
+                                        <!-- /.comment-text -->
+                                    </div>
+                                @endforeach
+                                @else
+                                    Aucun commentaire
+                                @endif
                         </div>
+
                         <!-- /.box-footer -->
                         @if(\Illuminate\Support\Facades\Session::has('user') == true)
                         <div class="box-footer">
@@ -125,7 +124,7 @@
 
 
                 <!-- Description -->
-                <div class="col-lg-5 order-3">
+                <div class="col-lg-5 order-1">
                     <div class="product_description">
                         <div class="product_category">{!! $produits->category->description !!}</div>
                         <div class="product_name">{!! $produits->wording !!}</div>
@@ -183,6 +182,9 @@
     </div>
 
 
+    <!-- popular category -->
+    <!-- delivery -->
+    @include('bodypart.delivery')
     <!-- footer -->
     @include('footer')
 
