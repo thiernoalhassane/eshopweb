@@ -231,46 +231,41 @@ class AdminController extends BaseController
         {
             $user_id = Session::get("user")['id'] ;
             $access_token = RestRequest::getInstance()->getAccessToken() ;
-            $new_item = RestRequest::getInstance()
-                ->postMultipart("api/items/user/{$user_id}",
-                    $multipart,
-                    ["client_id"=>$this->rest_endpoint->getClientId(),"access_token"=>$access_token]) ;
-
+            $request = RestRequest::getInstance()->post(
+                "api/items/user/{$user_id}",
+                'multipart',$multipart,
+                ["client_id"=>$this->rest_endpoint->getClientId(),"access_token"=>$access_token]
+            ) ;
+            $response = json_decode($request->getBody()->getContents(), TRUE) ;
+            if($response["code"] != 2001)
+            {
+                return redirect()->back(302)->with(["error_while_add_item"=> $response["data"]["message"]]);
+            }
             // Mise à jour du cache ///////////////////////////////////////////////////////////
+            $new_item = json_decode($response["data"], TRUE) ;
             $new_item["trader"] = null ;
             $new_item["category"] = null ;
-            $user_items = RestRequest::getInstance()->getItemsByUserId("5b809c6d6f9db627c638e57c"
+            $user_items = RestRequest::getInstance()->getItemsByUserId($user_id
                 , [
                     "client_id"=>$this->rest_endpoint->getClientId(),
                     "access_token"=>RestRequest::getInstance()->getAccessToken(),
                     "limit"=>100
                 ]) ;
             array_push($user_items, $new_item) ;
-            Cache::put("user:5b809c6d6f9db627c638e57c:items", $user_items, 60) ;
+            Cache::put("user:{$user_id}:items", $user_items, 60) ;
             ////////////////////////////////////////////////////////////////////////////////////
 
             return redirect()->back(302)->with(["succes_while_add_item"=> "Produit ajouter avec succès !"]);
         }catch (RestRequestException $rre)
         {
+            Cache::forget("access_token") ;
             switch ($rre->getCode())
             {
-                case 4001:
-                    // Si on a déjà essayer de retraiter le formulaire on affiche la page d'erreur.
-                    if(e(Input::get("retry")) != null)
-                    {
-                        return view("errors/app_unauthorized") ;
-                    }
-                    // Nouvelle tentative d'envoie
-                    Cache::forget("access_token"); Cache::forget("categories");
-                    return redirect("/items/add?retry=1", 302)->withInput($multipart) ;
-                    break;
                 case 4004:
-                    break;
                     return view("errors/non_registered_user") ;
-                default:
-                    return redirect("/items/add")->with("error_while_add_item", $rre->getMessage())->withInput($multipart) ;
                     break;
             }
+            return redirect()->back(302)->with("error_while_add_item", $rre->getMessage())->withInput($multipart) ;
         }
     }
 
@@ -331,10 +326,10 @@ class AdminController extends BaseController
             {
                 Cache::forget("access_token"); Cache::forget("user:{$user_id}:items");
                 $user_items = RestRequest::getInstance()->getItemsByUserId("$user_id" , [
-                        "client_id"=>$this->rest_endpoint->getClientId(),
-                        "access_token"=>RestRequest::getInstance()->getAccessToken(),
-                        "limit"=>100
-                    ]) ;
+                    "client_id"=>$this->rest_endpoint->getClientId(),
+                    "access_token"=>RestRequest::getInstance()->getAccessToken(),
+                    "limit"=>100
+                ]) ;
             }catch (RestRequestException $rre)
             {
                 return view("errors/app_unauthorized")  ;
@@ -423,9 +418,9 @@ class AdminController extends BaseController
         try
         {
             $request = RestRequest::getInstance()->get("api/baskets/user/{$user_id}" , [
-                    "client_id"=>$this->rest_endpoint->getClientId(),
-                    "access_token"=>RestRequest::getInstance()->getAccessToken()
-                ]) ;
+                "client_id"=>$this->rest_endpoint->getClientId(),
+                "access_token"=>RestRequest::getInstance()->getAccessToken()
+            ]) ;
             $response = json_decode((string) $request->getBody(), TRUE) ;
             if($response["code"] == 2000)
             {
@@ -487,10 +482,10 @@ class AdminController extends BaseController
             $access_token = RestRequest::getInstance()->getAccessToken() ;
             $user_id = Session::get("user")['id'] ;
             $request = RestRequest::getInstance()->put("api/user/{$user_id}/password", "form_params", $data,
-            [
-                "access_token"=>$access_token,
-                "client_id"=>$this->rest_endpoint->getClientId()
-            ]) ;
+                [
+                    "access_token"=>$access_token,
+                    "client_id"=>$this->rest_endpoint->getClientId()
+                ]) ;
 
             $response = json_decode((string) $request->getBody(), TRUE) ;
 
@@ -543,10 +538,10 @@ class AdminController extends BaseController
             $user_id = Session::get("user")['id'] ;
 
             $request = RestRequest::getInstance()->put("api/user/{$user_id}", "json", $put_data,
-            [
-                "access_token"=>$access_token,
-                "client_id"=>$this->rest_endpoint->getClientId()
-            ]);
+                [
+                    "access_token"=>$access_token,
+                    "client_id"=>$this->rest_endpoint->getClientId()
+                ]);
             $response = json_decode((string)$request->getBody(), TRUE) ;
 
             if($response["status"] == "success")
