@@ -12,6 +12,7 @@
     {!! HTML::style('acceuillogin/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css') !!}
     {!! HTML::style('acceuillogin/styles/cart_responsive.css') !!}
     {!! HTML::style('acceuillogin/styles/cart_styles.css') !!}
+    <link rel="stylesheet" href="{{ asset('acceuillogin/styles/main_styles.css')}} ">
     <link rel="stylesheet" href="{{ asset('acceuillogin/styles/responsive.css')}} ">
 
 </head>
@@ -97,7 +98,7 @@
 
                         @if(\Illuminate\Support\Facades\Session::has("basket") && \Illuminate\Support\Facades\Session::get("basket") != null)
                             <div class="cart_buttons">
-                                <button type="button" onclick="saveBasket()" class="button cart_button_clear">Enregister</button>
+                                <button type="button" onclick="saveBasket()" class="button cart_button_checkout">Enregister</button>
                                 <button type="button" class="button cart_button_checkout">Commander</button>
                             </div>
                         @endif
@@ -108,11 +109,10 @@
         </div>
     </div>
 
-    <!-- Newsletter -->
-
+    <!-- Delivery -->
+    @include('bodypart.delivery')
 
     <!-- Footer -->
-
     @include('footer')
 </div>
 

@@ -107,100 +107,11 @@
         </div>
     </div>
 
-    <!-- Popular Categories -->
+    <!-- Popular category -->
+    @include('bodypart.popular_category')
 
-    <div class="popular_categories">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3">
-                    <div class="popular_categories_content">
-                        <div class="popular_categories_title">Catégories Populaires</div>
-                        <div class="popular_categories_slider_nav">
-                            <div class="popular_categories_prev popular_categories_nav"><i class="fas fa-angle-left ml-auto"></i></div>
-                            <div class="popular_categories_next popular_categories_nav"><i class="fas fa-angle-right ml-auto"></i></div>
-                        </div>
-
-                    </div>
-                </div>
-
-                <!-- Popular Categories Slider -->
-
-                <div class="col-lg-9">
-                    <div class="popular_categories_slider_container">
-                        <div class="owl-carousel owl-theme popular_categories_slider">
-
-                            @foreach($nom as $nom)
-                                <div class="owl-item">
-                                    <div class="popular_category d-flex flex-column align-items-center justify-content-center">
-                                        <div class="popular_category_image"><img src="images/popular_3.png" alt=""></div>
-                                        <div class="popular_category_text">{{ $nom->description}}</div>
-                                    </div>
-                                </div>
-                            @endforeach
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Reviews -->
-
-    <div class="characteristics">
-        <div class="container">
-            <div class="row">
-                <!-- Les moyens de livraison -->
-                <!-- Char. Item -->
-                <div class="col-lg-3 col-md-6 char_col">
-                    <div class="char_item d-flex flex-row align-items-center justify-content-start">
-                        <div class="char_icon"><img src="images/char_1.png" alt=""></div>
-                        <div class="char_content">
-                            <div class="char_title">Free Delivery</div>
-                            <div class="char_subtitle">from $50</div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Char. Item -->
-                <div class="col-lg-3 col-md-6 char_col">
-                    <div class="char_item d-flex flex-row align-items-center justify-content-start">
-                        <div class="char_icon"><img src="images/char_1.png" alt=""></div>
-                        <div class="char_content">
-                            <div class="char_title">Free Delivery</div>
-                            <div class="char_subtitle">from $50</div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Char. Item -->
-                <div class="col-lg-3 col-md-6 char_col">
-                    <div class="char_item d-flex flex-row align-items-center justify-content-start">
-                        <div class="char_icon"><img src="images/char_1.png" alt=""></div>
-                        <div class="char_content">
-                            <div class="char_title">Free Delivery</div>
-                            <div class="char_subtitle">from $50</div>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Char. Item -->
-                <div class="col-lg-3 col-md-6 char_col">
-
-                    <div class="char_item d-flex flex-row align-items-center justify-content-start">
-                        <div class="char_icon"><img src="images/char_1.png" alt=""></div>
-                        <div class="char_content">
-                            <div class="char_title">Free Delivery</div>
-                            <div class="char_subtitle">from $50</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    <!-- Delivery -->
+    @include('bodypart.delivery')
 
     <!-- Footer -->
     @include('footer')

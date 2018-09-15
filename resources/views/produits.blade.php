@@ -40,13 +40,9 @@
 <div class="super_container">
 
     <!-- Header -->
-
-
-
     @include('header')
 
     <!-- Home -->
-
     <div class="home">
         <div class="home_background parallax-window" data-parallax="scroll" data-image-src="images/shop_background.jpg"></div>
         <div class="home_overlay"></div>
@@ -134,9 +130,6 @@
 
                             @endforeach
 
-
-
-
                         </div>
 
                         <!-- Shop Page Navigation -->
@@ -154,8 +147,13 @@
 
 
 
+    <!-- Popular category -->
+    @include('bodypart.popular_category')
 
-    <!-- footer -->
+    <!-- Delivery -->
+    @include('bodypart.delivery')
+
+    <!-- Footer -->
     @include('footer')
 
 </div>
