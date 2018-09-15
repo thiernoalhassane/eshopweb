@@ -145,6 +145,7 @@
                                     </li>
                                     <li><a href="{{ url('/produits')  }}">Les produits<i class="fas fa-chevron-down"></i></a></li>
                                     <li><a href="{{ url('/panier')  }}">Votre Panier<i class="fas fa-chevron-down"></i></a>
+                                    <li><a href="{{ url('/avis')  }}">Votre Avis<i class="fas fa-chevron-down"></i></a>
                                     </li>
                                     <!--<li><a href="{{ url('/blog')  }}">Blog<i class="fas fa-chevron-down"></i></a></li>-->
 

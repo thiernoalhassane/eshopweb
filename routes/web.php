@@ -11,8 +11,8 @@
 |
 */
 
-Route::get('/test', function () {
-    return view('welcome');
+Route::get('/avis', function () {
+    return view('avis');
 });
 /////////////////////////////////////////////////////
 /// Les Routes get /////////////////////////////////
