@@ -18,19 +18,9 @@ class AdminController extends BaseController
 
     protected $rest_endpoint ;
 
-    protected $user_profil ;
-
     public function __construct()
     {
         $this->rest_endpoint = new ApiConfig() ;
-        $this->user_profil = [
-            "name"=>Session::get("user")["name"],
-            "surname"=>Session::get("user")["surname"],
-            "profil"=>Session::get("user")["profil"],
-            "email"=>Session::get("user")["email"],
-            "phone"=>Session::get("user")["phone"],
-            "address"=>Session::get("user")["address"]
-        ] ;
     }
 
     public function show()
@@ -157,6 +147,25 @@ class AdminController extends BaseController
             // Cette redirection provoque une grave exception
             return redirect("/admin/items/update", 302)->withInput()->with(["retry"=>1]) ;
         }
+    }
+
+    private function validateItemForm(Request $post)
+    {
+        // validation du formulaire
+        return Validator::make($post->all(),
+            [
+                "wording" => "required|not_regex:/^[ \\._@!?,;\\d]+$/|",
+                "description" => "nullable|not_regex:/^[ \\._@!?,;\\d]+$/",
+                "price" => "required|min:1",
+                "quantity" => "required|min:1",
+                "picture" => "nullable|mimetypes:image/png,image/jpeg,image/jpg",
+                "category_id" => "required"
+                , [
+                "required" => "Le champ :attribute est obligatoire !",
+                "mimetypes" => "Les images doivent être de ce type :mimtypes",
+                "not_regex" => "Veullez saisir seulement des caractères alphanumériques"
+            ]
+            ]);
     }
 
     /**
@@ -320,11 +329,11 @@ class AdminController extends BaseController
         {
             try
             {
-                Cache::forget("access_token"); Cache::forget("user:5b34e9635390fd229c90b3d6:items");
-                $user_items = RestRequest::getInstance()->getItemsByUserId("5b34e9635390fd229c90b3d6"
-                    , [
+                Cache::forget("access_token"); Cache::forget("user:{$user_id}:items");
+                $user_items = RestRequest::getInstance()->getItemsByUserId("$user_id" , [
                         "client_id"=>$this->rest_endpoint->getClientId(),
-                        "access_token"=>RestRequest::getInstance()->getAccessToken()
+                        "access_token"=>RestRequest::getInstance()->getAccessToken(),
+                        "limit"=>100
                     ]) ;
             }catch (RestRequestException $rre)
             {
@@ -392,40 +401,56 @@ class AdminController extends BaseController
         }
     }
 
-
-    /**.
-
-    /**
-     * Valide le formulaire d'ajout ou de modification d'un produit.
-     * @param Request $post
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    private function validateItemForm(Request $post)
+    public function showBaskets()
     {
         if(!Session::has("user") || is_null(Session::get("user")) || !is_array(Session::get("user")))
         {
             return redirect("/connection", 302)->with(["error_while_access_to_backend"=>"Vous devez être connecté pour accéder à tout le site"]) ;
         }
+        // Récupération des paniers.
 
-        // validation du formulaire
-        return Validator::make($post->all(),
-            [
-                "wording"=>"required|not_regex:/^[ \\._@!?,;\\d]+$/",
-                "description"=>"nullable|not_regex:/^[ \\._@!?,;\\d]+$/",
-                "price"=>"required|min:1",
-                "quantity"=>"required|min:1",
-                "picture"=>"nullable|mimetypes:image/png,image/jpeg,image/jpg",
-                "category_id"=>"required"
-                ,[
-                "required"=>"Le champ :attribute est obligatoire !",
-                "mimetypes"=>"Les images doivent être de ce type :mimtypes",
-                "not_regex"=>"Veullez saisir seulement des caractères alphanumériques"
-            ]
-            ]) ;
+        $user_baskets = null ;
+        $user_id = Session::get("user")['id'] ;
+        $user_profil = [
+            "name"=>Session::get("user")["name"],
+            "surname"=>Session::get("user")["surname"],
+            "profil"=>Session::get("user")["profil"],
+            "email"=>Session::get("user")["email"],
+            "phone"=>Session::get("user")["phone"],
+            "address"=>Session::get("user")["address"]
+        ] ;
+
+        try
+        {
+            $request = RestRequest::getInstance()->get("api/baskets/user/{$user_id}" , [
+                    "client_id"=>$this->rest_endpoint->getClientId(),
+                    "access_token"=>RestRequest::getInstance()->getAccessToken()
+                ]) ;
+            $response = json_decode((string) $request->getBody(), TRUE) ;
+            if($response["code"] == 2000)
+            {
+                $user_baskets = json_decode($response["data"], TRUE) ;
+                //dd($user_baskets) ;
+            }
+        }catch (RestRequestException $rre)
+        {
+            try
+            {
+                Cache::forget("access_token");
+                $user_baskets = RestRequest::getInstance()->get("api/baskets/{$user_id}" , [
+                    "client_id"=>$this->rest_endpoint->getClientId(),
+                    "access_token"=>RestRequest::getInstance()->getAccessToken()
+                ]) ;
+            }catch (RestRequestException $rre)
+            {
+                return view("errors/app_unauthorized")  ;
+            }
+        }
+
+        return view('administration.baskets.main', ["user_baskets"=>$user_baskets, "user_profil"=>$user_profil]);
     }
 
-    /**
-
+    /**.
      * Traite le formulaire de modification du mot de passe.
      * @param Request $post
      * @return $this|\Illuminate\Http\RedirectResponse

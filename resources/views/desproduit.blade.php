@@ -138,14 +138,16 @@
                         </div>
                         <div class="product_price">Prix Unitiare: {!! $produits->price !!} CFA</div>
                         <div class="order_info d-flex flex-row">
-                            <form action="#">
+                            <form>
                                 <div class="clearfix" style="z-index: 1000;">
                                     <!-- Product Quantity -->
                                     <div class="row">
                                         <div class="col-6">
                                             <div class="product_quantity clearfix">
                                                 <span>Quantité : </span>
-                                                <input id="quantity_input" type="text" pattern="[1-9]*" value="0">
+                                                <input id="quantity_input" type="text" pattern="[1-9]*" value="1">
+                                                <input id="item_stock" hidden type="number" value="{!! $produits->quantity !!}"/>
+                                                <input id="unit_price" hidden type="number" value="{!! $produits->price !!}"/>
                                                 <div class="quantity_buttons">
                                                     <div id="quantity_inc_button" class="quantity_inc quantity_control">
                                                         <i class="fas fa-chevron-up"></i>
@@ -167,7 +169,7 @@
 
 
                                 <div class="button_container">
-                                    <button type="button" class="button cart_button">Ajouter au Panier</button>
+                                    <button type="button" onclick="addToBasket('{!! $produits->id !!}', '{!! csrf_token() !!}')" class="button cart_button">Ajouter au Panier</button>
                                     <div class="product_fav"><i class="fas fa-heart"></i></div>
                                 </div>
 

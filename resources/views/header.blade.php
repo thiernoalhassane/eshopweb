@@ -46,7 +46,7 @@
                     <!-- Logo -->
                     <div class="col-lg-2 col-sm-3 col-3 order-1">
                         <div class="logo_container">
-                            <div class="logo"><a href="#">OpenTrade</a></div>
+                            <div class="logo"><a style="font-size: 200%" href="#">Open Trade</a></div>
                         </div>
                     </div>
 
@@ -93,21 +93,31 @@
                         <div class="wishlist_cart d-flex flex-row align-items-center justify-content-end">
 
 
-                            <!-- Cart  Le Panier
+                            <!-- Le panier -->
+                            <?php
+                                $item_total_price=0.0;
+                                $total_item=0;
+                                if(\Illuminate\Support\Facades\Session::get("basket", null) != null)
+                                {
+                                    $total_item = count(\Illuminate\Support\Facades\Session::get("basket")) ;
+                                    foreach (\Illuminate\Support\Facades\Session::get("basket") as $value)
+                                    {
+                                        $item_total_price += (double)$value["total_price"]*$value["quantity"] ;
+                                    }
+                                }
+                            ?>
                             <div class="cart">
                                 <div class="cart_container d-flex flex-row align-items-center justify-content-end">
                                     <div class="cart_icon">
-                                        <img src="images/cart.png" alt="">
-                                        <div class="cart_count"><span>10</span></div>
+                                        <img src="{{url("images/cart.png")}}" alt="">
+                                        <div class="cart_count"><span id="cart_count"><?php echo $total_item ?></span></div>
                                     </div>
                                     <div class="cart_content">
                                         <div class="cart_text"><a href="{{ url('/panier')  }}">Votre panier</a></div>
-                                        <div class="cart_price">$85</div>
+                                        <div id="cart_price" class="cart_price"><?php echo $item_total_price ?> FCFA</div>
                                     </div>
                                 </div>
                             </div>
-
-                            -->
                         </div>
                     </div>
                 </div>
@@ -136,7 +146,7 @@
                                     <li><a href="{{ url('/produits')  }}">Les produits<i class="fas fa-chevron-down"></i></a></li>
                                     <li><a href="{{ url('/panier')  }}">Votre Panier<i class="fas fa-chevron-down"></i></a>
                                     </li>
-                                    <li><a href="{{ url('/blog')  }}">Blog<i class="fas fa-chevron-down"></i></a></li>
+                                    <!--<li><a href="{{ url('/blog')  }}">Blog<i class="fas fa-chevron-down"></i></a></li>-->
 
                                 </ul>
                             </div>
@@ -166,9 +176,9 @@
                         <div class="page_menu_content">
 
                             <div class="page_menu_search">
-                                <form action="#">
-                                    <input type="search" required="required" class="page_menu_search_input"
-                                           placeholder="Search for products...">
+                                <form action="{{url("/search")}}" method="get">
+                                    <input type="text" name="keyword" required="required" class="page_menu_search_input"
+                                           placeholder="rechercher...">
                                 </form>
                             </div>
                             <ul class="page_menu_nav">
@@ -180,8 +190,8 @@
                                                 class="fas fa-chevron-down"></i></a></li>
                                 <li class="page_menu_item"><a href="{{ url('/panier')  }}">Votre Panier<i
                                                 class="fas fa-chevron-down"></i></a></li>
-                                <li class="page_menu_item"><a href="{{ url('/blog')  }}">Blog<i
-                                                class="fas fa-chevron-down"></i></a></li>
+                                <!--<li class="page_menu_item"><a href="{{ url('/blog')  }}">Blog<i
+                                                class="fas fa-chevron-down"></i></a></li>-->
 
                             </ul>
 

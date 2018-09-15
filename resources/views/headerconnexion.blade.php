@@ -88,7 +88,7 @@
                                 <li><a href="{{ url('/produits')  }}">Les produits<i class="fas fa-chevron-down"></i></a></li>
                                 <li><a href="{{ url('/panier')  }}">Votre Panier<i class="fas fa-chevron-down"></i></a>
                                 </li>
-                                <li><a href="{{ url('/blog')  }}">Blog<i class="fas fa-chevron-down"></i></a></li>
+                                <!--<li><a href="{{ url('/blog')  }}">Blog<i class="fas fa-chevron-down"></i></a></li>-->
 
                             </ul>
                         </div>
@@ -132,8 +132,8 @@
                                             class="fas fa-chevron-down"></i></a></li>
                             <li class="page_menu_item"><a href="{{ url('/panier')  }}">Votre Panier<i
                                             class="fas fa-chevron-down"></i></a></li>
-                            <li class="page_menu_item"><a href="{{ url('/blog')  }}">Blog<i
-                                            class="fas fa-chevron-down"></i></a></li>
+                            <!--<li class="page_menu_item"><a href="{{ url('/blog')  }}">Blog<i
+                                            class="fas fa-chevron-down"></i></a></li>-->
 
                         </ul>
 

@@ -5,11 +5,11 @@
             <div class="col-lg-3 footer_col">
                 <div class="footer_column footer_contact">
                     <div class="logo_container">
-                        <div class="logo"><a href="#">OpenTrade</a></div>
+                        <div class="logo"><a href="#">Open Trade</a></div>
                     </div>
-                    <div class="footer_phone">numéro de téléphone</div>
+                    <div class="footer_phone">email</div>
                     <div class="footer_contact_text">
-                        <p>Lieu de travail</p>
+                        <p><a title="Special Team 39" href="mailto:specialteam39@gmail.com">specialteam39@gmail.com</a></p>
 
                     </div>
                     <div class="footer_social">
@@ -70,6 +70,8 @@
         </div>
     </div>
 </div>
+
+<script type="text/javascript" src="{{asset("js/basket.js")}}"></script>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-125640217-1"></script>

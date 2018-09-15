@@ -35,7 +35,7 @@
                         <a href="{{ url('/bilan')  }}"><i class="fa fa-circle-o"></i>Bilan</a>
                     </li>
                     <li>
-                        <a href=""><i class="fa fa-pie-chart"></i>Statistiques</a>
+                        <a href="#"><i class="fa fa-pie-chart"></i>Statistiques</a>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-shopping-basket"></i>Commandes des clients</a>
@@ -51,8 +51,8 @@
             </span>
                 </a>
                 <ul class="treeview-menu">
-                    <li><a href=""><i class="fa fa-shopping-bag"></i>Paniers</a></li>
-                    <li><a href=""><i class="fa fa-shopping-basket"></i>Commandes</a></li>
+                    <li><a href="{{url("/admin/baskets")}}"><i class="fa fa-shopping-bag"></i>Paniers</a></li>
+                    <li><a href="#"><i class="fa fa-shopping-basket"></i>Commandes</a></li>
                 </ul>
             </li>
             <li class="treeview">
@@ -70,6 +70,7 @@
                     <li><a href="{{url("/deconnecter")}}"><i class="fa fa-eject"></i>Déconnexion</a></li>
                 </ul>
             </li>
+            <li class=""><a title="retourner vers le site" href="{{url("/")}}">Retourner vers le site</a></li>
         </ul>
     </section>
     <!-- /.sidebar -->
