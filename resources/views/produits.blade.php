@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Les Produits</title>
+    <title>Open Trade - Les Produits</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="Togo commerce e-commerce">
@@ -30,6 +30,7 @@
           href="{{asset('acceuillogin/plugins/jquery-ui-1.12.1.custom/jquery-ui.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('acceuillogin/styles/shop_styles.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('acceuillogin/styles/shop_responsive.css')}}">
+    <link rel="stylesheet" href="{{ asset('acceuillogin/styles/responsive.css')}} ">
 
 
 </head>

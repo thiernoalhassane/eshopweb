@@ -46,7 +46,7 @@
                     <!-- Logo -->
                     <div class="col-lg-2 col-sm-3 col-3 order-1">
                         <div class="logo_container">
-                            <div class="logo"><a href="#">OpenTrade</a></div>
+                            <div class="logo"><a style="font-size: 200%" href="#">Open Trade</a></div>
                         </div>
                     </div>
 
@@ -146,7 +146,7 @@
                                     <li><a href="{{ url('/produits')  }}">Les produits<i class="fas fa-chevron-down"></i></a></li>
                                     <li><a href="{{ url('/panier')  }}">Votre Panier<i class="fas fa-chevron-down"></i></a>
                                     </li>
-                                    <li><a href="{{ url('/blog')  }}">Blog<i class="fas fa-chevron-down"></i></a></li>
+                                    <!--<li><a href="{{ url('/blog')  }}">Blog<i class="fas fa-chevron-down"></i></a></li>-->
 
                                 </ul>
                             </div>
@@ -176,9 +176,9 @@
                         <div class="page_menu_content">
 
                             <div class="page_menu_search">
-                                <form action="#">
-                                    <input type="search" required="required" class="page_menu_search_input"
-                                           placeholder="Search for products...">
+                                <form action="{{url("/search")}}" method="get">
+                                    <input type="text" name="keyword" required="required" class="page_menu_search_input"
+                                           placeholder="rechercher...">
                                 </form>
                             </div>
                             <ul class="page_menu_nav">
@@ -190,8 +190,8 @@
                                                 class="fas fa-chevron-down"></i></a></li>
                                 <li class="page_menu_item"><a href="{{ url('/panier')  }}">Votre Panier<i
                                                 class="fas fa-chevron-down"></i></a></li>
-                                <li class="page_menu_item"><a href="{{ url('/blog')  }}">Blog<i
-                                                class="fas fa-chevron-down"></i></a></li>
+                                <!--<li class="page_menu_item"><a href="{{ url('/blog')  }}">Blog<i
+                                                class="fas fa-chevron-down"></i></a></li>-->
 
                             </ul>
 

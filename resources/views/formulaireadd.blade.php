@@ -1,7 +1,7 @@
 <div class="row">
     <div class="col-md-6 col-sm-12 col-lg-6 col-md-offset-2">
         <div class="panel panel-primary">
-            <div class="panel-heading">OPENTRADE INSCRIPTION</div>
+            <div class="panel-heading">OPEN TRADE INSCRIPTION</div>
             <div class="panel-body">
                 <form action="{{ url('/inscription') }}" method="post" enctype="multipart/form-data">
 

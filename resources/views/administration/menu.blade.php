@@ -70,6 +70,7 @@
                     <li><a href="{{url("/deconnecter")}}"><i class="fa fa-eject"></i>Déconnexion</a></li>
                 </ul>
             </li>
+            <li class=""><a title="retourner vers le site" href="{{url("/")}}">Retourner vers le site</a></li>
         </ul>
     </section>
     <!-- /.sidebar -->

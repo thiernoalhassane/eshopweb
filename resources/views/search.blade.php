@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <title>OpenTrade - Recherche</title>
+    <title>Open Trade - Recherche</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="commerce boutique en ligne togo">

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Panier</title>
+    <title>Open Trade - Panier</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="OneTech shop project">
@@ -12,6 +12,8 @@
     {!! HTML::style('acceuillogin/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css') !!}
     {!! HTML::style('acceuillogin/styles/cart_responsive.css') !!}
     {!! HTML::style('acceuillogin/styles/cart_styles.css') !!}
+    <link rel="stylesheet" href="{{ asset('acceuillogin/styles/responsive.css')}} ">
+
 </head>
 
 <body>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>OpenTrade Bienvenue</title>
+    <title>Open Trade - Bienvenue</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="description" content="commerce boutique en ligne togo">
@@ -38,7 +38,7 @@
              data-image-src="images/shop_background.jpg"></div>
         <div class="home_overlay"></div>
         <div class="home_content d-flex flex-column align-items-center justify-content-center">
-            <h2 class="home_title">BIENVENUE SUR OPENTRADE</h2>
+            <h2 class="home_title">BIENVENUE SUR OPEN TRADE</h2>
         </div>
     </div>
 
