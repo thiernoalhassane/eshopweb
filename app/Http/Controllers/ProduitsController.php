@@ -6,15 +6,18 @@ use App\ApiConfig;
 
 use App\Utils\Net\RestRequest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Input;
 use App\Utils\Net\RestRequestException;
 
 use GuzzleHttp\Client;
 
 use Illuminate\Foundation\Bus\DispatchesJobs;
+
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
+use Illuminate\Support\Facades\Session;
 
 class ProduitsController extends BaseController
 {
@@ -110,6 +113,7 @@ class ProduitsController extends BaseController
                 "limit"=>10,
                 "keyword"=>$keyword
             ]) ;
+
 
             $response = json_decode((string) $request->getBody(), TRUE);
 

@@ -95,6 +95,7 @@ Route::get("/search/more", function ()
             $items = json_decode($response["data"], TRUE) ;
         }
 
+
         return view("items/bodypart/items",["items"=>$items]) ;
 
     }catch (\App\Utils\Net\RestRequestException $rre)
