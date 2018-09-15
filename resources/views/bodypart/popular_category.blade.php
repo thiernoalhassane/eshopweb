@@ -39,7 +39,7 @@
                         @foreach($footer as $nom)
                             <div class="owl-item">
                                 <div class="popular_category d-flex flex-column align-items-center justify-content-center">
-                                    <div class="popular_category_image"><img src="images/popular_3.png" alt=""></div>
+                                    <div class="popular_category_image"><img src="{{url("images/popular_3.png")}}" alt="catégorie populaire"></div>
                                     <div class="popular_category_text">{{ $nom->description}}</div>
                                 </div>
                             </div>

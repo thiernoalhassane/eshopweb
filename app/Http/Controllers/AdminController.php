@@ -366,10 +366,10 @@ class AdminController extends BaseController
 
     public function showTrader($id)
     {
-        if(!Session::has("user") || is_null(Session::get("user")) || !is_array(Session::get("user")))
+        /*if(!Session::has("user") || is_null(Session::get("user")) || !is_array(Session::get("user")))
         {
             return redirect("/connection", 302)->with(["error_while_access_to_backend"=>"Vous devez être connecté pour accéder à tout le site"]) ;
-        }
+        }*/
 
         if (\Illuminate\Support\Facades\Cache::has('access_token') && \Illuminate\Support\Facades\Cache::has('nomcategorie')) {
 

@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="{{asset('acceuillogin/styles/product_responsive.css')}}">
     <link rel="stylesheet" href="{{asset('administration/bootstrap/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{asset('administration/dist/css/AdminLTE.min.css')}}">
+    <link rel="stylesheet" href="{{ asset('acceuillogin/styles/main_styles.css')}} ">
+    <link rel="stylesheet" href="{{ asset('acceuillogin/styles/responsive.css')}} ">
 
 </head>
 
@@ -45,8 +47,10 @@
                     <div class="box box-widget">
                         <div class="box-header with-border">
                             <div class="user-block">
-                                <img class="img-circle" src="" alt="User Image">
 
+                                <img class="img-circle" src="{!! $produits->trader->profil  !!}" alt="profil {!! $produits->trader->name  !!}">
+
+                                
                                 <span class="username"><a href="{{ url('/trader', $id= $produits->trader->id)}}">{!! $produits->trader->name  !!} {!! $produits->trader->surname  !!}  </a></span>
                                 <span class="description"></span>
                             </div>
@@ -55,36 +59,63 @@
                         </div>
                         <!-- /.box-header -->
                         <div class="box-body">
-                            <img class="img-responsive pad" src="" alt="Photo">
+
+                            <img class="img-responsive pad" src="{!! $produits->picture  !!}" alt="aperçu {!! $produits->wording !!}">
+
 
                             <p></p>
                             <button type="button" class="btn btn-default btn-xs"><i class="fa fa-share"></i> Partager
                             </button>
 
-                            <!--    <span class="pull-right text-muted">Nombre de  likes - Nombre de comments</span> -->
+
+                            <span class="pull-right text-muted">
+                                <div>
+                                    <button class="btn btn-light"><i style="color: cornflowerblue" class="fa fa-thumbs-up"></i> {{$produits->likes->blue}}</button>
+                                    <button class="btn btn-light"><i style="color: red" class="fa fa-thumbs-down"></i> {{$produits->likes->red}}</button>
+                                </div>
+                                Nombre de commentaire <i class="badge">{{count($produits->comments)}}</i></span>
+
                         </div>
                         <!-- /.box-body
                         <div class="box-footer box-comments">
 
-                            <div class="box-comment">
+                            @if(count($produits->comments) > 0)
+                                @foreach($produits->comments as $comment)
+                                    <div class="box-comment">
+                                        <!-- User image -->
+                                        <!--<img class="img-circle img-sm" src="../dist/img/user3-128x128.jpg" alt="User Image">-->
+                                        <i class="fa fa-user img-circle img-sm"></i>
 
-                                <img class="img-circle img-sm" src="" alt="User Image">
+                                        <div class="comment-text">
+                                            <span class="username">
+                                                {{$comment->customer->name}} {{$comment->customer->surname}}
+                                                <span class="text-muted pull-right">{{$comment->date}}</span>
+                                            </span><!-- /.username -->
+                                           <span id="comment_text_original_{{$comment->id}}">{{$comment->message}}</span>
 
-                                <div class="comment-text">
+                                            <!-- Formulaire de modification d'un commentaire -->
+                                            <form id="comment_update_form_{{$comment->id}}" class="hidden form-horizontal">
+                                                <input type="text" name="comment_id" hidden value="{{$comment->id}}" />
+                                                <input type="text" name="user_id" hidden value="{{$comment->customer->id}}" />
+                                                <input required name="comment_text" id="comment_text_{{$comment->id}}" type="text" class="form-control input-sm" value="{{$comment->message}}">
+                                                <button type="button" onclick="updateComment('{{$comment->id}}', '{{csrf_token()}}')" title="valider" class="pull-right btn btn-light">
+                                                    <i class="fa fa-check"></i>
+                                                </button>
+                                            </form>
+                                            <span class="pull-right">
+                                                <button title="modifier le commentaire" onclick="displayCommentUpdateForm('{{$comment->id}}', '{{$comment->message}}')" class="btn btn-light"><i class="glyphicon glyphicon-pencil"></i></button>
+                                            </span>
 
-                      <span class="username">
-                        Maria Gonzales
-                        <span class="text-muted pull-right">8:03 PM Today</span>
-                      </span>
-                                    It is a long established fact that a reader will be distracted
-                                    by the readable content of a page when looking at its layout.
-                                </div>
-
-                            </div>
-
-
+                                        </div>
+                                        <!-- /.comment-text -->
+                                    </div>
+                                @endforeach
+                                @else
+                                    Aucun commentaire
+                                @endif
 
                         </div>
+
                         <!-- /.box-footer -->
                         @if(\Illuminate\Support\Facades\Session::has('user') == true)
                         <div class="box-footer">
@@ -101,7 +132,7 @@
                                      alt="Alt Text">
                                 <!-- .img-push is used to add margin to elements next to floating images -->
                                 <div class="img-push">
-                                    <input type="text" class="form-control input-sm" name="comment"
+                                    <input required type="text" class="form-control input-sm" name="comment"
                                            placeholder="Votre commentaire">
                                 </div>
                             </form>
@@ -114,7 +145,7 @@
 
 
                 <!-- Description -->
-                <div class="col-lg-5 order-3">
+                <div class="col-lg-5 order-1">
                     <div class="product_description">
                         <div class="product_category">{!! $produits->category->description !!}</div>
                         <div class="product_name">{!! $produits->wording !!}</div>
@@ -172,6 +203,9 @@
     </div>
 
 
+    <!-- popular category -->
+    <!-- delivery -->
+    @include('bodypart.delivery')
     <!-- footer -->
     @include('footer')
 
@@ -217,6 +251,65 @@
 <script src="{{asset('administration/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js')}}"></script>
 <script src="{{asset('administration/plugins/slimScroll/jquery.slimscroll.min.js')}}"></script>
 <script src="{{asset('administration/dist/js/demo.js')}}"></script>
+
+<script>
+    function displayCommentUpdateForm(commentTextInputId, commentTextOriginal) {
+
+        // Le contenu du textfield du formulaire de mise à jour
+        var commentTextInput =  $('#comment_text_'+commentTextInputId) ;
+        commentTextInput.val(commentTextOriginal);
+        //commentTextInput.removeClass('hidden') ;
+
+        // Masquage du text original
+        //$('#comment_text_original_'+commentTextInputId).fadeToggle("fast");
+
+        // Le formulaire de mise à jour
+        var commentUpdateForm = $('#comment_update_form_'+commentTextInputId) ;
+        commentUpdateForm.fadeToggle('slow', 'linear', function () {
+            commentUpdateForm.removeClass('hidden') ;
+        }) ;
+    }
+
+    function updateComment(comment_id, csrf_token)
+    {
+        var ajax = $.ajax(
+            {
+                url:"/comment/update",
+                dataType: 'text',
+                data:
+                    {
+                        comment_id:comment_id,
+                        comment_text: $("#comment_text_"+comment_id).val(),
+                        _token:csrf_token
+                    },
+                type:'POST',
+                statusCode:{
+                    400: function (msg) {
+                        alert(msg.responseText) ;
+                        console.log(msg.responseText) ;
+                    },
+                    500: function (msg) {
+                        alert(msg.responseText) ;
+                        console.log(msg.responseText) ;
+                    }
+                }
+            }
+        ).done(function (msg) {
+            console.log(msg) ;
+
+            // Mise à jour du texte
+            $('#comment_text_original_'+comment_id).text(msg) ;
+            $('#comment_text_'+comment_id).val(msg) ;
+
+            // Fondu du formulaire
+            var commentUpdateForm = $('#comment_update_form_'+comment_id) ;
+            commentUpdateForm.fadeToggle('slow', 'linear', function () {
+                commentUpdateForm.removeClass('hidden') ;
+            }) ;
+        }) ;
+    }
+</script>
+
 </body>
 
 </html>

@@ -14,7 +14,7 @@
             <!-- Char. Item -->
             <div class="col-lg-3 col-md-6 char_col">
                 <div class="char_item d-flex flex-row align-items-center justify-content-start">
-                    <div class="char_icon"><img src="images/char_1.png" alt=""></div>
+                    <div class="char_icon"><img src="{{url("images/char_1.png")}}" alt=""></div>
                     <div class="char_content">
                         <div class="char_title">Livraison à domicile</div>
                         <div class="char_subtitle">à partir de ...</div>
@@ -26,7 +26,7 @@
             <!-- Char. Item -->
             <div class="col-lg-3 col-md-6 char_col">
                 <div class="char_item d-flex flex-row align-items-center justify-content-start">
-                    <div class="char_icon"><img src="images/char_1.png" alt=""></div>
+                    <div class="char_icon"><img src="{{url("images/char_1.png")}}" alt=""></div>
                     <div class="char_content">
                         <div class="char_title">Livraison à domicile</div>
                         <div class="char_subtitle">à partir de ...</div>
@@ -38,7 +38,7 @@
             <!-- Char. Item -->
             <div class="col-lg-3 col-md-6 char_col">
                 <div class="char_item d-flex flex-row align-items-center justify-content-start">
-                    <div class="char_icon"><img src="images/char_1.png" alt=""></div>
+                    <div class="char_icon"><img src="{{url("images/char_1.png")}}" alt=""></div>
                     <div class="char_content">
                         <div class="char_title">Livraison à domicile</div>
                         <div class="char_subtitle">à partir de ...</div>
@@ -51,7 +51,7 @@
             <div class="col-lg-3 col-md-6 char_col">
 
                 <div class="char_item d-flex flex-row align-items-center justify-content-start">
-                    <div class="char_icon"><img src="images/char_1.png" alt=""></div>
+                    <div class="char_icon"><img src="{{url("images/char_1.png")}}" alt=""></div>
                     <div class="char_content">
                         <div class="char_title">Livraison à domicile</div>
                         <div class="char_subtitle">à partir de ...</div>
