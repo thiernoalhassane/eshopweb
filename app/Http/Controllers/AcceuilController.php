@@ -15,7 +15,6 @@ class AcceuilController extends BaseController
   {
 
 
-      Cache::forget('access_token');
       if (\Illuminate\Support\Facades\Cache::has('access_token') && \Illuminate\Support\Facades\Cache::has('nomcategorie')) {
           $uri = new ApiConfig();
           $limit = 10;
