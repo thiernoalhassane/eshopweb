@@ -11,17 +11,16 @@ namespace App;
 
 class ApiConfig
 {
-    protected $client_id = "5b26340139e44b2a9bd4ee30";
-    protected $url_auth = "https://eshopdocker-opentrade.193b.starter-ca-central-1.openshiftapps.com/eshoprest/api/o";
-    protected $url_rest = "https://eshopdocker-opentrade.193b.starter-ca-central-1.openshiftapps.com/eshoprest/";
 
+
+    protected $client_id = "5b26340139e44b2a9bd4ee30";
+    protected $url_auth = "https://nameless-tor-45908.herokuapp.com/api/o";
+    protected $url_rest = "https://desolate-castle-82146.herokuapp.com/";
 
     /* protected $client_id = "5b26340139e44b2a9bd4ee30";
      protected $url_auth = "https://eshopdocker-opentrade.193b.starter-ca-central-1.openshiftapps.com/eshoprest/api/o";
      protected $url_rest = "https://eshopdocker-opentrade.193b.starter-ca-central-1.openshiftapps.com/eshoprest/";
-     /*protected $client_id = "5b26340139e44b2a9bd4ee30";
-   protected $url_auth = "http://192.168.41.1:8081/eshop-auth-1.0-SNAPSHOT/";
-   protected $url_rest = "http://192.168.41.1:8081/eshoprest/";
+
  protected $client_id = "5b26340139e44b2a9bd4ee30";
  protected $url_auth = "https://nameless-tor-45908.herokuapp.com/";
  protected $url_rest = "https://desolate-castle-82146.herokuapp.com/";
