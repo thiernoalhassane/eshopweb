@@ -99,7 +99,7 @@ class InscriptionController extends BaseController
             if($response["code"] != 2001)
             {
                 Cache::forget("access_token") ;
-                return redirect('inscription')->with('erreur', $response["data"])->withInput();
+                return redirect('inscription')->with(['erreur'=>$response["data"]["message"]])->withInput();
             }
 
             return redirect()->route('confirmation');
@@ -108,7 +108,7 @@ class InscriptionController extends BaseController
         catch (RestRequestException $rre)
         {
             Cache::forget("access_token") ;
-            return redirect('inscription')->with('erreur', $rre->getMessage())->withInput();
+            return redirect('inscription')->with(['erreur'=>$response["data"]["message"]])->withInput();
         }
     }
 
