@@ -39,7 +39,6 @@
         <div class="container">
             <div class="row">
 
-
                 <!-- Selected Image -->
 
                 <div class="col-md-6">
@@ -73,10 +72,11 @@
                                     <button class="btn btn-light"><i style="color: cornflowerblue" class="fa fa-thumbs-up"></i> {{$produits->likes->blue}}</button>
                                     <button class="btn btn-light"><i style="color: red" class="fa fa-thumbs-down"></i> {{$produits->likes->red}}</button>
                                 </div>
-                                Nombre de commentaire <i class="badge">{{count($produits->comments)}}</i></span>
+                                Nombre de commentaire <i class="badge">{{count($produits->comments)}}</i>
+                            </span>
 
                         </div>
-                        <!-- /.box-body
+                        <!-- /.box-body-->
                         <div class="box-footer box-comments">
 
                             @if(count($produits->comments) > 0)
@@ -94,18 +94,22 @@
                                            <span id="comment_text_original_{{$comment->id}}">{{$comment->message}}</span>
 
                                             <!-- Formulaire de modification d'un commentaire -->
-                                            <form id="comment_update_form_{{$comment->id}}" class="hidden form-horizontal">
-                                                <input type="text" name="comment_id" hidden value="{{$comment->id}}" />
-                                                <input type="text" name="user_id" hidden value="{{$comment->customer->id}}" />
-                                                <input required name="comment_text" id="comment_text_{{$comment->id}}" type="text" class="form-control input-sm" value="{{$comment->message}}">
-                                                <button type="button" onclick="updateComment('{{$comment->id}}', '{{csrf_token()}}')" title="valider" class="pull-right btn btn-light">
-                                                    <i class="fa fa-check"></i>
-                                                </button>
-                                            </form>
-                                            <span class="pull-right">
-                                                <button title="modifier le commentaire" onclick="displayCommentUpdateForm('{{$comment->id}}', '{{$comment->message}}')" class="btn btn-light"><i class="glyphicon glyphicon-pencil"></i></button>
-                                            </span>
+                                            @if(\Illuminate\Support\Facades\Session::has("user")
+                                                && \Illuminate\Support\Facades\Session::get("user") != null
+                                                && \Illuminate\Support\Facades\Session::get("user")['id'] == $comment->customer->id)
 
+                                                <form id="comment_update_form_{{$comment->id}}" class="hidden form-horizontal">
+                                                    <input type="text" name="comment_id" hidden value="{{$comment->id}}" />
+                                                    <input type="text" name="user_id" hidden value="{{$comment->customer->id}}" />
+                                                    <input required name="comment_text" id="comment_text_{{$comment->id}}" type="text" class="form-control input-sm" value="{{$comment->message}}">
+                                                    <button type="button" onclick="updateComment('{{$comment->id}}', '{{csrf_token()}}')" title="valider" class="pull-right btn btn-light">
+                                                        <i class="fa fa-check"></i>
+                                                    </button>
+                                                </form>
+                                                <span class="pull-right">
+                                                    <button title="modifier le commentaire" onclick="displayCommentUpdateForm('{{$comment->id}}', '{{$comment->message}}')" class="btn btn-light"><i class="glyphicon glyphicon-pencil"></i></button>
+                                                </span>
+                                            @endif
                                         </div>
                                         <!-- /.comment-text -->
                                     </div>
@@ -285,6 +289,10 @@
                 type:'POST',
                 statusCode:{
                     400: function (msg) {
+                        alert(msg.responseText) ;
+                        console.log(msg.responseText) ;
+                    },
+                    401: function (msg) {
                         alert(msg.responseText) ;
                         console.log(msg.responseText) ;
                     },
