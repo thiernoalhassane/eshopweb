@@ -32,7 +32,7 @@
     @endif
 
     @if(Session::has('erreur'))
-    @include('partials/error', ['type' => 'info', 'message' => Session::get('erreur') ])
+    @include('partials/error', ['type' => 'warning', 'message' => Session::get('erreur') ])
     @endif
     @include('headerconnexion')
 
