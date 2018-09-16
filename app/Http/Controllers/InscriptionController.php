@@ -42,7 +42,7 @@ class InscriptionController extends BaseController
         $tel = e(Input::get('phone'));
         $adresse = e(Input::get('address'));
         $sexe = e(Input::get('sex'));
-
+      
         $data = [
             [
                 'name' => 'name',
